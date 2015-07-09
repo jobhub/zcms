@@ -1,10 +1,10 @@
 .idea
 cron-jobs
 dev-tools/backupDb
-#cache/volt/
-#cache/metadata/
-#cache/web
-#cache/install
-#cache/logs/db.log
+cache/volt/
+cache/metadata/
+cache/web
+cache/install
+cache/logs/db.log
 app/config/config.php
 public/test.php
