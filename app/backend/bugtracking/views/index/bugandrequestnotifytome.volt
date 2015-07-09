@@ -1,0 +1,20 @@
+{% extends "../../index.volt" %}
+{% block content %}
+    <section class="content">
+        <form action="{{ _baseUri }}{{ router.getRewriteUri() }}" method="post" id="adminForm">
+            {{ hidden_field("filter_order", "value" : _filter['filter_order']) }}
+            {{ hidden_field("filter_order_dir", "value" : _filter['filter_order_dir']) }}
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {% include _standardTable %}
+                </div>
+            </div>
+        </form>
+    </section>
+
+    {{ partial('index/modal') }}
+
+{% endblock %}
+{% block js_footer %}
+    {{ partial('index/js_footer') }}
+{% endblock %}
