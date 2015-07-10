@@ -14,16 +14,14 @@ class IndexController extends InstallController
 
     public function indexAction()
     {
-
+        $this->_checkENV();
+        
         $config = $this->_getConfig();
-
         if (!is_writable($this->configPath)) {
             $this->flashSession->notice('File config /app/config/config.php is not writable');
             $this->view->setVar('hiddenButton', '1');
             return;
         }
-
-        $this->_checkENV();
 
         $step = (int)$this->request->get('step', 'int', 0);
         if ($step == 1) {

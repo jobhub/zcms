@@ -33,7 +33,7 @@
 
                                         <div class="fileupload-new thumbnail" style="height: 150px;">
                                             {% if item is defined and item.thumbnail|length %}
-                                                <img src="{{ _baseUri~"/"~item.thumbnail }}" alt="">
+                                                <img src="{{ _baseUri ~ item.thumbnail }}" alt="">
                                             {% else %}
                                                 <img src="{{ _baseUri }}/media/default/no-image.png" alt="">
                                             {% endif %}
