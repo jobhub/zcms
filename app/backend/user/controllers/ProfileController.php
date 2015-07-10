@@ -47,11 +47,13 @@ class ProfileController extends ZAdminController
                 $_POST['current_password'] = '';
                 $_POST['password'] = '';
                 $_POST['password_confirmation'] = '';
-                if ($newPassword != '' && Users::checkPassword($currentPassword, $userData->salt, $oldUserData->password)) {
-                    $userData->generatePassword($newPassword);
-                } else {
-                    $this->flashSession->notice('m_user_message_current_password_not_fount');
-                    return null;
+                if ($newPassword != '') {
+                    if (Users::checkPassword($currentPassword, $userData->salt, $oldUserData->password)) {
+                        $userData->generatePassword($newPassword);
+                    } else {
+                        $this->flashSession->notice('m_user_message_current_password_not_fount');
+                        return null;
+                    }
                 }
                 if ($userData->save()) {
                     $this->_user['full_name'] = $userData->first_name . ' ' . $userData->last_name;

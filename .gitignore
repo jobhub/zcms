@@ -1,7 +1,7 @@
 .idea
 cron-jobs
-cache/volt/
 dev-tools/backupDb
+cache/volt/
 cache/metadata/
 cache/web
 cache/install
