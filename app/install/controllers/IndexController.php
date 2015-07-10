@@ -1,5 +1,4 @@
 <?php
-
 use Phalcon\Db;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Email;
@@ -11,11 +10,10 @@ use Phalcon\Validation\Validator\Confirmation;
  */
 class IndexController extends InstallController
 {
-
     public function indexAction()
     {
         $this->_checkENV();
-        
+
         $config = $this->_getConfig();
         if (!is_writable($this->configPath)) {
             $this->flashSession->notice('File config /app/config/config.php is not writable');
@@ -25,9 +23,7 @@ class IndexController extends InstallController
 
         $step = (int)$this->request->get('step', 'int', 0);
         if ($step == 1) {
-            $config['auth']['salt'] = $this->security->getSaltBytes();
-            $config['debug'] = 0;
-            $this->_saveConfig($config);
+            //Do something
         } elseif ($step == 2) {
             $this->view->pick('index/setUpDatabase');
             try {
@@ -45,41 +41,56 @@ class IndexController extends InstallController
                     $config['database']['dbname'] = $this->request->getPost('dbname', 'string', '');
                     $config['database']['username'] = $this->request->getPost('username', 'string', '');
                     $config['database']['password'] = $this->request->getPost('password', 'string', '');
-                    $this->_saveConfig($config);
-                    $this->di->set('config', new \Phalcon\Config\Adapter\Php(ROOT_PATH . '/app/config/config.php'));
-                    $this->response->redirect('/install.php?step=2');
-                    return;
+
+                    $this->di->set('db', function () use ($config) {
+                        $adapter = 'Phalcon\Db\Adapter\Pdo\\' . $config['database']['adapter'];
+                        if ($config['database']['adapter'] == 'Mysql') {
+                            return new $adapter($config['database']);
+                        } else {
+                            return new $adapter(array(
+                                'host' => $config['database']['host'],
+                                'username' => $config['database']['username'],
+                                'password' => $config['database']['password'],
+                                'dbname' => $config['database']['dbname']
+                            ));
+                        }
+                    });
+
+                    try {
+                        $this->db->connect();
+                        $this->_saveConfig($config);
+                        header('Location: /install.php?step=3');
+                        exit;
+                    }catch (\Exception $e){
+                        header('Location: /install.php?step=2');
+                        exit;
+                    }
                 }
             }
         } elseif ($step == 3) {
             $this->view->pick('index/setupAccount');
-            if ($this->request->isPost()) {
+            if ($this->request->isPost() && $this->request->get('siteName')) {
                 $siteName = $this->request->get('siteName', ['string', 'striptags']);
                 $config['website']['siteName'] = trim(preg_replace("/[^A-Za-z0-9 ]/", '', $siteName), ' ');
-
                 $firstName = $this->request->getPost('first_name', ['string', 'striptags']);
                 $lastName = $this->request->getPost('last_name', ['string', 'striptags']);
                 $email = $this->request->getPost('email', 'email');
                 $password = $this->request->getPost('password', 'string');
                 $salt = $this->security->getSaltBytes();
-
                 $validation = new Validation();
                 $validation->add('email', new Email(array(
                     'message' => 'The email is not valid'
                 )));
-
                 $validation->add('password', new StringLength([
                     'max' => 32,
                     'min' => 6,
                     'messageMaximum' => 'Password must be of maximum 32 characters',
                     'messageMinimum' => 'Password must be of minimum 6 characters'
                 ]));
-
                 $validation->add('password', new Confirmation([
                     'message' => "Password doesn't match confirmation",
                     'with' => 'confirmPassword'
                 ]));
-
                 $messages = $validation->validate($this->request->getPost());
                 if (count($messages)) {
                     foreach ($messages as $message) {
@@ -88,7 +99,6 @@ class IndexController extends InstallController
                     return;
                 }
                 $this->db->begin();
-
                 //Rename old tables
                 $queriesRenameOldTable = $this->_renameOldTablesQueries($this->config);
                 //echo '<pre>'; var_dump($queriesRenameOldTable); echo '</pre>';die();
@@ -104,7 +114,6 @@ class IndexController extends InstallController
                 $password = $password . $salt;
                 $queriesZCMS = $this->_fetchQueries($this->config->database->adapter);
                 $queriesZCMS[] = "INSERT INTO users (role_id, first_name, last_name, email, password, salt, avatar, is_active, language_code, reset_password_token, reset_password_token_at, active_account_at, active_account_token, coin, token, gender, mobile, birthday, default_bill_address, default_ship_address, default_payment, country_id, country_state_id, short_description, created_at, created_by, updated_at, updated_by) VALUES (1, '" . $firstName . "', '" . $lastName . "', '" . $email . "','" . $this->security->hash($password) . "', '" . $salt . "','/media/users/default.png', 1, 'en-GB', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '" . date('Y-m-h H:i:s') . "', 1, '" . date('Y-m-h H:i:s') . "', 1)";
-
                 foreach ($queriesZCMS as $query) {
                     if ($query != '') {
                         if (!$this->db->execute($query)) {
@@ -180,7 +189,8 @@ class IndexController extends InstallController
         }
         $varExport = var_export($config, true);
         $content = "<?php\nreturn $varExport;\n";
-        return file_put_contents(ROOT_PATH . '/app/config/config.php', $content);
+        $result = file_put_contents(ROOT_PATH . '/app/config/config.php', $content);
+        return $result;
     }
 
     /**
@@ -222,16 +232,12 @@ class IndexController extends InstallController
     {
         //Check Phalcon framework installation
         $this->view->setVar('env_phalcon', extension_loaded('phalcon'));
-
         //Check APC cache
         $this->view->setVar('env_apc', extension_loaded('apc'));
-
         //Check memcache
         $this->view->setVar('env_memcache', extension_loaded('memcache'));
-
         //Check mbstring
         $this->view->setVar('env_mbstring', extension_loaded('mbstring'));
-
         //Check postgresql
         $this->view->setVar('env_PDO', extension_loaded('PDO'));
         $this->view->setVar('env_pdo_pgsql', extension_loaded('pdo_pgsql'));
