@@ -41,6 +41,7 @@ class IndexController extends InstallController
                     $config['database']['dbname'] = $this->request->getPost('dbname', 'string', '');
                     $config['database']['username'] = $this->request->getPost('username', 'string', '');
                     $config['database']['password'] = $this->request->getPost('password', 'string', '');
+                    $config['auth']['salt'] = $this->security->getSaltBytes();
 
                     $this->di->set('db', function () use ($config) {
                         $adapter = 'Phalcon\Db\Adapter\Pdo\\' . $config['database']['adapter'];
