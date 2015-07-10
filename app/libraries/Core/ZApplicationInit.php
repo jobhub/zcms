@@ -75,7 +75,9 @@ trait ZApplicationInit
          * Start the session the first time some component request the session service
          */
         $di->set('session', function () use ($config) {
-            $session = new ZSession();
+            $session = new ZSession([
+                'uniqueId' => $config->auth->salt
+            ]);
             $session->start();
             return $session;
         }, true);
