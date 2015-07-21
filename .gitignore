@@ -5,6 +5,6 @@ cache/volt/
 cache/metadata/
 cache/web
 cache/install
+cache/tmp
 cache/logs/db.log
 app/config/config.php
-public/test.php
