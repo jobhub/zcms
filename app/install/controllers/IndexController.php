@@ -102,7 +102,6 @@ class IndexController extends InstallController
                 $this->db->begin();
                 //Rename old tables
                 $queriesRenameOldTable = $this->_renameOldTablesQueries($this->config);
-                //echo '<pre>'; var_dump($queriesRenameOldTable); echo '</pre>';die();
                 foreach ($queriesRenameOldTable as $query) {
                     if ($query != '') {
                         if (!$this->db->execute($query)) {
@@ -114,7 +113,7 @@ class IndexController extends InstallController
                 //Install new table in ZCMS
                 $password = $password . $salt;
                 $queriesZCMS = $this->_fetchQueries($this->config->database->adapter);
-                $queriesZCMS[] = "INSERT INTO users (role_id, first_name, last_name, email, password, salt, avatar, is_active, language_code, reset_password_token, reset_password_token_at, active_account_at, active_account_token, coin, token, gender, mobile, birthday, default_bill_address, default_ship_address, default_payment, country_id, country_state_id, short_description, created_at, created_by, updated_at, updated_by) VALUES (1, '" . $firstName . "', '" . $lastName . "', '" . $email . "','" . $this->security->hash($password) . "', '" . $salt . "','/media/users/default.png', 1, 'en-GB', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '" . date('Y-m-h H:i:s') . "', 1, '" . date('Y-m-h H:i:s') . "', 1)";
+                $queriesZCMS[] = "INSERT INTO users (role_id, first_name, last_name, email, password, salt, avatar, is_active, language_code, reset_password_token, reset_password_token_at, active_account_at, active_account_token, coin, token, gender, mobile, birthday, default_bill_address, default_ship_address, default_payment, country_id, country_state_id, short_description, created_at, created_by, updated_at, updated_by) VALUES (1, '" . $firstName . "', '" . $lastName . "', '" . $email . "','" . $this->security->hash($password) . "', '" . $salt . "','/media/users/default.png', 1, 'en-GB', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '" . date('Y-m-h H:i:s') . "', 1, '" . date('Y-m-h H:i:s') . "', 1)";
                 foreach ($queriesZCMS as $query) {
                     if ($query != '') {
                         if (!$this->db->execute($query)) {
@@ -154,8 +153,8 @@ class IndexController extends InstallController
         if ($dbType == 'postgresql') {
             $queriesContent = file_get_contents(ROOT_PATH . '/app/install/sql/postgresql/zcms.sql');
             $queries = explode("--ZCMS--", $queriesContent);
-            //$queries[] = 'CREATE OR REPLACE FUNCTION zcms_cut_string(x text, l int4) RETURNS text AS $BODY$ DECLARE tmp1 TEXT ARRAY; lTmp1 INT; y TEXT; BEGIN IF length(x) <= l THEN RETURN x; END IF; y = left(x, l); tmp1 = regexp_split_to_array(y, E\'\\\\s+\'); lTmp1 = length(tmp1 [array_length(tmp1, 1)]); y = left(y, l - lTmp1); RETURN y; END; $BODY$ LANGUAGE plpgsql';
-            //$queries[] = 'CREATE OR REPLACE FUNCTION zcms_generate_alias(str text) RETURNS text AS $BODY$ DECLARE coDau TEXT; kDau TEXT; BEGIN coDau = \'áàảãạâấầẩẫậăắằẳẵặđéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵÁÀẢÃẠÂẤẦẨẪẬĂẮẰẲẴẶĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỴ\'; kDau = \'aaaaaaaaaaaaaaaaadeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyyAAAAAAAAAAAAAAAAADEEEEEEEEEEEIIIIIOOOOOOOOOOOOOOOOOUUUUUUUUUUUYYYYY\'; FOR i IN 0..length(coDau) LOOP str = replace(str, substr(coDau, i, 1), substr(kDau, i, 1)); END LOOP; RETURN (lower(str)); END; $BODY$ LANGUAGE plpgsql';
+            $queries[] = 'CREATE OR REPLACE FUNCTION zcms_cut_string(x text, l int4) RETURNS text AS $BODY$ DECLARE tmp1 TEXT ARRAY; lTmp1 INT; y TEXT; BEGIN IF length(x) <= l THEN RETURN x; END IF; y = left(x, l); tmp1 = regexp_split_to_array(y, E\'\\\\s+\'); lTmp1 = length(tmp1 [array_length(tmp1, 1)]); y = left(y, l - lTmp1); RETURN y; END; $BODY$ LANGUAGE plpgsql';
+            $queries[] = 'CREATE OR REPLACE FUNCTION zcms_generate_alias(str text) RETURNS text AS $BODY$ DECLARE coDau TEXT; kDau TEXT; BEGIN coDau = \'áàảãạâấầẩẫậăắằẳẵặđéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵÁÀẢÃẠÂẤẦẨẪẬĂẮẰẲẴẶĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỴ\'; kDau = \'aaaaaaaaaaaaaaaaadeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyyAAAAAAAAAAAAAAAAADEEEEEEEEEEEIIIIIOOOOOOOOOOOOOOOOOUUUUUUUUUUUYYYYY\'; FOR i IN 0..length(coDau) LOOP str = replace(str, substr(coDau, i, 1), substr(kDau, i, 1)); END LOOP; RETURN (lower(str)); END; $BODY$ LANGUAGE plpgsql';
         } else {
             $queriesContent = file_get_contents(ROOT_PATH . '/app/install/sql/mysql/zcms.sql');
             $queries = explode("##ZCMS##", $queriesContent);

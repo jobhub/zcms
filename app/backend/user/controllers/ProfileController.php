@@ -54,6 +54,8 @@ class ProfileController extends ZAdminController
                         $this->flashSession->notice('m_user_message_current_password_not_fount');
                         return null;
                     }
+                } else {
+                    $userData->password = $oldUserData->password;
                 }
                 if ($userData->save()) {
                     $this->_user['full_name'] = $userData->first_name . ' ' . $userData->last_name;
@@ -68,6 +70,7 @@ class ProfileController extends ZAdminController
                     $this->response->redirect('/admin/user/profile/');
                     return true;
                 } else {
+                    $this->setFlashSession($userData->getMessages(), 'error');
                     $_POST['password'] = '';
                     $_POST['password_confirmation'] = '';
                     $this->flashSession->notice('m_system_user_message_update_user_failed');
