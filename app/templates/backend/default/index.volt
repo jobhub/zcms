@@ -4,19 +4,19 @@
 <head>
     <meta charset="UTF-8">
     {% if _toolbarHelpers is defined %}<title>{{ _toolbarHelpers.getTitle() }} | {{ _systemName }}</title>
-    {% else %}<title>{{ _systemName }}</title>{% endif %}<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+{% else %}<title>{{ _systemName }}</title>{% endif %}<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap -->
-    <link href="/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ _baseUri }}/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- Data Tables -->
-    <link href="/plugins/datatables/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ _baseUri }}/plugins/datatables/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
     <!-- Font Awesome Icons -->
-    <link href="/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ _baseUri }}/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <!-- Theme style -->
-    <link href="/templates/backend/default/css/AdminLTE.min.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ _baseUri }}/templates/backend/default/css/AdminLTE.min.css" rel="stylesheet" type="text/css"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
-    <link href="/templates/backend/default/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ _baseUri }}/templates/backend/default/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css"/>
     <!-- ZCMS custom -->
-    <link href="/templates/backend/default/zcms/css/zcms.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ _baseUri }}/templates/backend/default/zcms/css/zcms.css" rel="stylesheet" type="text/css"/>
 
     <!-- Coder css -->
     {{ assets.outputCss('css_header') }}<!-- End Coder css -->
@@ -35,7 +35,7 @@
 <div class="wrapper">
     <header class="main-header">
         <!-- Logo -->
-        <a href="/" class="logo">
+        <a href="{{ _baseUri }}/" class="logo" target="_blank">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini">{{ _systemName }}</span>
             <!-- logo for regular state and mobile devices -->
@@ -57,13 +57,13 @@
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="{{ _user['avatar'] }}" class="user-image" alt="User Image"/>
+                            <img src="{{ _baseUri }}/{{ _user['avatar'] }}" class="user-image" alt="User Image"/>
                             <span class="hidden-xs">{{ _user['full_name'] }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="{{ _user['avatar'] }}" class="img-circle" alt="User Image"/>
+                                <img src="{{ _baseUri }}/{{ _user['avatar'] }}" class="img-circle" alt="User Image"/>
                                 <p>
                                     {{ _user['full_name'] }}
                                     <small>{{ __('Member since') }} {{ _user['created_at'] }}</small>
@@ -72,12 +72,12 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 {% if this.acl.isAllowed('user|profile|index') %}
-                                <div class="pull-left">
-                                    <a href="/admin/user/profile/" class="btn btn-default btn-flat">Profile</a>
-                                </div>
+                                    <div class="pull-left">
+                                        <a href="{{ _baseUri }}/admin/user/profile/" class="btn btn-default btn-flat">Profile</a>
+                                    </div>
                                 {% endif %}
                                 <div class="pull-right">
-                                    <a href="/admin/user/logout/" class="btn btn-default btn-flat">Sign out</a>
+                                    <a href="{{ _baseUri }}/admin/user/logout/" class="btn btn-default btn-flat">Sign out</a>
                                 </div>
                             </li>
                             <!-- End Menu Footer-->
@@ -112,16 +112,16 @@
 </div>
 <!-- ./wrapper -->
 <!-- jQuery -->
-<script src="/plugins/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
-<script src="/plugins/jquery-ui/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+<script src="{{ _baseUri }}/plugins/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script src="{{ _baseUri }}/plugins/jquery-ui/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
 <!-- Bootstrap JS -->
-<script src="/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="{{ _baseUri }}/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <!-- AdminLTE App -->
-<script src="/templates/backend/default/js/app.min.js" type="text/javascript"></script>
+<script src="{{ _baseUri }}/templates/backend/default/js/app.min.js" type="text/javascript"></script>
 <!-- Pace -->
-<script src="/plugins/pace/pace.min.js" type="text/javascript"></script>
+<script src="{{ _baseUri }}/plugins/pace/pace.min.js" type="text/javascript"></script>
 <!-- ZCMS JS -->
-<script src="/templates/backend/default/zcms/js/zcms.js" type="text/javascript"></script>
+<script src="{{ _baseUri }}/templates/backend/default/zcms/js/zcms.js" type="text/javascript"></script>
 <!-- Coder JS -->
 {{ assets.outputJs('js_footer') }}
 <!-- End Coder JS -->

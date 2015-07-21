@@ -6,15 +6,15 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
     <!-- Bootstrap 3.3.4 -->
-    <link href="/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ _baseUri }}/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- Font Awesome Icons -->
-    <link href="/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ _baseUri }}/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <!-- Theme style -->
-    <link href="/templates/backend/default/css/AdminLTE.min.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ _baseUri }}/templates/backend/default/css/AdminLTE.min.css" rel="stylesheet" type="text/css"/>
     <!-- iCheck -->
-    <link href="/plugins/iCheck/square/blue.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ _baseUri }}/plugins/iCheck/square/blue.css" rel="stylesheet" type="text/css"/>
     <!-- Install CSS -->
-    <link href="/templates/backend/default/zcms/css/zcms_install.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ _baseUri }}/templates/backend/default/zcms/css/zcms_install.css" rel="stylesheet" type="text/css"/>
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -51,7 +51,7 @@
             {% endif %}
         </div>
         {% if db_connect == 0 %}
-            <form action="/install.php?step=2" method="post">
+            <form action="{{ _baseUri }}/install.php?step=2" method="post">
                 <div class="form-group">
                     <label for="host">{{ __('Adapter') }} <span class="symbol required"></span>:</label>
 
@@ -111,7 +111,7 @@
                 <h4 class="text-center">Connect database successfully...</h4>
                 <br/>
                 <div class="col-xs-6 col-xs-offset-3">
-                    <a href="/install.php?step=3">
+                    <a href="{{ _baseUri }}/install.php?step=3">
                         <button type="button" class="btn btn-success btn-block btn-flat">{{ __('Next') }} &rightarrow;</button>
                     </a>
                 </div>
@@ -127,9 +127,9 @@
 </div>
 
 <!-- jQuery 2.1.4 -->
-<script src="/plugins/jquery/jquery-1.11.3.min.js"></script>
+<script src="{{ _baseUri }}/plugins/jquery/jquery-1.11.3.min.js"></script>
 <!-- Bootstrap 3.3.2 JS -->
-<script src="/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="{{ _baseUri }}/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(function () {
         $('#adapter').change(function () {

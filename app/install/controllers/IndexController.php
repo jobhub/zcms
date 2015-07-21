@@ -41,7 +41,6 @@ class IndexController extends InstallController
                     $config['database']['dbname'] = $this->request->getPost('dbname', 'string', '');
                     $config['database']['username'] = $this->request->getPost('username', 'string', '');
                     $config['database']['password'] = $this->request->getPost('password', 'string', '');
-                    $config['auth']['salt'] = $this->security->getSaltBytes();
 
                     $this->di->set('db', function () use ($config) {
                         $adapter = 'Phalcon\Db\Adapter\Pdo\\' . $config['database']['adapter'];
@@ -60,10 +59,10 @@ class IndexController extends InstallController
                     try {
                         $this->db->connect();
                         $this->_saveConfig($config);
-                        header('Location: /install.php?step=3');
+                        header('Location: ' . BASE_URI . '/install.php?step=3');
                         exit;
-                    }catch (\Exception $e){
-                        header('Location: /install.php?step=2');
+                    } catch (\Exception $e) {
+                        header('Location: ' . BASE_URI . '/install.php?step=2');
                         exit;
                     }
                 }
@@ -73,6 +72,7 @@ class IndexController extends InstallController
             if ($this->request->isPost() && $this->request->get('siteName')) {
                 $siteName = $this->request->get('siteName', ['string', 'striptags']);
                 $config['website']['siteName'] = trim(preg_replace("/[^A-Za-z0-9 ]/", '', $siteName), ' ');
+                $config['auth']['salt'] = $this->security->getSaltBytes();
                 $firstName = $this->request->getPost('first_name', ['string', 'striptags']);
                 $lastName = $this->request->getPost('last_name', ['string', 'striptags']);
                 $email = $this->request->getPost('email', 'email');
@@ -128,12 +128,12 @@ class IndexController extends InstallController
                     if ($status) {
                         @rename(ROOT_PATH . '/public/install.php', ROOT_PATH . '/public/_install.php');
                         @rename(ROOT_PATH . '/app/install/', ROOT_PATH . '/app/_install/');
-                        header('Location: /admin/');
+                        header('Location: ' . BASE_URI . '/admin/');
                         exit;
                     } else {
                         //Do something
                         $this->flashSession->error('Could not setup ZCMS. Please check your system or contact to ZCMS Support Team!');
-                        $this->response->redirect('/install?step=1');
+                        $this->response->redirect(BASE_URI . 'install?step=1');
                     }
                     return;
                 }

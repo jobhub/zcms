@@ -37,6 +37,7 @@ trait ZApplicationInit
     public function _initLoader($di)
     {
         $loader = new Loader();
+
         //Register plugins
         //$loader->registerDirs([
         //    APP_DIR . '/plugins/',

@@ -11,7 +11,7 @@ try {
     require_once ROOT_PATH . '/app/config/define.php';
     require_once(ROOT_PATH . '/app/libraries/Core/Utilities/ZFunctions.php');
 
-    if(!file_exists(ROOT_PATH . '/app/install/')){
+    if (!file_exists(ROOT_PATH . '/app/install/')) {
         die();
     }
 
@@ -21,6 +21,14 @@ try {
      * @var mixed $config
      */
     $config = new \Phalcon\Config\Adapter\Php(ROOT_PATH . '/app/config/config.php');
+
+    if ($config->website->baseUri == '') {
+        if ($_SERVER['SERVER_PORT'] != '443') {
+            $config->website->baseUri = 'http://' . $_SERVER['HTTP_HOST'] . str_replace('/public/install.php', '', $_SERVER['SCRIPT_NAME']);
+        }else{
+            $config->website->baseUri = 'https://' . $_SERVER['HTTP_HOST'] . str_replace('/public/install.php', '', $_SERVER['SCRIPT_NAME']);
+        }
+    }
 
     /**
      * Read auto-loader

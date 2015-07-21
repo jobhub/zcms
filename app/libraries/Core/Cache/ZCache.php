@@ -63,7 +63,7 @@ class ZCache
      * @param int $lifeTime
      * @return ZCache
      */
-    public static function getInstance($cacheName = 'GLOBAL', $cacheType = 'ApcCache', $lifeTime = null)
+    public static function getInstance($cacheName = 'GLOBAL', $cacheType = 'FileCache', $lifeTime = null)
     {
         if (!is_array(self::$instance) || !isset(self::$instance[$cacheName])) {
             self::$instance[$cacheName] = new ZCache($cacheName, $cacheType, $lifeTime);
