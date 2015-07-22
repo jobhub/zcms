@@ -13,5 +13,6 @@ class IndexController extends ZFrontController
 {
     public function indexAction()
     {
+        echo $e;
     }
 }

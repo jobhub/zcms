@@ -20,6 +20,12 @@ class CorePhpLogs extends Model
      *
      * @var string
      */
+    public $log_key;
+
+    /**
+     *
+     * @var string
+     */
     public $type;
 
     /**
@@ -42,7 +48,7 @@ class CorePhpLogs extends Model
 
     /**
      *
-     * @var string
+     * @var int
      */
     public $status;
 
@@ -75,6 +81,16 @@ class CorePhpLogs extends Model
             $this->created_at = date("Y-m-d H:i:s");
         }
 
+        if (property_exists($this, 'updated_at')) {
+            $this->updated_at = date("Y-m-d H:i:s");
+        }
+    }
+
+    /**
+     * Execute before update
+     */
+    public function beforeUpdate()
+    {
         if (property_exists($this, 'updated_at')) {
             $this->updated_at = date("Y-m-d H:i:s");
         }

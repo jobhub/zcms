@@ -123,11 +123,12 @@ CREATE TABLE IF NOT EXISTS core_logs (
 ##ZCMS##
 CREATE TABLE IF NOT EXISTS core_php_logs (
   log_id           BIGINT AUTO_INCREMENT PRIMARY KEY     NOT NULL,
-  type             TEXT,
+  log_key          VARCHAR(32),
   message          TEXT,
   file             TEXT,
   line             TEXT,
-  status           VARCHAR(20),
+  type             TEXT,
+  status           SMALLINT,
   created_at       DATETIME,
   updated_at       DATETIME
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
