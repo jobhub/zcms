@@ -43,12 +43,13 @@ class ZApplication extends PhalconApplication
         $this->config = ZFactory::config();
         if ($this->config->website->baseUri == '') {
             if ($_SERVER['SERVER_PORT'] != '443') {
-                $this->config->website->baseUri = 'http://' . $_SERVER['HTTP_HOST'] . str_replace('/public/index.php', '', $_SERVER['SCRIPT_NAME']);
+                $this->config->website->baseUri = 'http://' . $_SERVER['HTTP_HOST'] . str_replace(['/public/index.php', '/index.php'], '', $_SERVER['SCRIPT_NAME']);
             } else {
-                $this->config->website->baseUri = 'https://' . $_SERVER['HTTP_HOST'] . str_replace('/public/index.php', '', $_SERVER['SCRIPT_NAME']);
+                $this->config->website->baseUri = 'https://' . $_SERVER['HTTP_HOST'] . str_replace(['/public/index.php', '/index.php'], '', $_SERVER['SCRIPT_NAME']);
             }
 
         }
+
         $this->di->set('config', $this->config);
         /**
          * @define bool DEBUG

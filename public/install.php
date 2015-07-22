@@ -24,9 +24,9 @@ try {
 
     if ($config->website->baseUri == '') {
         if ($_SERVER['SERVER_PORT'] != '443') {
-            $config->website->baseUri = 'http://' . $_SERVER['HTTP_HOST'] . str_replace('/public/install.php', '', $_SERVER['SCRIPT_NAME']);
+            $config->website->baseUri = 'http://' . $_SERVER['HTTP_HOST'] . str_replace(['/public/install.php', '/install.php'], '', $_SERVER['SCRIPT_NAME']);
         }else{
-            $config->website->baseUri = 'https://' . $_SERVER['HTTP_HOST'] . str_replace('/public/install.php', '', $_SERVER['SCRIPT_NAME']);
+            $config->website->baseUri = 'https://' . $_SERVER['HTTP_HOST'] . str_replace(['/public/install.php', '/install.php'], '', $_SERVER['SCRIPT_NAME']);
         }
     }
 
