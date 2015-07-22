@@ -203,7 +203,7 @@ class SidebarController extends ZAdminController
                     ]);
 
                     if (is_object($CoreSidebars) && isset($CoreSidebars->sidebar_base_name)) {
-                        $CoreSidebars->sidebar_base_name = $s;
+                        $CoreSidebars->sidebar_base_name = $s['baseName'];
                         $CoreSidebars->save();
                     } else {
                         $CoreSidebars = new CoreSidebars();

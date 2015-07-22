@@ -169,23 +169,27 @@ function get_child_folder($path)
  */
 function get_files_in_folder($path, $extension = '', $getFileName = false)
 {
-    $files = scandir($path);
     $childFiles = [];
-    if ($extension != '') {
-        foreach ($files as $file) {
-            $pathFile = $path . '/' . $file;
-            if (strpos($file, ".") !== false && !is_dir($pathFile) && pathinfo($path . '/' . $file, PATHINFO_EXTENSION) == $extension) {
-                if ($getFileName) {
-                    $childFiles[] = pathinfo($path . '/' . $file, PATHINFO_FILENAME);
-                } else {
-                    $childFiles[] = $file;
+    if (is_dir($path)) {
+        $files = scandir($path);
+        if (is_array($files)) {
+            if ($extension != '') {
+                foreach ($files as $file) {
+                    $pathFile = $path . '/' . $file;
+                    if (strpos($file, ".") !== false && !is_dir($pathFile) && pathinfo($path . '/' . $file, PATHINFO_EXTENSION) == $extension) {
+                        if ($getFileName) {
+                            $childFiles[] = pathinfo($path . '/' . $file, PATHINFO_FILENAME);
+                        } else {
+                            $childFiles[] = $file;
+                        }
+                    }
                 }
-            }
-        }
-    } else {
-        foreach ($files as $file) {
-            if (strpos($file, ".") !== false && !is_dir($path . '/' . $file)) {
-                $childFiles[] = $file;
+            } else {
+                foreach ($files as $file) {
+                    if (strpos($file, ".") !== false && !is_dir($path . '/' . $file)) {
+                        $childFiles[] = $file;
+                    }
+                }
             }
         }
     }
