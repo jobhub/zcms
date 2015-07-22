@@ -82,15 +82,17 @@ class ZApplication extends PhalconApplication
         $handle = $this->handle();
         if ($this->config->logError) {
             $error = error_get_last();
-            $corePhpLog = new CorePhpLogs();
-            $corePhpLog->assign([
-                'type' => $error['type'],
-                'message' => $error['message'],
-                'file' => $error['file'],
-                'line' => $error['line'],
-                'status' => '0'
-            ]);
-            $corePhpLog->save();
+            if ($error) {
+                $corePhpLog = new CorePhpLogs();
+                $corePhpLog->assign([
+                    'type' => $error['type'],
+                    'message' => $error['message'],
+                    'file' => $error['file'],
+                    'line' => $error['line'],
+                    'status' => '0'
+                ]);
+                $corePhpLog->save();
+            }
         }
 
         return $handle;
