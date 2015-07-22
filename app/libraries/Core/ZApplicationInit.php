@@ -157,6 +157,9 @@ trait ZApplicationInit
 
             if ($config->database->log) {
                 $eventsManager = new EventsManager();
+                if(!file_exists(ROOT_PATH . '/cache/logs/db.log')){
+                    file_put_contents(ROOT_PATH . '/cache/logs/db.log','');
+                }
                 $logger = new FileLogger(ROOT_PATH . '/cache/logs/db.log');
                 //Listen all the database events
                 $eventsManager->attach('db', function ($event, $db) use ($logger) {
