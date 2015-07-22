@@ -89,7 +89,7 @@ class ZApplication extends PhalconApplication
                  */
                 $corePhpLog = CorePhpLogs::findFirst([
                     'conditions' => 'log_key = ?0',
-                    'bind' => $logKey
+                    'bind' => [$logKey]
                 ]);
 
                 if($corePhpLog){
