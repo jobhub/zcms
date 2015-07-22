@@ -41,21 +41,7 @@ try {
     /**
      * Run ZCMS Application
      */
-    $application->run();
-
-    if (DEBUG_ERROR === 1) {
-        $error = error_get_last();
-        if ($error) {
-            echo '<pre>';
-            var_dump($error);
-            echo '</pre>';
-            die();
-        } else {
-            echo $application->handle()->getContent();
-        }
-    } else {
-        echo $application->handle()->getContent();
-    }
+    echo $application->run()->getContent();
 } catch (Exception $e) {
     echo $e->getMessage();
 }

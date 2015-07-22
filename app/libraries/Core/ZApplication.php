@@ -5,6 +5,7 @@ namespace ZCMS\Core;
 use Phalcon\DI;
 use ZCMS\Core\Cache\ZCache;
 use Phalcon\Mvc\Application as PhalconApplication;
+use ZCMS\Core\Models\CorePhpLogs;
 
 /**
  * Class ZApplication
@@ -67,6 +68,8 @@ class ZApplication extends PhalconApplication
 
     /**
      * Run application
+     *
+     * @return bool|\Phalcon\Http\ResponseInterface
      */
     public function run()
     {
@@ -75,6 +78,22 @@ class ZApplication extends PhalconApplication
         $this->_initServices($this->_dependencyInjector, $this->config);
 
         $this->_initModule();
+
+        $handle = $this->handle();
+        if ($this->config->logError) {
+            $error = error_get_last();
+            $corePhpLog = new CorePhpLogs();
+            $corePhpLog->assign([
+                'type' => $error['type'],
+                'message' => $error['message'],
+                'file' => $error['file'],
+                'line' => $error['line'],
+                'status' => '0'
+            ]);
+            $corePhpLog->save();
+        }
+
+        return $handle;
     }
 
     /**
