@@ -65,7 +65,7 @@
                         var zdata = {widget_class: widget_class, index: (indexNewItem + 1), sidebar_name: sidebar_name};
                         console.log(zdata);
                         $.ajax({
-                            url: "/admin/template/sidebar/addNewWidget/",
+                            url: "{{ _baseUri }}/admin/template/sidebar/addNewWidget/",
                             type: 'POST',
                             data: zdata,
                             success: function (html) {
@@ -86,7 +86,7 @@
                         var sidebar_name = ui.item.parents().parents().attr('data-content');
                         var zdata = {widget_id: ui.item.attr('data-content-id'), index: (ui.item.index() + 1), sidebar_name: sidebar_name};
                         $.ajax({
-                            url: "/admin/template/sidebar/updateWidgetOrder/",
+                            url: "{{ _baseUri }}/admin/template/sidebar/updateWidgetOrder/",
                             type: 'POST',
                             data: zdata,
                             success: function (html) {
@@ -107,7 +107,7 @@
                 var data = $(this).parents().parents().serialize();
                 element.button('loading');
                 $.ajax({
-                    url: "/admin/template/sidebar/addSaveWidget/",
+                    url: "{{ _baseUri }}/admin/template/sidebar/addSaveWidget/",
                     type: 'POST',
                     data: data,
                     success: function (html) {
@@ -142,7 +142,7 @@
                     var id = '#p-' + $(this).parents().parents().attr('id');
                     var data = $(this).parents().parents().serialize();
                     $.ajax({
-                        url: "/admin/template/sidebar/deleteWidget/",
+                        url: "{{ _baseUri }}/admin/template/sidebar/deleteWidget/",
                         type: 'POST',
                         data: data,
                         success: function (html) {

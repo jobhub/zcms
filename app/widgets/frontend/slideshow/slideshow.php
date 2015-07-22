@@ -49,12 +49,12 @@ class SlideShow_Widget extends ZWidget
         //Get all slide show
         $slideShows = SlideShows::find([
             'conditions' => 'published = 1',
-            'order' => 'id ASC'
+            'order' => 'slide_show_id ASC'
         ]);
         $form .= Tag::select([
             $this->getFieldName('slide_show_id'),
             $slideShows,
-            'using' => ['id', 'title'],
+            'using' => ['slide_show_id', 'title'],
             'class' => 'form-control input-sm',
             'value' => $slide_show_id,
         ]);
