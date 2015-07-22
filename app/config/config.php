@@ -28,9 +28,12 @@ return [
     ],
     'social' => [
         'facebook' => [
-            'appId' => '',
-            'appSecret' => '',
-            'defaultGraphVersion' => 'v2.2',
+            'appId' => '1101020523259539',
+            'appSecret' => '6c2b05451172bb6b65f12f10ec654726',
+            'defaultGraphVersion' => 'v2.4',
+            'permissions' => [
+                'email',
+            ]
         ],
     ],
     'backendTemplate' => [
