@@ -12,6 +12,7 @@ class ZFactory
 {
     /**
      * Get default config
+     *
      * @return PhalconConfig
      */
     public static function config()
@@ -21,7 +22,8 @@ class ZFactory
 
     /**
      * Get default config
-     * @return PhalconConfig
+     *
+     * @return mixed|PhalconConfig
      */
     public static function getConfig()
     {
