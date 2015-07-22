@@ -2,6 +2,7 @@
 return array (
   'version' => '2.0.1',
   'debug' => 0,
+  'logError' => 0,
   'debugType' => 'var_dump',
   'database' => 
   array (
