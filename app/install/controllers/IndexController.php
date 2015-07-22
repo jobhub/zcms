@@ -80,7 +80,7 @@ class IndexController extends InstallController
                 $salt = $this->security->getSaltBytes();
                 $validation = new Validation();
                 $validation->add('email', new Email(array(
-                    'message' => 'The email is not valid'
+                    'message' => 'Your email in valid'
                 )));
                 $validation->add('password', new StringLength([
                     'max' => 32,
