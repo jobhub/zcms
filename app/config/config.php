@@ -26,6 +26,13 @@ return [
         'salt' => 'uOrk7P8majuly8TZy7R0gg',
         'lifetime' => 3600,
     ],
+    'social' => [
+        'facebook' => [
+            'appId' => '',
+            'appSecret' => '',
+            'defaultGraphVersion' => 'v2.2',
+        ],
+    ],
     'backendTemplate' => [
         'compileTemplate' => 1,
         'defaultTemplate' => 'default',
