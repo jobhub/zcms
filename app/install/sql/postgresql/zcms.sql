@@ -121,6 +121,18 @@ CREATE TABLE IF NOT EXISTS core_logs (
   updated_by  INTEGER
 );
 --ZCMS--
+CREATE TABLE IF NOT EXISTS core_php_logs (
+  log_id           BIGSERIAL PRIMARY KEY     NOT NULL,
+  type             TEXT,
+  message          TEXT,
+  file             TEXT,
+  line             TEXT,
+  log_json_content TEXT,
+  status           VARCHAR(20),
+  created_at       TIMESTAMP,
+  updated_at       TIMESTAMP
+);
+--ZCMS--
 CREATE TABLE IF NOT EXISTS core_media (
   media_id    SERIAL PRIMARY KEY     NOT NULL,
   title       VARCHAR(255),
@@ -210,8 +222,10 @@ CREATE TABLE IF NOT EXISTS core_templates (
 );
 --ZCMS--
 INSERT INTO core_templates (base_name, name, location, uri, description, author, authoruri, tag, version, published) VALUES
-  ('default', 't_template_backend_name_default', 'backend', 'http://www.zcms.com', 't_template_backend_name_default_desc', 'ZCMS Team', NULL, 'red, e-commerce, zcms team', '1.0.0', 1),
-  ('default', 't_template_frontend_name_default', 'frontend', 'http://www.zcms.com', 't_template_frontend_name_default_desc', 'ZCMS Team', NULL, 'red, zcms team', '1.0.0', 1);
+  ('default', 't_template_backend_name_default', 'backend', 'http://www.zcms.com', 't_template_backend_name_default_desc',
+   'ZCMS Team', NULL, 'red, e-commerce, zcms team', '1.0.0', 1),
+  ('default', 't_template_frontend_name_default', 'frontend', 'http://www.zcms.com', 't_template_frontend_name_default_desc',
+   'ZCMS Team', NULL, 'red, zcms team', '1.0.0', 1);
 --ZCMS--
 CREATE TABLE IF NOT EXISTS core_widget_values (
   widget_value_id   SERIAL PRIMARY KEY     NOT NULL,

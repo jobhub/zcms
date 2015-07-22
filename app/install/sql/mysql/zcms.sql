@@ -121,6 +121,18 @@ CREATE TABLE IF NOT EXISTS core_logs (
   updated_by  INTEGER
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ##ZCMS##
+CREATE TABLE IF NOT EXISTS core_php_logs (
+  log_id           BIGINT AUTO_INCREMENT PRIMARY KEY     NOT NULL,
+  type             TEXT,
+  message          TEXT,
+  file             TEXT,
+  line             TEXT,
+  log_json_content TEXT,
+  status           VARCHAR(20),
+  created_at       DATETIME,
+  updated_at       DATETIME
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+##ZCMS##
 CREATE TABLE IF NOT EXISTS core_media (
   media_id    INTEGER AUTO_INCREMENT PRIMARY KEY     NOT NULL,
   title       VARCHAR(255),
