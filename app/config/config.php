@@ -2,6 +2,7 @@
 return array (
   'version' => '2.0.1',
   'debug' => 0,
+  'logError' => 0,
   'debugType' => 'var_dump',
   'database' => 
   array (
@@ -20,9 +21,9 @@ return array (
     'baseUri' => '',
     'direction' => 'ltr',
     'language' => 'en-GB',
-    'metaDesc' => 'ZCMS Power by Phalcon 2',
+    'metaDesc' => 'ZCMS Power by Phalcon 2!',
     'metaKey' => 'zcms, phalcon 2',
-    'siteName' => 'ZCMS Demo',
+    'siteName' => 'ZCMS',
     'systemName' => 'ZCMS SYSTEM',
     'timezone' => 'America/Los_Angeles',
   ),
