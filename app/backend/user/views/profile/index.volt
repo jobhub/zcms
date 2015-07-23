@@ -1,6 +1,6 @@
 {% extends "../../index.volt" %}
 {% block content %}
-    <section class="content">
+    <div class="content">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -55,7 +55,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 {% endblock %}
 
 {% block js_footer %}

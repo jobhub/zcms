@@ -16,7 +16,7 @@
             {% endfor %}
         </ol>
     {%- endmacro %}
-    <section class="content">
+    <div class="content">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -115,7 +115,7 @@
             </div>
         </div>
 
-    </section>
+    </div>
 
 
 {% endblock %}

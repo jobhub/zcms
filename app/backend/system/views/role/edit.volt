@@ -1,6 +1,6 @@
 {% extends "../../index.volt" %}
 {% block content %}
-    <section class="content">
+    <div class="content">
         <form action="{{ _baseUri }}{{ router.getRewriteUri() }}" method="post" id="adminForm">
             <div class="box">
                 <div class="box-body table-responsive">
@@ -42,7 +42,7 @@
                 <hr />
             </div>
         </form>
-    </section>
+    </div>
 {% endblock %}
 
 {% block js_footer %}

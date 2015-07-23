@@ -522,10 +522,10 @@ class ZToolbarHelper
             $buttonLink = BASE_URI . $buttonLink;
         }
 
-        $html = "";
+        $html = '';
         //Add href
         if ($buttonLink == '') {
-            $html .= '<a ';
+            $html .= '<a href="#" ';
         } else {
             $html .= "<a href=\"" . $buttonLink . "\"";
         }
@@ -536,10 +536,9 @@ class ZToolbarHelper
             $html .= " onclick=\"" . $onClickEvent . "\"";
         }
 
-        $html .= ">";
+        $html .= ' class="' . $buttonTypeClass . ' btn-sm"';
 
-        //Add button class
-        $html .= '<button type="button" class="' . $buttonTypeClass . ' btn-sm">';
+        $html .= ">";
 
         if ($buttonIconClassDir == "left") {
             if (strlen($buttonIconClass) > 0) {
@@ -554,10 +553,7 @@ class ZToolbarHelper
                 $html .= ' <span class="' . $buttonIconClass . '""></span>';
             }
         }
-        //Add button icon
-
-
-        $html .= '</button></a>';
+        $html .= '</a>';
 
         return $html;
     }

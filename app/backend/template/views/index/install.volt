@@ -1,6 +1,6 @@
 {% extends "../../index.volt" %}
 {% block content %}
-<section class="content">
+<div class="content">
     <form action="" method="post" id="adminForm" enctype="multipart/form-data">
         <div class="box">
             <div class="box-body table-responsive">
@@ -9,5 +9,5 @@
             </div>
         </div>
     </form>
-</section>
+</div>
 {% endblock %}

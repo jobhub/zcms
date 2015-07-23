@@ -1,6 +1,6 @@
 {% extends "../../index.volt" %}
 {% block content %}
-    <section class="content">
+    <div class="content">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -81,7 +81,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <div id="ajax-modal-menu" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
          aria-labelledby="myLargeModalLabel" aria-hidden="true">

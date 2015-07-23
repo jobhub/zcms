@@ -1,6 +1,6 @@
 {% extends "../../index.volt" %}
 {% block content %}
-    <section class="content">
+    <div class="content">
         <div class="col-sm-6 widget-main" style="padding-left: 0; padding-right: 0">
             <div class="box box-default">
                 <div class="box-header with-border">
@@ -19,7 +19,7 @@
         <div class="col-sm-6 sidebar-main" style="padding-right: 0">
             {{ sidebar_html }}
         </div>
-    </section>
+    </div>
     <div class="clearfix"></div>
 
     <div id="static" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false"

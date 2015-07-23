@@ -1,6 +1,6 @@
 {% extends "../../index.volt" %}
 {% block content %}
-    <section class="content">
+    <div class="content">
         <form action="{{ _baseUri }}{{ router.getRewriteUri() }}" method="post" id="adminForm">
 
             {{ hidden_field("filter_order", "value" : _filter['filter_order']) }}
@@ -21,5 +21,5 @@
                 </div>
             </div>
         </form>
-    </section>
+    </div>
 {% endblock %}

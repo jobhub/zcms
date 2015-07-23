@@ -1,6 +1,6 @@
 {% extends "../../index.volt" %}
 {% block content %}
-    <section class="content">
+    <div class="content">
         <form action="" method="post" id="adminForm" novalidate="novalidate"
               enctype="multipart/form-data">
             <div class="row" style="padding: 0 10px 0 10px;">
@@ -264,5 +264,5 @@
                 </div>
             </div>
         </form>
-    </section>
+    </div>
 {% endblock %}

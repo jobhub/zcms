@@ -1,6 +1,6 @@
 {% extends "../../index.volt" %}
 {% block content %}
-    <section class="content">
+    <div class="content">
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="table-responsive">
@@ -76,5 +76,5 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 {% endblock %}
