@@ -543,7 +543,7 @@ class ZToolbarHelper
 
         if ($buttonIconClassDir == "left") {
             if (strlen($buttonIconClass) > 0) {
-                $html .= '<span class=\"' . $buttonIconClass . '"></span> ';
+                $html .= '<span class="' . $buttonIconClass . '"></span> ';
             }
             //Add translation button name
             $html .= __($buttonName);
