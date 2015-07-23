@@ -420,7 +420,7 @@
                                 {% if itemValue!='' %}
                              src="{% if column['uri_prefix'] is defined %}{{ column['uri_prefix'] }}{% else %}{{ _baseUri }}{% endif %}{{ itemValue }}">
                         {% else %}
-                            src="{{ column["default_thumbnail"] }}">
+                            src="{{ _baseUri }}{{ column["default_thumbnail"] }}">
                         {% endif %}
                     </td>
                 {% elseif column['type'] == 'date' %}
