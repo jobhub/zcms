@@ -44,13 +44,12 @@ class ZRouter extends Plugin
     /**
      * Get menu
      *
-     * @param string $module
      * @param string $type
      * @param int $currentPage
      * @param string $title
      * @return mixed
      */
-    public function getMenu($module, $type, $currentPage = 1, $title = null)
+    public function getMenu($type, $currentPage = 1, $title = null)
     {
         $routerBuilder = $type . 'RouterBuilder';
         $routerBuilderLink = $type . 'Router';

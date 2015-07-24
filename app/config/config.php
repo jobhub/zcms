@@ -68,7 +68,7 @@ return [
     ],
     'cachePrefix' => 'ZCMS_',
     'fileCache' => [
-        'lifetime' => 1800,
+        'lifetime' => 1,
         'cacheDir' => '/cache/fileCache/',
         'status' => true,
     ],

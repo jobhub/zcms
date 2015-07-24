@@ -100,7 +100,8 @@ class ZWidget extends Injectable
                     'bind' => [$id]
                 ]);
                 if (!$widget) {
-                    $this->options = [];
+                    $this->options = new \stdClass();
+                    $this->options->_layout = 'default';
                 } else {
                     $this->options = json_decode($widget->options);
                     $this->_id = $id;
@@ -250,6 +251,8 @@ class ZWidget extends Injectable
         $this->widget();
         $this->view->start();
         $overrideFolder = ROOT_PATH . '/app/templates/frontend/' . $this->config->frontendTemplate->defaultTemplate . '/widgets/';
+        //echo '<pre>'; var_dump($this->options);echo '</pre>'; die();
+        //echo '<pre>'; var_dump($this->config->frontendTemplate->defaultTemplate);echo '</pre>'; die();
         $overrideFile = $overrideFolder . $this->_widget_name . DS . $this->options->_layout . '.volt';
         if (file_exists($overrideFile)) {
             $this->view->setViewsDir($overrideFolder);
@@ -261,7 +264,7 @@ class ZWidget extends Injectable
         $this->view->finish();
         $content = $this->view->getContent();
         $html = $this->beforeWidget();
-        if ($this->options->title != '') {
+        if (isset($this->options->title) && $this->options->title != '') {
             $html .= $this->beforeTitle() . $this->options->title . $this->afterTitle();
         }
         $html .= '<div class="widget-content">' . $content . '</div>';

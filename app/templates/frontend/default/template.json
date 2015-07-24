@@ -26,8 +26,8 @@
       "name": "t_default_sidebar_right"
     },
     {
-      "baseName": "sidebar_demo",
-      "name": "t_default_sidebar_demo"
+      "baseName": "sidebar_top",
+      "name": "t_default_sidebar_top"
     }
   ]
 }

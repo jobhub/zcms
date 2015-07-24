@@ -1,15 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Meta, title, CSS, favicon, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Bootstrap, a sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.">
-    <meta name="keywords" content="HTML, CSS, JS, JavaScript, framework, bootstrap, front-end, frontend, web development">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    {{ zcms_header() }}
 
-    <title>
-        Bootstrap
-    </title>
+    <link type="text/css" rel="stylesheet" href="{{ _baseUri }}/plugins/bootstrap/css/bootstrap.min.css" media="all">
+    <link type="text/css" rel="stylesheet" href="{{ _baseUri }}/plugins/bootstrap/css/bootstrap-theme.min.css" media="all">
+    <script async src="{{ _baseUri }}/plugins/jquery/jquery-1.11.3.min.js"></script>
+    <script async src="{{ _baseUri }}/plugins/bootstrap/js/bootstrap.min.js"></script>
 <body>

@@ -24,7 +24,7 @@
                                data-toggle="modal">{{ menu['title'] }}</a>
                             <br/>
                         {% elseif menu['type'] == 'link' %}
-                            <a class="select-menu-item-link-fixed" data-content="{{ _baseUri }}{{ menu['link'] }}"
+                            <a class="select-menu-item-link-fixed" data-content="{{ menu['link'] }}"
                                href="javascript:void(0)"  >{{ menu['title'] }}</a>
                             <br/>
                         {% endif %}

@@ -436,9 +436,9 @@ class ZSEO
         $this->icon = BASE_URI . '/templates/frontend/' . $config->frontendTemplate->defaultTemplate . '/favicon.ico';
 
         if ($this->getTitle() == '') {
-            $this->setTitle($config->website->sitename);
+            $this->setTitle($config->website->siteName);
         } else {
-            $this->setTitle($this->getTitle() . ' - ' . $config->website->sitename);
+            $this->setTitle($this->getTitle() . ' - ' . $config->website->siteName);
         }
 
         /**
@@ -448,7 +448,7 @@ class ZSEO
         $this->setLanguage($config->website->language);
 
         if ($this->getDescription() == '') {
-            $this->setDescription($config->website->metadesc);
+            $this->setDescription($config->website->metaDesc);
         }
 
         if ($this->getDirection() == '') {
@@ -461,10 +461,10 @@ class ZSEO
         }
 
         if ($this->getKeywords() == '') {
-            $this->setKeywords($config->website->metakey);
+            $this->setKeywords($config->website->metaKey);
         }
 
-        $header[] = "<meta charset='{$this->charset}'/>";
+        $header[] = "<meta charset=\"{$this->charset}\"/>";
         $header[] = "<title>{$this->title}</title>";
         $header[] = "<meta name=\"description\" content=\"{$this->description}\" />";
         $header[] = "<meta name=\"keywords\" content=\"{$this->keywords}\"/>";

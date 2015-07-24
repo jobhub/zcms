@@ -2,9 +2,9 @@
 
 namespace ZCMS\Backend\Menu\Controllers;
 
-use ZCMS\Core\Models\CoreModules;
-use ZCMS\Core\ZAdminController;
 use ZCMS\Core\ZRouter;
+use ZCMS\Core\ZAdminController;
+use ZCMS\Core\Models\CoreModules;
 
 /**
  * Class RouterController
@@ -14,19 +14,8 @@ use ZCMS\Core\ZRouter;
 class RouterController extends ZAdminController
 {
     /**
-     * Init Router
-     */
-    public function initialize()
-    {
-        parent::initialize();
-    }
-
-    public function getRouterModule()
-    {
-
-    }
-
-    /**
+     * Build Link
+     *
      * @param string $moduleName
      * @param string $type
      * @param int $currentPage
@@ -42,7 +31,7 @@ class RouterController extends ZAdminController
             require_once($routerFile);
             $routerHelper = new $routerClass();
             if (method_exists($routerHelper, 'getMenu')) {
-                $this->view->setVar('_page', $routerHelper->getMenu($moduleName, $type, $currentPage, $title));
+                $this->view->setVar('_page', $routerHelper->getMenu($type, $currentPage, $title));
                 $url = BASE_URI . "/admin/menu/router/build/{$moduleName}/{$type}/";
                 $this->view->setVar('request_title', urlencode($title) . '/');
                 $this->view->setVar('request_link', $url);
@@ -53,14 +42,21 @@ class RouterController extends ZAdminController
         }
     }
 
+    /**
+     * Get menu (Ajax request)
+     */
     public function menuAction()
     {
-        $this->view->setVar('menuModule', $this->getMenuModules());
+        if ($this->request->isAjax()) {
+            $this->view->setVar('menuModule', $this->getMenuModules());
+        }
     }
 
     /**
+     * Get menu module
+     *
      * @param $module
-     * @return mixed
+     * @return mixed|bool Return Array if success, false if module doesn't support
      */
     public final function getMenuModule($module)
     {
@@ -80,10 +76,12 @@ class RouterController extends ZAdminController
                 return $class->getMenuModule($module);
             }
         }
-        return $menu;
+        return false;
     }
 
     /**
+     * Get all menu for module frontend
+     *
      * @return array
      */
     public final function getMenuModules()
@@ -95,7 +93,10 @@ class RouterController extends ZAdminController
         $moduleMenuType = [];
         if (count($frontModules)) {
             foreach ($frontModules as $module) {
-                $moduleMenuType[] = $this->getMenuModule($module);
+                $menu = $this->getMenuModule($module);;
+                if ($menu) {
+                    $moduleMenuType[] = $menu;
+                }
             }
         }
         return $moduleMenuType;

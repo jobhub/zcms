@@ -18,8 +18,18 @@ class RouterIndexHelper extends ZRouter
     public $routerType = [
         [
             'type' => 'link',
-            'menu_name' => 'm_index_router_home_page',
-            'menu_link' => '/' //Home Page
-        ]
+            'menu_name' => 'Home Page',
+            'menu_link' => '/'
+        ],
+        [
+            'type' => 'link',
+            'menu_name' => 'User Login',
+            'menu_link' => '/login/'
+        ],
+        [
+            'type' => 'link',
+            'menu_name' => 'User Logout',
+            'menu_link' => '/logout/'
+        ],
     ];
 }
