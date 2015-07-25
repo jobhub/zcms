@@ -1,4 +1,4 @@
-{% include "../../../templates/frontend/default/header.volt" %}
+{% include _header %}
 <!-- Main menu and slide Show -->
 {% block sidebar_top %}
     <div class="container">
@@ -6,6 +6,8 @@
     </div>
 {% endblock %}
 <!-- END Main menu and slide show -->
+
+<!-- END Flash Session -->
 {% block content %}
 {% endblock %}
-{% include "../../../templates/frontend/default/footer.volt" %}
+{% include _footer %}

@@ -35,6 +35,9 @@ return [
                 'email',
             ]
         ],
+        'google' => [
+            'appId' => '1'
+        ]
     ],
     'backendTemplate' => [
         'compileTemplate' => 1,

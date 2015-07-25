@@ -18,7 +18,8 @@ class LogoutController extends ZFrontController
     {
         unset($_SESSION);
         $this->session->destroy();
-        $this->response->redirect('/');
+        $this->response->redirect('/user/login/');
+        $this->flashSession->success('You are logged out');
         return;
     }
 }

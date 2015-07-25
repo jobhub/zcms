@@ -2,6 +2,7 @@
 {% block content %}
     <div class="container user-control">
         <div class="col-md-4 col-sm-4 col-md-offset-4 col-sm-offset-4">
+            {% include _flashSession %}
             <div class="row">
                 <div class="panel panel-primary">
                     <div class="panel-heading">

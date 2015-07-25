@@ -31,6 +31,7 @@ class ZFrontController extends PController
      * @var Users
      */
     public $_user;
+
     /**
      * @var string
      */
@@ -58,18 +59,8 @@ class ZFrontController extends PController
 
         //Set user to view
         $this->view->setVar('_user', $this->_user);
-        //Add base url to view
-        $this->view->setVar('_baseUri', BASE_URI);
-        $this->view->setVar('_siteName', $this->config->website->siteName);
-        $this->view->setVar('_currentUri', $_SERVER['REQUEST_URI']);
 
-        //Get template default
-        $this->_defaultTemplate = $this->di->get("config")->frontendTemplate->defaultTemplate;
-
-        //Add template default to view
-        $this->view->setVar("_defaultTemplate", $this->_defaultTemplate);
-
-        $this->view->setVar('_user', $this->session->get('auth'));
+        $this->_initBasicViewVariables();
 
         $this->assets->collection('js_header');
         $this->assets->collection('css_header');
@@ -110,6 +101,29 @@ class ZFrontController extends PController
             echo '</pre>';
             die('');
         }
+    }
+
+    /**
+     * Init basic view variables
+     */
+    protected function _initBasicViewVariables()
+    {
+        //Add base url to view
+        $this->view->setVar('_baseUri', BASE_URI);
+        $this->view->setVar('_siteName', $this->config->website->siteName);
+        $this->view->setVar('_currentUri', $_SERVER['REQUEST_URI']);
+
+        //Get template default
+        $this->_defaultTemplate = $this->di->get("config")->frontendTemplate->defaultTemplate;
+
+        //Add template default to view
+        $this->view->setVar("_defaultTemplate", $this->_defaultTemplate);
+
+        $this->view->setVar('_user', $this->session->get('auth'));
+        $this->view->setVar('_flashSession', "../../../templates/frontend/{$this->_defaultTemplate}/flashSession");
+        $this->view->setVar('_header', "../../../templates/frontend/{$this->_defaultTemplate}/header");
+        $this->view->setVar('_footer', "../../../templates/frontend/{$this->_defaultTemplate}/footer");
+        $this->view->setVar('_sidebar', "../../../templates/frontend/{$this->_defaultTemplate}/sidebar");
     }
 
     /**
