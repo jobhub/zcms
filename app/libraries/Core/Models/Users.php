@@ -409,4 +409,8 @@ class Users extends ZModel
         }
         return null;
     }
+
+    public static function isLoggedIn(){
+        return (bool)Users::getCurrentUser();
+    }
 }

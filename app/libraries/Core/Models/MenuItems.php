@@ -43,6 +43,12 @@ class MenuItems extends ZModel
 
     /**
      *
+     * @var string
+     */
+    public $full_link;
+
+    /**
+     *
      * @var integer
      */
     public $parent;
@@ -72,4 +78,32 @@ class MenuItems extends ZModel
     {
 
     }
+
+    /**
+     * Execute before create
+     */
+    public function beforeCreate()
+    {
+        parent::beforeCreate();
+        if (strpos($this->link, ['https://', 'http://']) === false) {
+            $this->full_link = BASE_URI . $this->link;
+        } else {
+            $this->full_link = $this->link;
+        }
+    }
+
+    /**
+     * Execute before update
+     */
+    public function beforeUpdate()
+    {
+        parent::beforeUpdate();
+        if (strpos($this->link, ['https://', 'http://']) === false) {
+            $this->full_link = BASE_URI . $this->link;
+        } else {
+            $this->full_link = $this->link;
+        }
+    }
+
+
 } 

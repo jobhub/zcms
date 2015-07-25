@@ -104,7 +104,7 @@ class ZAdminController extends Controller
      *
      * @var string Model primary key
      */
-    public $_modePrimaryKey = '';
+    public $_modelPrimaryKey = '';
 
     /**
      * Default backend template
@@ -264,7 +264,7 @@ class ZAdminController extends Controller
                 ZArrayHelper::toInteger($ids);
             }
             if (is_array($ids)) {
-                $query = "UPDATE {$this->_modelBaseName} SET published = 1 " . $extraQuery . " WHERE {$this->_modePrimaryKey} IN (" . implode(',', $ids) . ")";
+                $query = "UPDATE {$this->_modelBaseName} SET published = 1 " . $extraQuery . " WHERE {$this->_modelPrimaryKey} IN (" . implode(',', $ids) . ")";
                 $this->db->execute($query);
                 $this->flashSession->success(__($this->_getPrefixMessage() . 'message_items_successfully_published', ["1" => $this->db->affectedRows()]));
             }
@@ -300,7 +300,7 @@ class ZAdminController extends Controller
                 ZArrayHelper::toInteger($ids);
             }
             if (is_array($ids)) {
-                $query = "UPDATE {$this->_modelBaseName} SET published = 0 " . $extraQuery . " WHERE {$this->_modePrimaryKey} IN (" . implode(',', $ids) . ")";
+                $query = "UPDATE {$this->_modelBaseName} SET published = 0 " . $extraQuery . " WHERE {$this->_modelPrimaryKey} IN (" . implode(',', $ids) . ")";
                 $this->db->execute($query);
                 $this->flashSession->success(__($this->_getPrefixMessage() . 'message_items_successfully_unpublished', ["1" => $this->db->affectedRows()]));
             }

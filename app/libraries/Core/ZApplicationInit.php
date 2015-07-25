@@ -106,7 +106,7 @@ trait ZApplicationInit
                 if ($config->modelMetadataCache->type == 'apc') {
                     return new MetaDataApc([
                         'lifetime' => $config->modelMetadataCache->lifetime,
-                        'prefix' => 'my-prefix',
+                        'prefix' => $config->modelMetadataCache->prefix,
                     ]);
                 } else {
                     return new MetadataFiles([
