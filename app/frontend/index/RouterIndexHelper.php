@@ -24,12 +24,12 @@ class RouterIndexHelper extends ZRouter
         [
             'type' => 'link',
             'menu_name' => 'User Login',
-            'menu_link' => '/login/'
+            'menu_link' => '/user/login/'
         ],
         [
             'type' => 'link',
             'menu_name' => 'User Logout',
-            'menu_link' => '/logout/'
+            'menu_link' => '/user/logout/'
         ],
     ];
 }

@@ -1,6 +1,6 @@
 {% include "../../../templates/frontend/default/header.volt" %}
 <!-- Main menu and slide Show -->
-{% block top %}
+{% block sidebar_top %}
     <div class="container">
         {{ get_sidebar('sidebar_top') }}
     </div>
