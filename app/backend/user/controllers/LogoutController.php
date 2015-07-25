@@ -12,12 +12,13 @@ use ZCMS\Core\ZAdminController;
 class LogoutController extends ZAdminController
 {
     /**
-     * @return \Phalcon\Http\ResponseInterface
+     * Logout Action
      */
     public function indexAction()
     {
         unset($_SESSION);
         $this->session->destroy();
-        return $this->response->redirect('/admin/user/login/');
+        $this->response->redirect('/admin/user/login/');
+        return;
     }
 }

@@ -16,7 +16,7 @@ class RouterIndex extends Group
 
         $this->setPrefix('/');
 
-        $this->add('logout/', [
+        $this->add('logout(/)?', [
             'controller' => 'logout',
             'action' => 'index',
         ]);

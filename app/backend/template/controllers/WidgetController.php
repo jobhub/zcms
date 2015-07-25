@@ -29,7 +29,7 @@ class WidgetController extends ZAdminController
      *
      * @var string
      */
-    public $_modePrimaryKey = 'widget_id';
+    public $_modelPrimaryKey = 'widget_id';
 
     /**
      * List all widgets

@@ -44,6 +44,14 @@ class MenuItemController extends ZAdminController
     public $thumbHeight = 0; // => auto
 
     /**
+     * Primary key for this model
+     *
+     * @var string Model primary key
+     */
+    public $_modelPrimaryKey = 'menu_item_id';
+
+
+    /**
      * Phalcon Model
      * @var string
      */
@@ -54,7 +62,7 @@ class MenuItemController extends ZAdminController
      *
      * @var string
      */
-    public $_modelBaseName = 'menu_item';
+    public $_modelBaseName = 'menu_items';
 
     /**
      * Index Action
