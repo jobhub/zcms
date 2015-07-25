@@ -96,6 +96,7 @@ return [
         'status' => true,
         'lifetime' => 1800,
         'type' => 'files',
+        'prefix' => 'mmc_'//mmc = model_metadata_cache
     ],
     'debug' => 0,
     'logError' => 0,
