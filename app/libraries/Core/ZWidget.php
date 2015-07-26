@@ -251,8 +251,6 @@ class ZWidget extends Injectable
         $this->widget();
         $this->view->start();
         $overrideFolder = ROOT_PATH . '/app/templates/frontend/' . $this->config->frontendTemplate->defaultTemplate . '/widgets/';
-        //echo '<pre>'; var_dump($this->options);echo '</pre>'; die();
-        //echo '<pre>'; var_dump($this->config->frontendTemplate->defaultTemplate);echo '</pre>'; die();
         $overrideFile = $overrideFolder . $this->_widget_name . DS . $this->options->_layout . '.volt';
         if (file_exists($overrideFile)) {
             $this->view->setViewsDir($overrideFolder);
