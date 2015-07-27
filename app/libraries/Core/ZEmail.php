@@ -136,7 +136,7 @@ class ZEmail
             $this->config = ZFactory::getConfig();
         }
         $this->message = Swift_Message::newInstance();
-        $this->message->setFrom($this->config->mail->mailFrom, $this->config->mail->mailName);
+        $this->message->setFrom($this->config->mail->smtpUser, $this->config->mail->mailName);
         if ($this->config->mail->mailType == 'smtp') {
             $transporter = Swift_SmtpTransport::newInstance($this->config->mail->smtpHost, $this->config->mail->smtpPort, $this->config->mail->smtpSecure)
                 ->setUsername($this->config->mail->smtpUser)
