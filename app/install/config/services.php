@@ -38,24 +38,24 @@ $di->set('view', function () use ($config) {
 
     $view->setViewsDir(ROOT_PATH . '/app/install/views/');
 
-    $view->registerEngines(array(
+    $view->registerEngines([
         '.volt' => function ($view, $di) use ($config) {
 
             $volt = new VoltEngine($view, $di);
 
-            $volt->setOptions(array(
+            $volt->setOptions([
                 'compiledPath' => ROOT_PATH . '/cache/install/',
                 'compiledSeparator' => '_',
                 'compileAlways' => true,
                 'stat' => false
-            ));
+            ]);
 
             $compiler = $volt->getCompiler();
             $compiler->addFunction('__', '__');
 
             return $volt;
         }
-    ));
+    ]);
 
     return $view;
 }, true);
@@ -68,12 +68,12 @@ $di->set('db', function () use ($config) {
     if ($config->database->adapter == 'Mysql') {
         return new $adapter($config->database->toArray());
     } else {
-        return new $adapter(array(
+        return new $adapter([
             'host' => $config->database->host,
             'username' => $config->database->username,
             'password' => $config->database->password,
             'dbname' => $config->database->dbname
-        ));
+        ]);
     }
 });
 

@@ -181,7 +181,7 @@ class ZFrontModule implements ModuleDefinitionInterface
                             $templatePath = strstr($templatePath, '/app');
                             $dirName = dirname($templatePath);
                             if (!is_dir(ROOT_PATH . '/cache/volt' . $dirName)) {
-                                mkdir(ROOT_PATH . '/cache/volt' . $dirName, 0755, TRUE);
+                                mkdir(ROOT_PATH . '/cache/volt' . $dirName, 0755, true);
                             }
                             return ROOT_PATH . '/cache/volt' . $dirName . '/' . basename($templatePath, '.volt') . '.php';
                         },
