@@ -20,7 +20,9 @@ require_once ROOT_PATH . '/app/libraries/SwiftMailer/lib/swift_required.php';
  * ZEmail::getInstance()
  *     ->addTo('kimthangatm@gmail.com', 'Kim Tan')
  *     ->setSubject('Register account successfully!')
- *     // APPLICATION_FOLDER/frontend/index/email/register_with_form_success.volt
+ *     // APPLICATION_FOLDER / frontend/index/languages/email-templates/en-GB/register_with_form_success.volt
+ *     // Or override email template
+ *     // APPLICATION_FOLDER / templates/frontend/default/languages/email-templates/index/en-GB/register_with_form_success.volt
  *     ->setTemplate('index','register_with_form_success', [
  *         'username' => 'Full Name',
  *         'password' => 'USER PASSWORD'
