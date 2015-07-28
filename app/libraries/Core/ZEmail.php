@@ -13,6 +13,19 @@ use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 
 require_once ROOT_PATH . '/app/libraries/SwiftMailer/lib/swift_required.php';
 
+/**
+ * Class ZEmail
+ * @package ZCMS\Core
+ *
+ * ZEmail::getInstance()
+ *     ->addTo('kimthangatm@gmail.com', 'Kim Tan')
+ *     ->setSubject('Register account successfully!')
+ *     // APPLICATION_FOLDER/frontend/index/email/register_with_form_success.volt
+ *     ->setTemplate('index','register_with_form_success', [
+ *         'username' => 'Full Name',
+ *         'password' => 'USER PASSWORD'
+ *     ])->send();
+ */
 class ZEmail
 {
     /**
@@ -267,23 +280,24 @@ class ZEmail
      * @param string $module
      * @param string $template
      * @param array $data
+     * @param string $moduleLocation
      * @param string $contentType
      * @param string $charset
      * @return $this
      */
-    public function setTemplate($module, $template, $data = [], $contentType = 'text/html', $charset = 'utf-8')
+    public function setTemplate($module, $template, $data = [], $moduleLocation = 'frontend', $contentType = 'text/html', $charset = 'utf-8')
     {
         $view = $this->_initView();
         $view->setVar('data', $data);
         $view->start();
-        $overrideFolder = ROOT_PATH . '/app/templates/frontend/' . $this->config->frontendTemplate->defaultTemplate . '/email/';
-        $overrideFile = $overrideFolder . $module . DS . $template . '.volt';
+        $overrideFolder = ROOT_PATH . '/app/templates/' . $moduleLocation . DS . $this->config->frontendTemplate->defaultTemplate . '/languages/email-templates/' . $module . DS;
+        $overrideFile = $overrideFolder . $this->config->website->language . DS . $template . '.volt';
         if (file_exists($overrideFile)) {
             $view->setViewsDir($overrideFolder);
-            $view->render($module, $template)->getContent();
+            $view->render($this->config->website->language, $template)->getContent();
         } else {
-            $view->setViewsDir(ROOT_PATH . '/app/frontend/' . $module . DS);
-            $view->render('email', $template)->getContent();
+            $view->setViewsDir(ROOT_PATH . '/app/' . $moduleLocation . DS . $module . '/languages/email-templates/');
+            $view->render($this->config->website->language, $template)->getContent();
         }
         $view->finish();
         $this->message->setBody($view->getContent(), $contentType, $charset);
