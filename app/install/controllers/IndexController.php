@@ -71,13 +71,14 @@ class IndexController extends InstallController
             $this->view->pick('index/setupAccount');
             if ($this->request->isPost() && $this->request->get('siteName')) {
                 $siteName = $this->request->get('siteName', ['string', 'striptags']);
-                $config['website']['siteName'] = trim(preg_replace("/[^A-Za-z0-9 ]/", '', $siteName), ' ');
-                $config['auth']['salt'] = $this->security->getSaltBytes();
+                $email = $this->request->getPost('email', 'email');
                 $firstName = $this->request->getPost('first_name', ['string', 'striptags']);
                 $lastName = $this->request->getPost('last_name', ['string', 'striptags']);
-                $email = $this->request->getPost('email', 'email');
                 $password = $this->request->getPost('password', 'string');
                 $salt = $this->security->getSaltBytes();
+                $config['website']['siteName'] = trim(preg_replace("/[^A-Za-z0-9 ]/", '', $siteName), ' ');
+                $config['mail']['mailFrom'] = $email;
+                $config['mail']['smtpUser'] = $email;
                 $validation = new Validation();
                 $validation->add('email', new Email(array(
                     'message' => 'Your email in valid'
@@ -127,7 +128,7 @@ class IndexController extends InstallController
                     $status = $this->_saveConfig($config);
                     if ($status) {
                         @rename(ROOT_PATH . '/public/install.php', ROOT_PATH . '/public/_install.php');
-                        @rename(ROOT_PATH . '/app/install/', ROOT_PATH . '/app/_install/');
+                        //@rename(ROOT_PATH . '/app/install/', ROOT_PATH . '/app/_install/');
                         header('Location: ' . BASE_URI . '/admin/');
                         exit;
                     } else {
