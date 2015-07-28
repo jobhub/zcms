@@ -10,7 +10,7 @@ return [
         'port' => '3306',
         'schema' => 'public',
         'log' => 0,
-        'charset' => 'utf8',
+        'charset' => 'utf8'
     ],
     'website' => [
         'baseUri' => '',
@@ -20,11 +20,11 @@ return [
         'metaKey' => 'zcms, phalcon 2',
         'siteName' => 'ZCMS',
         'systemName' => 'ZCMS SYSTEM',
-        'timezone' => 'America/Los_Angeles',
+        'timezone' => 'America/Los_Angeles'
     ],
     'auth' => [
         'salt' => 'uOrk7P8majuly8TZy7R0gg',
-        'lifetime' => 3600,
+        'lifetime' => 3600
     ],
     'social' => [
         'facebook' => [
@@ -41,51 +41,50 @@ return [
     ],
     'backendTemplate' => [
         'compileTemplate' => 1,
-        'defaultTemplate' => 'default',
+        'defaultTemplate' => 'default'
     ],
     'frontendTemplate' => [
         'compileTemplate' => 1,
-        'defaultTemplate' => 'default',
+        'defaultTemplate' => 'default'
     ],
     'mail' => [
         'mailName' => 'ZCMS',
         'mailFrom' => '',
-        'mailType' => 'smtp',
-        //'mailType' => 'sendMail',
+        'mailType' => 'sendMail',//smtp
         'sendMail' => '/usr/sbin/sendmail',
-        'smtpAuth' => 0,
+        'smtpUser' => '',
         'smtpHost' => 'smtp.gmail.com',
         'smtpPass' => '',
-        'smtpPort' => 465,
         'smtpSecure' => 'ssl',
-        'smtpUser' => '',
+        'smtpPort' => 465,
+        'smtpAuth' => 0
     ],
     'pagination' => [
         'feedLimit' => 15,
         'limit' => 15,
-        'mediaLimit' => 12,
+        'mediaLimit' => 12
     ],
     'viewCache' => [
         'lifetime' => 1800,
-        'dir' => '/cache/web/',
+        'dir' => '/cache/web/'
     ],
     'cachePrefix' => 'ZCMS_',
     'fileCache' => [
         'lifetime' => 1,
         'cacheDir' => '/cache/fileCache/',
-        'status' => true,
+        'status' => true
     ],
     'apcCache' => [
         'prefix' => 'cache',
         'lifetime' => 1800,
-        'status' => true,
+        'status' => true
     ],
     'memCache' => [
         'host' => 'localhost',
         'lifetime' => 1800,
         'port' => 11211,
         'prefix' => 'ZCMS_',
-        'status' => true,
+        'status' => true
     ],
     'redisCache' => [
         'host' => 'localhost',
@@ -93,7 +92,7 @@ return [
         'lifetime' => 1800,
         'auth' => 'ZCMS',
         'persistent' => false,
-        'status' => true,
+        'status' => true
     ],
     'modelMetadataCache' => [
         'status' => true,
@@ -103,5 +102,5 @@ return [
     ],
     'debug' => 0,
     'logError' => 0,
-    'debugType' => 'var_dump',
+    'debugType' => 'var_dump'
 ];
