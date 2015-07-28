@@ -294,7 +294,7 @@ class SidebarController extends ZAdminController
              */
             $widgetValue = CoreWidgetValues::findFirst($widgetId);
             if ($widgetValue) {
-                $data = $this->request->get($widgetValue->class_name);
+                $data = $this->request->get(strtolower($widgetValue->class_name));
                 if (isset($data["{$widgetValue->widget_value_id}"])) {
                     $widgetValue->options = json_encode($data["{$widgetValue->widget_value_id}"]);
                     if ($widgetValue->save()) {

@@ -46,14 +46,13 @@ class ZSidebar
         if (count($widgets) > 0) {
             //Get widget html
             foreach ($widgets as $widget) {
-                $class_name = str_replace('_widget', '', $widget['class_name']);
+                $class_name = explode('_', $widget['class_name'])[0];
                 if (!class_exists($widget['class_name'])) {
                     $widget_file = APP_DIR . '/widgets/frontend/' . $class_name . '/' . $class_name . '.php';
                     if (file_exists($widget_file)) {
                         require_once $widget_file;
                     }
                 }
-
                 if (class_exists($widget['class_name'])) {
                     /**
                      * @var \ZCMS\Core\ZWidget $ob

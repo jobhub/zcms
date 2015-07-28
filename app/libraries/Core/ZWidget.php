@@ -359,7 +359,7 @@ class ZWidget extends Injectable
 
             $CoreWidgetValues->sidebar_base_name = $sidebar;
             $CoreWidgetValues->theme_name = $themeName;
-            $CoreWidgetValues->class_name = $this->widget_class_name;
+            $CoreWidgetValues->class_name = $this->_widget_name . '_Widget';
             $CoreWidgetValues->options = $this->_processOptions($id, $newInstance);
             $CoreWidgetValues->published = 1;
             $CoreWidgetValues->ordering = $ordering;
