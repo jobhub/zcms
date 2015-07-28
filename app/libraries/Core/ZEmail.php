@@ -21,6 +21,8 @@ class ZEmail
     public $mailer;
 
     /**
+     * A Phalcon\Config\Adapter\Php
+     *
      * @var mixed
      */
     private $config;
@@ -54,35 +56,6 @@ class ZEmail
     public function __construct($config)
     {
         $this->_initConfig($config);
-    }
-
-    /**
-     * Set volt template for email
-     *
-     * @param string $module
-     * @param string $template
-     * @param array $data
-     * @param string $contentType
-     * @param string $charset
-     * @return $this
-     */
-    public function setTemplate($module, $template, $data = [], $contentType = 'text/html', $charset = 'utf-8')
-    {
-        $view = $this->_initView();
-        $view->setVar('data', $data);
-        $view->start();
-        $overrideFolder = ROOT_PATH . '/app/templates/frontend/' . $this->config->frontendTemplate->defaultTemplate . '/email/';
-        $overrideFile = $overrideFolder . $module . DS . $template . '.volt';
-        if (file_exists($overrideFile)) {
-            $view->setViewsDir($overrideFolder);
-            $view->render($module, $template)->getContent();
-        } else {
-            $view->setViewsDir(ROOT_PATH . '/app/frontend/' . $module . DS);
-            $view->render('email', $template)->getContent();
-        }
-        $view->finish();
-        $this->message->setBody($view->getContent(), $contentType, $charset);
-        return $this;
     }
 
     /**
@@ -136,15 +109,15 @@ class ZEmail
             $this->config = ZFactory::getConfig();
         }
         $this->message = Swift_Message::newInstance();
-        $this->message->setFrom($this->config->mail->smtpUser, $this->config->mail->mailName);
         if ($this->config->mail->mailType == 'smtp') {
+            $this->message->setFrom($this->config->mail->smtpUser, $this->config->mail->mailName);
             $transporter = Swift_SmtpTransport::newInstance($this->config->mail->smtpHost, $this->config->mail->smtpPort, $this->config->mail->smtpSecure)
                 ->setUsername($this->config->mail->smtpUser)
                 ->setPassword($this->config->mail->smtpPass);
             $this->mailer = Swift_Mailer::newInstance($transporter);
         } else {
+            $this->message->setFrom($this->config->mail->mailFrom, $this->config->mail->mailName);
             $transporter = Swift_SendmailTransport::newInstance($this->config->mail->sendMail . ' -bs');
-            //$transporter = \Swift_MailTransport::newInstance();
             $this->mailer = Swift_Mailer::newInstance($transporter);
         }
     }
@@ -283,7 +256,37 @@ class ZEmail
      */
     public function attach($path)
     {
-        $this->message->attach(\Swift_Attachment::fromPath($path));
+        $this->message->attach(Swift_Attachment::fromPath($path));
+        return $this;
+    }
+
+
+    /**
+     * Set volt template for email
+     *
+     * @param string $module
+     * @param string $template
+     * @param array $data
+     * @param string $contentType
+     * @param string $charset
+     * @return $this
+     */
+    public function setTemplate($module, $template, $data = [], $contentType = 'text/html', $charset = 'utf-8')
+    {
+        $view = $this->_initView();
+        $view->setVar('data', $data);
+        $view->start();
+        $overrideFolder = ROOT_PATH . '/app/templates/frontend/' . $this->config->frontendTemplate->defaultTemplate . '/email/';
+        $overrideFile = $overrideFolder . $module . DS . $template . '.volt';
+        if (file_exists($overrideFile)) {
+            $view->setViewsDir($overrideFolder);
+            $view->render($module, $template)->getContent();
+        } else {
+            $view->setViewsDir(ROOT_PATH . '/app/frontend/' . $module . DS);
+            $view->render('email', $template)->getContent();
+        }
+        $view->finish();
+        $this->message->setBody($view->getContent(), $contentType, $charset);
         return $this;
     }
 }
