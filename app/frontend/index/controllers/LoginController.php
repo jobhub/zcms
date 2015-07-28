@@ -37,7 +37,7 @@ class LoginController extends ZFrontController
                 foreach ($messages as $message) {
                     $this->flashSession->error($message);
                 }
-                $this->response->redirect('/admin/user/login/');
+                $this->response->redirect('/user/login/');
                 return;
             }
 
