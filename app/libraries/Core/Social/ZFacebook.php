@@ -35,7 +35,7 @@ class ZFacebook extends Facebook
     }
 
     /**
-     * Instantiates a new Facebook super-class object.
+     * Instantiates a new Facebook super-class object
      *
      * @param array $config
      *
@@ -46,8 +46,9 @@ class ZFacebook extends Facebook
         if (!count($config)) {
             $sysConfig = ZFactory::getConfig();
             $config = [
-                'app_id' => $sysConfig->social->facebook->appId,
+                'app_id' => $sysConfig->social->facebook->appID,
                 'app_secret' => $sysConfig->social->facebook->appSecret,
+                'permissions' => $sysConfig->social->facebook->permissions,
                 'default_graph_version' => $sysConfig->social->facebook->defaultGraphVersion ? $sysConfig->social->facebook->defaultGraphVersion : 'v2.2',
             ];
         }

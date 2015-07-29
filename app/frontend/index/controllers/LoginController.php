@@ -5,6 +5,7 @@ namespace ZCMS\Frontend\Index\Controllers;
 use Phalcon\Validation;
 use ZCMS\Core\Models\Users;
 use ZCMS\Core\Social\ZFacebook;
+use ZCMS\Core\Social\ZGoogle;
 use ZCMS\Core\ZFrontController;
 use Phalcon\Validation\Validator\Email;
 
@@ -60,16 +61,17 @@ class LoginController extends ZFrontController
      */
     private function _addSocialLogin(){
         $isSocialLogin = false;
-        if($this->config->social->facebook->appId){
+        if($this->config->social->facebook->appID){
             $fb = ZFacebook::getInstance();
             $helper = $fb->getRedirectLoginHelper();
             $permissions = $this->config->social->facebook->permissions->toArray();
-            $this->view->setVar('facebookLoginUrl', $helper->getLoginUrl(BASE_URI . '/facebook/login-callback/', $permissions));
+            $this->view->setVar('facebookLoginUrl', $helper->getLoginUrl(BASE_URI . '/auth/facebook/login-callback/', $permissions));
             $isSocialLogin = true;
         }
 
-        if($this->config->social->google->appId){
-            $this->view->setVar('googleLoginUrl', '#');
+        if($this->config->social->google->clientID){
+            $google = ZGoogle::getInstance();
+            $this->view->setVar('googleLoginUrl', $google->getAuthUrl());
             $isSocialLogin = true;
         }
 

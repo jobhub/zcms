@@ -41,6 +41,7 @@ class CoreOptions extends Model
      * If value equal 1 then option autoload to CACHE
      *
      * @var int Value in [0,1]
+     * @return array
      */
     public $autoload;
 
@@ -48,16 +49,33 @@ class CoreOptions extends Model
     {
         $cache = ZCache::getInstance(ZCMS_APPLICATION);
         //Load cache options
-        $options = $cache->get(self::ZCMS_CACHE_MODEL_CORE_OPTIONS);
-
+        $optionsCache = $cache->get(self::ZCMS_CACHE_MODEL_CORE_OPTIONS);
         //If reload cache Or current cache is null
-        if ($reloadCache || $options === null) {
+        if ($reloadCache || $optionsCache === null) {
             $options = self::find([
                 'columns' => ['option_scope', 'option_name', 'option_value'],
                 'conditions' => 'autoload = 1'
-            ])->toArray();
-            $cache->save(self::ZCMS_CACHE_MODEL_CORE_OPTIONS, $options);
+            ]);
+            $optionsCache = [];
+            foreach ($options as $option) {
+                $optionsCache[$option->option_name . '_' . $option->option_scope] = $option->option_value;
+            }
+            $cache->save(self::ZCMS_CACHE_MODEL_CORE_OPTIONS, $optionsCache);
         }
+        return $optionsCache;
+    }
+
+    public static function getOptions($name, $scope = '')
+    {
+        $cache = ZCache::getInstance(ZCMS_APPLICATION);
+        $optionsCache = $cache->get(self::ZCMS_CACHE_MODEL_CORE_OPTIONS);
+        if ($optionsCache === null) {
+            $optionsCache = self::initOrUpdateCacheOptions(true);
+        }
+        if (isset($optionsCache[$name . '_' . $scope])) {
+            return $optionsCache[$name . '_' . $scope];
+        }
+        return null;
     }
 
     /**

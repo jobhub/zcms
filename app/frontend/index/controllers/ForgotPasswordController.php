@@ -14,7 +14,8 @@ class ForgotPasswordController extends ZFrontController
     public function indexAction()
     {
         if ($this->isLogin()) {
-            return $this->response->redirect('/');
+            $this->response->redirect('/');
+            exit;
         }
         if ($this->request->isPost()) {
             $email = $this->request->getPost('email', null, '');
@@ -42,15 +43,14 @@ class ForgotPasswordController extends ZFrontController
 //                    $mailer->sendEmail();
                     $this->flashSession->success(__('Please check your email to retrieve password'));
                     $this->response->redirect('/dang-nhap/');
-                    return true;
+                    exit;
                 } else {
                     $this->flashSession->error('Email not found');
                 }
             } else {
                 $this->flashSession->error('Email invalid');
-                return false;
+                exit;
             }
         }
-        return false;
     }
 }

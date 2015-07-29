@@ -14,8 +14,13 @@ class RouterAuth extends Group
             'namespace' => 'ZCMS\Frontend\Auth\Controllers'
         ]);
 
-        $this->add('/facebook/login-callback(/)?', [
+        $this->add('/auth/facebook/login-callback(/)?', [
             'controller' => 'facebook',
+            'action' => 'login',
+        ]);
+
+        $this->add('/auth/google/login-callback(/)?', [
+            'controller' => 'google',
             'action' => 'login',
         ]);
     }

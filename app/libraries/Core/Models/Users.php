@@ -410,7 +410,21 @@ class Users extends ZModel
         return null;
     }
 
-    public static function isLoggedIn(){
+    /**
+     * Check user logged in
+     *
+     * @return bool
+     */
+    public static function isLoggedIn()
+    {
         return (bool)Users::getCurrentUser();
+    }
+
+    public static function checkUserExists($email)
+    {
+        return (bool)self::findFirst([
+            'conditions' => 'email = ?0',
+            'bind' => [$email]
+        ]);
     }
 }
