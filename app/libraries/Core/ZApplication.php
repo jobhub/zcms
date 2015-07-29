@@ -4,8 +4,9 @@ namespace ZCMS\Core;
 
 use Phalcon\DI;
 use ZCMS\Core\Cache\ZCache;
-use Phalcon\Mvc\Application as PhalconApplication;
+use ZCMS\Core\Models\CoreOptions;
 use ZCMS\Core\Models\CorePhpLogs;
+use Phalcon\Mvc\Application as PApplication;
 
 /**
  * Class ZApplication
@@ -13,24 +14,14 @@ use ZCMS\Core\Models\CorePhpLogs;
  * @package ZCMS\Application
  * @property
  */
-class ZApplication extends PhalconApplication
+class ZApplication extends PApplication
 {
     use ZApplicationInit;
-
-    /**
-     * Cache module key
-     */
-    const ZCMS_APPLICATION = 'ZCMS_APPLICATION';
 
     /**
      * Cache modules key
      */
     const ZCMS_APPLICATION_CACHE_MODULES = 'ZCMS_APPLICATION_CACHE_MODULES';
-
-    /**
-     * Cache modules key
-     */
-    const ZCMS_APPLICATION_CACHE_OPTIONS = 'ZCMS_APPLICATION_CACHE_OPTIONS';
 
     /**
      * @var mixed
@@ -123,19 +114,9 @@ class ZApplication extends PhalconApplication
     public function _initModule()
     {
         //Create new cache
-        $cache = ZCache::getInstance(self::ZCMS_APPLICATION);
+        $cache = ZCache::getInstance(ZCMS_APPLICATION);
 
-        //Load options
-        $options = $cache->get(self::ZCMS_APPLICATION_CACHE_OPTIONS);
-        if ($options === null) {
-            /**
-             * @var \Phalcon\Db\Adapter\Pdo\Postgresql $db
-             */
-            $db = $this->getDI()->get('db');
-            $query = 'SELECT option_name, option_scope, option_value FROM core_options WHERE autoload = 1';
-            $options = $db->fetchAll($query);
-            $cache->save(self::ZCMS_APPLICATION_CACHE_OPTIONS, $options);
-        }
+        CoreOptions::initOrUpdateCacheOptions();
 
         //Load module
         $registerModules = $cache->get(self::ZCMS_APPLICATION_CACHE_MODULES);
