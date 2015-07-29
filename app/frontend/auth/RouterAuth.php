@@ -23,6 +23,11 @@ class RouterAuth extends Group
             'controller' => 'google',
             'action' => 'login',
         ]);
+
+        $this->add('/auth/active(/)?', [
+            'controller' => 'activate',
+            'action' => 'index',
+        ]);
     }
 }
 

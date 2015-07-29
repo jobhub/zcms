@@ -280,4 +280,29 @@ class UserRoles extends ZModel
 
         return false;
     }
+
+
+    /**
+     * Get default customer role
+     *
+     * @return UserRoles
+     */
+    public static function getDefaultCustomerRole(){
+        return self::findFirst([
+            'conditions' => 'location = 0 AND is_default =1'
+        ]);
+    }
+
+    /**
+     * Get default customer role ID
+     *
+     * @return UserRoles
+     */
+    public static function getDefaultCustomerRoleID(){
+        $role = self::getDefaultCustomerRole();
+        if($role){
+            return $role->role_id;
+        }
+        return 0;
+    }
 }

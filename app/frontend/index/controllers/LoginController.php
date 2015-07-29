@@ -23,7 +23,8 @@ class LoginController extends ZFrontController
     {
         //User has login yet
         if ($this->_user) {
-            $this->session->destroy();
+            $this->session->remove('auth');
+            unset($_SESSION);
         }
 
         $this->_addSocialLogin();

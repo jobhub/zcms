@@ -290,13 +290,18 @@ class ZEmail
     public function setTemplate($module, $template, $data = [], $moduleLocation = 'frontend', $contentType = 'text/html', $charset = 'utf-8')
     {
         $view = $this->_initView();
+
+        //Init base variable
+        $view->setVar('_baseUri', BASE_URI);
+        $view->setVar('_siteName', $this->config->website->siteName);
+
         $view->setVar('data', $data);
         $view->start();
-        $overrideFolder = ROOT_PATH . '/app/templates/' . $moduleLocation . DS . $this->config->frontendTemplate->defaultTemplate . '/languages/email-templates/' . $module . DS;
-        $overrideFile = $overrideFolder . $this->config->website->language . DS . $template . '.volt';
+        $overrideFolder = ROOT_PATH . '/app/templates/' . $moduleLocation . DS . $this->config->frontendTemplate->defaultTemplate . '/languages/email-templates/' . $this->config->website->language . DS;
+        $overrideFile = $overrideFolder . $module . DS . $template . '.volt';
         if (file_exists($overrideFile)) {
             $view->setViewsDir($overrideFolder);
-            $view->render($this->config->website->language, $template)->getContent();
+            $view->render($module, $template)->getContent();
         } else {
             $view->setViewsDir(ROOT_PATH . '/app/' . $moduleLocation . DS . $module . '/languages/email-templates/');
             $view->render($this->config->website->language, $template)->getContent();

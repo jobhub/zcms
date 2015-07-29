@@ -22,7 +22,8 @@ class LoginController extends ZAdminController
     {
         //User has login yet
         if ($this->_user) {
-            $this->session->destroy();
+            $this->session->remove('auth');
+            unset($_SESSION);
         }
 
         //Regular login

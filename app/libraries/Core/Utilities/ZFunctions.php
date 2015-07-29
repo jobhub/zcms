@@ -776,3 +776,23 @@ function memory_usage()
         return round($mem_usage / 1048576, 2) . " MB";
     }
 }
+
+/**
+ * Random string
+ *
+ * @param int $length
+ * @param bool|false $specialCharacters
+ * @return string
+ */
+function randomString($length = 22, $specialCharacters = false) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    if($specialCharacters){
+        $characters = '~!@#$%^&*()_+' . $characters . '~!@#$%^&*()_+';
+    }
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}

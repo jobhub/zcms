@@ -74,6 +74,18 @@ class Users extends ZModel
 
     /**
      *
+     * @var integer
+     */
+    public $is_active_facebook;
+
+    /**
+     *
+     * @var integer
+     */
+    public $is_active_google;
+
+    /**
+     *
      * @var string
      */
     public $language_code;
@@ -101,6 +113,12 @@ class Users extends ZModel
      * @var string
      */
     public $active_account_token;
+
+    /**
+     *
+     * @var string
+     */
+    public $active_account_type;
 
     /**
      *
@@ -322,6 +340,46 @@ class Users extends ZModel
         }
 
         return false;
+    }
+
+    /**
+     * Login current user
+     *
+     * @return bool
+     */
+    public function loginCurrentUSer()
+    {
+        /**
+         * @var UserRoles $role
+         */
+        $role = UserRoles::findFirst($this->role_id);
+        $acl = json_decode($role->acl, true);
+        /**
+         * @var \ZCMS\Core\ZSession $session
+         */
+        $session = Di::getDefault()->get('session');
+        /**
+         * @var \Phalcon\Security $security
+         */
+        $security = Di::getDefault()->get('security');
+        $token = $security->getToken();
+        $session->set('auth', [
+            'full_name' => $this->first_name . ' ' . $this->last_name,
+            'email' => $this->email,
+            'id' => $this->user_id,
+            'role' => $this->role_id,
+            'rules' => $acl['rules'],
+            'gender' => $this->gender,
+            'linkAccess' => $acl['links'],
+            'language' => $this->language_code,
+            'avatar' => $this->avatar,
+            'token' => $token,
+            'coin' => (float)$this->coin,
+            'created_at' => date('Y-m-d', strtotime($this->created_at)),
+            'is_super_admin' => $role->is_super_admin,
+            'last_use_admin' => time(),
+        ]);
+        return true;
     }
 
     /**

@@ -91,12 +91,12 @@ class ZGoogle
         $this->client->setClientSecret($this->config['clientSecret']);
         $this->client->setScopes($this->config['scope']);
         $this->client->setRedirectUri(BASE_URI . '/auth/google/login-callback/');
-        $session = Di::getDefault()->get('session');
-        $token = $session->get(self::SOCIAL_GOOGLE_ACCESS_TOKEN);
-        if($token){
-            $this->client->setAccessToken($token);
-            $this->isReady = true;
-        }
+//        $session = Di::getDefault()->get('session');
+//        $token = $session->get(self::SOCIAL_GOOGLE_ACCESS_TOKEN);
+//        if ($token && $this->client->verifyIdToken($token)) {
+//            $this->client->setAccessToken($token);
+//            $this->isReady = true;
+//        }
     }
 
     /**
@@ -121,7 +121,7 @@ class ZGoogle
             $this->client->authenticate($code);
             $session = Di::getDefault()->get('session');
             $token = $this->client->getAccessToken();
-            $session->set('', $token);
+            $session->set(self::SOCIAL_GOOGLE_ACCESS_TOKEN, $token);
             $this->client->setAccessToken($token);
             return true;
         }
@@ -148,7 +148,7 @@ class ZGoogle
         try {
             $info = $this->client->verifyIdToken()->getAttributes();
             if (is_array($info)) {
-                //$info = $info['payload'];
+                $info = $info['payload'];
             } else {
                 $info = false;
             }
@@ -156,6 +156,22 @@ class ZGoogle
             return false;
         }
         return $info;
+    }
+
+    public function getUserInfoToCreateAccount()
+    {
+        $me = $this->getMe();
+        $payload = $this->payload();
+        if(isset($payload['email'])){
+            return [
+                'email' => $payload['email'],
+                'first_name' => $me->getName()->givenName,
+                'last_name' => $me->getName()->familyName,
+                'display_name' => $me->getDisplayName(),
+            ];
+        }else{
+            return false;
+        }
     }
 
     /**

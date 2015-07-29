@@ -65,7 +65,7 @@ class CoreOptions extends Model
         return $optionsCache;
     }
 
-    public static function getOptions($name, $scope = '')
+    public static function getOptions($name, $scope = '', $default = null)
     {
         $cache = ZCache::getInstance(ZCMS_APPLICATION);
         $optionsCache = $cache->get(self::ZCMS_CACHE_MODEL_CORE_OPTIONS);
@@ -75,7 +75,7 @@ class CoreOptions extends Model
         if (isset($optionsCache[$name . '_' . $scope])) {
             return $optionsCache[$name . '_' . $scope];
         }
-        return null;
+        return $default;
     }
 
     /**
