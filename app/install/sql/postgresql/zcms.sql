@@ -32,16 +32,13 @@ CREATE TABLE IF NOT EXISTS bug_tracking_type (
   ordering INTEGER
 );
 --ZCMS--
-CREATE TABLE IF NOT EXISTS core_configs (
-  config_id      SERIAL PRIMARY KEY     NOT NULL,
-  scope          VARCHAR(24),
-  key            VARCHAR(40)            NOT NULL,
-  value          VARCHAR(255),
-  is_crypt_value SMALLINT               NOT NULL DEFAULT 0,
-  created_at     TIMESTAMP,
-  created_by     INTEGER,
-  updated_at     TIMESTAMP,
-  updated_by     INTEGER
+CREATE TABLE core_options
+(
+  option_id    BIGSERIAL   NOT NULL PRIMARY KEY,
+  option_scope VARCHAR(64),
+  option_name  VARCHAR(64) NOT NULL UNIQUE,
+  option_value TEXT,
+  autoload     SMALLINT    NOT NULL  DEFAULT 0
 );
 --ZCMS--
 CREATE TABLE IF NOT EXISTS core_contacts (
@@ -122,15 +119,15 @@ CREATE TABLE IF NOT EXISTS core_logs (
 );
 --ZCMS--
 CREATE TABLE IF NOT EXISTS core_php_logs (
-  log_id           BIGSERIAL PRIMARY KEY     NOT NULL,
-  log_key          VARCHAR(32),
-  message          TEXT,
-  file             TEXT,
-  line             TEXT,
-  type             TEXT,
-  status           SMALLINT,
-  created_at       TIMESTAMP,
-  updated_at       TIMESTAMP
+  log_id     BIGSERIAL PRIMARY KEY     NOT NULL,
+  log_key    VARCHAR(32),
+  message    TEXT,
+  file       TEXT,
+  line       TEXT,
+  type       TEXT,
+  status     SMALLINT,
+  created_at TIMESTAMP,
+  updated_at TIMESTAMP
 );
 --ZCMS--
 CREATE TABLE IF NOT EXISTS core_media (
@@ -430,6 +427,8 @@ CREATE TABLE IF NOT EXISTS users (
   avatar                  VARCHAR(255),
   facebook_id             BIGINT,
   is_active               SMALLINT               NOT NULL,
+  is_active_facebook      SMALLINT         DEFAULT 0,
+  is_active_google        SMALLINT         DEFAULT 0,
   language_code           VARCHAR(5),
   reset_password_token    TEXT,
   reset_password_token_at TIMESTAMP,
