@@ -1,6 +1,7 @@
 <?php
 
 define('DS', '/');
+define('ZCMS_APPLICATION','ZCMS_APPLICATION');
 define('ZCMS_VERSION', '2.0.1');
 define('PHP_VERSION_REQUIRED', '5.5.x');
 define('PHALCON_VERSION_REQUIRED', '2.0.2');
