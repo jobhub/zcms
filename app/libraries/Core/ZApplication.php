@@ -28,6 +28,11 @@ class ZApplication extends PhalconApplication
     const ZCMS_APPLICATION_CACHE_MODULES = 'ZCMS_APPLICATION_CACHE_MODULES';
 
     /**
+     * Cache modules key
+     */
+    const ZCMS_APPLICATION_CACHE_OPTIONS = 'ZCMS_APPLICATION_CACHE_OPTIONS';
+
+    /**
      * @var mixed
      */
     protected $config;
@@ -92,9 +97,9 @@ class ZApplication extends PhalconApplication
                     'bind' => [$logKey]
                 ]);
 
-                if($corePhpLog){
+                if ($corePhpLog) {
                     $corePhpLog->status = 0;
-                }else{
+                } else {
                     $corePhpLog = new CorePhpLogs();
                     $corePhpLog->assign([
                         'log_key' => $logKey,
@@ -117,15 +122,29 @@ class ZApplication extends PhalconApplication
      */
     public function _initModule()
     {
-
+        //Create new cache
         $cache = ZCache::getInstance(self::ZCMS_APPLICATION);
+
+        //Load options
+        $options = $cache->get(self::ZCMS_APPLICATION_CACHE_OPTIONS);
+        if ($options === null) {
+            /**
+             * @var \Phalcon\Db\Adapter\Pdo\Postgresql $db
+             */
+            $db = $this->getDI()->get('db');
+            $query = 'SELECT option_name, option_scope, option_value FROM core_options WHERE autoload = 1';
+            $options = $db->fetchAll($query);
+            $cache->save(self::ZCMS_APPLICATION_CACHE_OPTIONS, $options);
+        }
+
+        //Load module
         $registerModules = $cache->get(self::ZCMS_APPLICATION_CACHE_MODULES);
         if ($registerModules === null) {
             /**
              * @var \Phalcon\Db\Adapter\Pdo\Postgresql $db
              */
             $db = $this->getDI()->get('db');
-            $query = "SELECT base_name, class_name, path FROM core_modules WHERE published = 1";
+            $query = 'SELECT base_name, class_name, path FROM core_modules WHERE published = 1';
             $modules = $db->fetchAll($query);
             $registerModules = [];
             foreach ($modules as $module) {
@@ -134,7 +153,7 @@ class ZApplication extends PhalconApplication
                     'path' => APP_DIR . $module['path']
                 ];
             }
-            $cache->save('REGISTER_MODULES', $registerModules);
+            $cache->save(self::ZCMS_APPLICATION_CACHE_MODULES, $registerModules);
         }
         $this->registerModules($registerModules);
     }

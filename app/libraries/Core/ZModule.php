@@ -2,14 +2,13 @@
 
 namespace ZCMS\Core;
 
-use Phalcon\Di as PDI;
 use Phalcon\Loader;
+use Phalcon\Di as PDI;
+use Phalcon\DiInterface;
+use Phalcon\Mvc\View as ZView;
+use Phalcon\Mvc\View\Engine\Volt;
 use Phalcon\Mvc\Dispatcher as PDispatcher;
 use Phalcon\Mvc\ModuleDefinitionInterface as ModuleDefinitionInterface;
-use Phalcon\Mvc\View\Engine\Volt;
-use Phalcon\Mvc\View as ZView;
-use Phalcon\DiInterface;
-use ZCMS\Core\Models\CoreTemplates;
 
 /**
  * Class Base Admin Module
@@ -60,10 +59,9 @@ class ZModule implements ModuleDefinitionInterface
 
         $this->module = $moduleName;
         $this->defaultController = $defaultController;
-        $this->baseControllers = 'ZCMS\\Backend\\' . ucfirst($this->module) . "\\Controllers";
-        $this->baseModels = "ZCMS\\Backend\\" . ucfirst($this->module) . "\\Models";
-        $this->baseForms = "ZCMS\\Backend\\" . ucfirst($this->module) . "\\Forms";
-        //$this->setTemplateDefault();
+        $this->baseControllers = 'ZCMS\\Backend\\' . ucfirst($this->module) . '\\Controllers';
+        $this->baseModels = 'ZCMS\\Backend\\' . ucfirst($this->module) . '\\Models';
+        $this->baseForms = 'ZCMS\\Backend\\' . ucfirst($this->module) . '\\Forms';
     }
 
     /**
@@ -75,27 +73,11 @@ class ZModule implements ModuleDefinitionInterface
     {
         $loader = new Loader();
         $loader->registerNamespaces([
-            $this->baseControllers => APP_DIR . "/backend/" . $this->module . "/controllers/",
-            $this->baseModels => APP_DIR . "/backend/" . $this->module . "/models/",
-            $this->baseForms => APP_DIR . "/backend/" . $this->module . "/forms/",
+            $this->baseControllers => APP_DIR . '/backend/' . $this->module . '/controllers/',
+            $this->baseModels => APP_DIR . '/backend/' . $this->module . '/models/',
+            $this->baseForms => APP_DIR . '/backend/' . $this->module . '/forms/',
         ]);
         $loader->register();
-    }
-
-    /**
-     * Set default template
-     */
-    protected final function setTemplateDefault()
-    {
-        $config = PDI::getDefault()->get("config");
-        /**
-         * @var CoreTemplates $templateDefault
-         */
-        $templateDefault = CoreTemplates::findFirst("published = 1 AND location = \"backend\"");
-        if ($templateDefault) {
-            $config->backendTemplate->defaultTemplate = $templateDefault->base_name;
-            PDI::getDefault()->set("config", $config);
-        }
     }
 
     /**
