@@ -43,8 +43,17 @@ class FacebookController extends ZFrontController
             try {
                 $response = $fb->get('/me?fields=email,first_name,last_name');
                 $userNode = $response->getGraphUser();
-                $this->_process($userNode);
-                $this->response->redirect('/');
+                $status = $this->_process($userNode);
+                if($status['success'] && $status['message'] == null){
+                    $this->response->redirect('/');
+                }elseif($status['success'] && $status['message'] != null){
+                    $this->flashSession->success($status['message']);
+                    $this->response->redirect('/user/login/');
+                }elseif(!$status['success']){
+                    $this->flashSession->notice($status['message']);
+                    $this->response->redirect('/user/login/');
+                }
+                return;
             } catch (\Exception $e) {
                 $this->flashSession->notice('_ZT_Facebook server is busy, please try again later!');
                 $this->response->redirect('/user/login/');
@@ -57,6 +66,7 @@ class FacebookController extends ZFrontController
      * Process login with Facebook
      *
      * @param \Facebook\GraphNodes\GraphUser $userNode
+     * @return array
      */
     private function _process($userNode)
     {
@@ -65,11 +75,6 @@ class FacebookController extends ZFrontController
         $userInfo['first_name'] = $userNode->getFirstName();
         $userInfo['last_name'] = $userNode->getLastName();
         $userInfo['facebook_id'] = $userNode->getId();
-        if ($userInfo) {
-            $message = (new ZSocialHelper($userInfo, 'facebook'))->process();
-            if (gettype($message) == 'string' && strlen($message)) {
-                $this->flashSession->notice($message);
-            }
-        }
+        return (new ZSocialHelper($userInfo, 'facebook'))->process();
     }
 }

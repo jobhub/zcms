@@ -484,6 +484,12 @@ class Users extends ZModel
         return (bool)Users::getCurrentUser();
     }
 
+    /**
+     * Check user exits
+     *
+     * @param string $email
+     * @return bool
+     */
     public static function checkUserExists($email)
     {
         return (bool)self::findFirst([

@@ -50,9 +50,16 @@ class ZSocialHelper
         $this->socialName = strtolower($socialName);
     }
 
+    /**
+     * Process login with social
+     *
+     * @return array
+     */
     public function process()
     {
         if ($this->userInfo['first_name'] && $this->userInfo['last_name'] && $this->userInfo['email'] && in_array($this->socialName, self::$socialSupport)) {
+            $messageActive = '_ZT_Please Activate Account from Email';
+            $messageFailed = '_ZT_System is busy, please try again later!';
             $autoLoginIfAccountExists = CoreOptions::getOptions('social_automatic_' . $this->socialName, 'zcms', 0);
             $sendEmailActivateAccount = CoreOptions::getOptions('social_automatic_' . $this->socialName, 'zcms', 1);
             $this->user = Users::findFirst([
@@ -63,18 +70,30 @@ class ZSocialHelper
             if ($this->user) {
                 if ($this->user->$propertyName == 1) {
                     $this->user->loginCurrentUSer();
-                    return true;
+                    return [
+                        'success' => true,
+                        'message' => ''
+                    ];
                 }
                 if ($autoLoginIfAccountExists) {
                     $this->_updateLoginWithSocial();
                     $this->user->loginCurrentUSer();
-                    return true;
+                    return [
+                        'success' => true,
+                        'message' => null
+                    ];
                 } else {
                     $ok = $this->_generateActiveAccountWithSocial();
                     if ($ok) {
-                        return '_ZT_Please Activate Account from Email';
+                        return [
+                            'success' => true,
+                            'message' => $messageActive
+                        ];
                     } else {
-                        return '_ZT_System is busy, please try again later!';
+                        return [
+                            'success' => false,
+                            'message' => $messageFailed
+                        ];
                     }
                 }
             } else {
@@ -86,22 +105,37 @@ class ZSocialHelper
                 if ($sendEmailActivateAccount) {
                     $ok = $this->_generateActiveAccountWithSocial();
                     if ($ok) {
-                        return '_ZT_Please Activate Account from Email';
+                        return [
+                            'success' => true,
+                            'message' => $messageActive
+                        ];
                     } else {
-                        return '_ZT_System is busy, please try again later!';
+                        return [
+                            'success' => false,
+                            'message' => $messageFailed
+                        ];
                     }
                 } else {
                     $this->user->is_active = 1;
                     if ($this->user->save()) {
                         $this->user->loginCurrentUSer();
+                        return [
+                            'success' => true,
+                            'message' => null
+                        ];
                     } else {
-                        return '_ZT_System is busy, please try again later!';
+                        return [
+                            'success' => false,
+                            'message' => $messageFailed
+                        ];
                     }
-                    return true;
                 }
             }
         }
-        return false;
+        return [
+            'success' => false,
+            'message' => '_ZT_Your info invalid, please contact to admin!'
+        ];
     }
 
     /**
@@ -116,6 +150,9 @@ class ZSocialHelper
             $this->user->active_account_token = randomString(100) . time() . '_' . base64_encode($this->socialName);
             $this->user->active_account_type = $this->socialName;
             $this->user->is_active = 0;
+            if ($this->socialName == 'facebook' && isset($this->userInfo['facebook_id'])) {
+                $this->user->facebook_id = $this->userInfo['facebook_id'];
+            }
             if (!$this->user->role_id) {
                 $this->user->role_id = $defaultCustomerRoleID;
             }
