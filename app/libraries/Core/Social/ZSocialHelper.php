@@ -53,7 +53,7 @@ class ZSocialHelper
     public function process()
     {
         if ($this->userInfo['first_name'] && $this->userInfo['last_name'] && $this->userInfo['email'] && in_array($this->socialName, self::$socialSupport)) {
-            $autoLoginIfAccountExists = CoreOptions::getOptions('social_automatic_' . $this->socialName, 'zcms', 1);
+            $autoLoginIfAccountExists = CoreOptions::getOptions('social_automatic_' . $this->socialName, 'zcms', 0);
             $sendEmailActivateAccount = CoreOptions::getOptions('social_automatic_' . $this->socialName, 'zcms', 1);
             $this->user = Users::findFirst([
                 'conditions' => 'email = ?0',
@@ -112,11 +112,13 @@ class ZSocialHelper
     private function _generateActiveAccountWithSocial()
     {
         $defaultCustomerRoleID = UserRoles::getDefaultCustomerRoleID();
-        if($defaultCustomerRoleID){
+        if ($defaultCustomerRoleID) {
             $this->user->active_account_token = randomString(100) . time() . '_' . base64_encode($this->socialName);
             $this->user->active_account_type = $this->socialName;
             $this->user->is_active = 0;
-            $this->user->role_id = $defaultCustomerRoleID;
+            if (!$this->user->role_id) {
+                $this->user->role_id = $defaultCustomerRoleID;
+            }
             $data = [
                 'active_account_token' => $this->user->active_account_token,
                 'email' => $this->user->email,
@@ -143,6 +145,9 @@ class ZSocialHelper
     {
         if ($this->socialName == 'facebook') {
             $this->user->is_active_facebook = 1;
+            if (isset($this->userInfo['facebook_id'])) {
+                $this->user->facebook_id = $this->userInfo['facebook_id'];
+            }
         } elseif ($this->socialName == 'google') {
             $this->user->is_active_google = 1;
         }
@@ -152,6 +157,12 @@ class ZSocialHelper
         return $this->user->save();
     }
 
+    /**
+     * Active login with social
+     *
+     * @param $token
+     * @return bool
+     */
     public static function processActivateWithToken($token)
     {
         if (strlen($token) > 100) {

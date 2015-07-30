@@ -68,6 +68,12 @@ class Users extends ZModel
 
     /**
      *
+     * @var string
+     */
+    public $facebook_id;
+
+    /**
+     *
      * @var integer
      */
     public $is_active;

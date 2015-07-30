@@ -18,6 +18,11 @@ class FacebookController extends ZFrontController
      */
     public function loginAction()
     {
+        $error = $this->request->get('error','string');
+        if($error){
+            $this->response->redirect('/');
+            return;
+        }
         $fb = ZFacebook::getInstance();
 
         $accessToken = null;
