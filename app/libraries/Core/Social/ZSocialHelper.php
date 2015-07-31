@@ -2,10 +2,10 @@
 
 namespace ZCMS\Core\Social;
 
-use ZCMS\Core\Models\CoreOptions;
-use ZCMS\Core\Models\UserRoles;
-use ZCMS\Core\Models\Users;
 use ZCMS\Core\ZEmail;
+use ZCMS\Core\Models\Users;
+use ZCMS\Core\Models\UserRoles;
+use ZCMS\Core\Models\CoreOptions;
 
 /**
  * Class ZSocialHelper
