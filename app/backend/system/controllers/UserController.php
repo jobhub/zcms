@@ -368,20 +368,13 @@ class UserController extends ZAdminController
 
     /**
      * Delete user
-     *
-     * @param null $id
      */
-    public function deleteAction($id = null)
+    public function deleteAction()
     {
         //return false;
         if ($this->_model && $this->_modelBaseName) {
-            if ($id) {
-                $id = intval($id);
-                $ids[] = $id;
-            } else {
-                $ids = $this->request->getPost('ids');
-                ZArrayHelper::toInteger($ids);
-            }
+            $ids = $this->request->getPost('ids');
+            ZArrayHelper::toInteger($ids);
             if (is_array($ids)) {
                 $query = "DELETE FROM {$this->_modelBaseName} WHERE id IN (" . implode(',', $ids) . ") AND is_supper_admin <> 1";
                 $this->db->execute($query);

@@ -264,19 +264,14 @@ class IndexController extends ZAdminController
     /**
      * Delete slide show
      *
-     * @param null $slideShowID
      * @return \Phalcon\Http\ResponseInterface
      */
-    public function deleteAction($slideShowID = null)
+    public function deleteAction()
     {
-        $id = null;
-        if ($slideShowID) {
-            $id = intval($slideShowID);
-        } else {
-            $ids = $this->request->getPost('ids');
-            if (count($ids)) {
-                $id = $ids[0];
-            }
+        $id = 0;
+        $ids = $this->request->getPost('ids');
+        if (count($ids)) {
+            $id = $ids[0];
         }
 
         if ($id > 0) {

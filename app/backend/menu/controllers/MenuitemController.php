@@ -270,16 +270,11 @@ class MenuItemController extends ZAdminController
     /**
      * Delete menu item
      *
-     * @param int $id
      * @return \Phalcon\Http\ResponseInterface
      */
-    public function deleteAction($id = null)
+    public function deleteAction()
     {
-        if (isset($id)) {
-            $ids = [(int)$id];
-        } else {
-            $ids = $this->request->getPost('ids');
-        }
+        $ids = $this->request->getPost('ids');
         ZArrayHelper::toInteger($ids);
 
         if (count($ids)) {

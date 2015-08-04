@@ -161,17 +161,12 @@ class IndexController extends ZAdminController
     /**
      * Delete multiple menu type and menu item of this menu type
      *
-     * @param int $id
      * @return \Phalcon\Http\ResponseInterface
      */
-    public function deleteAction($id = NULL)
+    public function deleteAction()
     {
         if ($this->request->isPost()) {
-            if ($id == null) {
-                $ids = $this->request->getPost('ids');
-            } else {
-                $ids = [$id];
-            }
+            $ids = $this->request->getPost('ids');
 
             ZArrayHelper::toInteger($ids);
 
@@ -202,7 +197,7 @@ class IndexController extends ZAdminController
     }
 
     /**
-     * Get menu item
+     * Get menu items
      *
      * @return \Phalcon\Http\Response
      * REST service return menu item information

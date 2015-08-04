@@ -433,22 +433,13 @@ class ModuleController extends ZAdminController
     }
 
     /**
-     * Delete item action
-     *
-     * @param int $id
-     * @param string $redirect
+     * Delete module item action
      */
-    public function deleteAction($id = null, $redirect = null)
+    public function deleteAction()
     {
         if (class_exists($this->_model) && $this->_modelBaseName) {
-            $ids = [];
-            if ($id) {
-                $id = intval($id);
-                $ids[] = $id;
-            } else {
-                $ids = $this->request->getPost('ids');
-                ZArrayHelper::toInteger($ids);
-            }
+            $ids = $this->request->getPost('ids');
+            ZArrayHelper::toInteger($ids);
             if (is_array($ids)) {
                 $idsSrt = implode(',', $ids);
                 $query = "DELETE FROM {$this->_modelBaseName} WHERE is_core = 0 AND module_id IN (" . $idsSrt . ")";
@@ -466,10 +457,6 @@ class ModuleController extends ZAdminController
         } else {
             $this->flashSession->error('gb_message_you_are_must_set_model_in_child_controller');
         }
-        if ($redirect) {
-            $this->response->redirect($redirect);
-        } else {
-            $this->response->redirect('/admin/' . $this->_module . '/' . $this->_controller . '/');
-        }
+        $this->response->redirect('/admin/' . $this->_module . '/' . $this->_controller . '/');
     }
 }
