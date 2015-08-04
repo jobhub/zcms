@@ -17,6 +17,9 @@ use ZCMS\Backend\Slide\Forms\SlideShowForm;
 class IndexController extends ZAdminController
 {
 
+    /**
+     * Define image folder
+     */
     const SLIDE_SHOW_FOLDER_UPLOAD = 'media/slide-shows';
 
     /**
@@ -28,7 +31,6 @@ class IndexController extends ZAdminController
      * @var string Model name in database
      */
     public $_modelBaseName = 'slide_shows';
-
 
     /**
      * List all slide show
@@ -291,7 +293,7 @@ class IndexController extends ZAdminController
              * @var $slideShowItems SlideShowItems[]
              */
             $slideShowItems = SlideShowItems::find([
-                'conditions' => 'id_slide_show = ?0',
+                'conditions' => 'slide_show_item_id = ?0',
                 'bind' => [$id]
             ]);
 
@@ -307,7 +309,6 @@ class IndexController extends ZAdminController
                 return $this->response->redirect('/admin/slide/');
             }
         }
-
         return $this->response->redirect('/admin/slide/');
     }
 }

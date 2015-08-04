@@ -10,7 +10,7 @@ use Phalcon\Mvc\View as PView;
  *
  * @package   ZCMS\Core
  * @author    ZCMS Team
- * @copyright 2014 ZCMS Team
+ * @copyright ZCMS Team
  * @since     0.0.1
  */
 class ZFrontTemplate
@@ -18,7 +18,7 @@ class ZFrontTemplate
     /**
      * @var string Module name need overwrite template;
      */
-    protected $moduleBaseName = "";
+    protected $moduleBaseName = '';
 
     /**
      * Instance construct

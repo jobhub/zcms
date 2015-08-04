@@ -21,7 +21,7 @@ zcms_load_widget_file();
  *
  * @package   ZCMS\Core
  * @author    ZCMS Team
- * @copyright 2014 ZCMS Team
+ * @copyright ZCMS Team
  * @since     0.0.1
  */
 class SidebarController extends ZAdminController

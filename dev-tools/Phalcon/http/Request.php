@@ -321,7 +321,7 @@ class Request implements \Phalcon\Http\RequestInterface, \Phalcon\Di\InjectionAw
      * Gets attached files as Phalcon\Http\Request\File instances
      *
      * @param bool $notErrored 
-     * @return \Phalcon\Http\Request\File 
+     * @return \Phalcon\Http\Request\File[]
      */
 	public function getUploadedFiles($notErrored = false) {}
 
