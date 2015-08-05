@@ -41,6 +41,15 @@ CREATE TABLE core_options
   autoload     SMALLINT    NOT NULL             DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ##ZCMS##
+INSERT INTO core_options (option_scope, option_name, option_value, autoload) VALUES
+  ('zcms', 'auto_login_if_account_exists_with_facebook', '0', 1),
+  ('zcms', 'auto_login_if_account_exists_with_google', '0', 1),
+  ('zcms', 'auto_login_if_account_exists_with_twitter', '0', 1),
+  ('zcms', 'verify_register_or_exist_account_with_facebook', '0', 1),
+  ('zcms', 'verify_register_or_exist_account_with_google', '0', 1),
+  ('zcms', 'verify_register_or_exist_account_with_twitter', '0', 1),
+  ('zcms', 'verify_register_when_sign_up', '1', 1);
+##ZCMS##
 CREATE TABLE IF NOT EXISTS core_contacts (
   contact_id INTEGER AUTO_INCREMENT PRIMARY KEY     NOT NULL,
   full_name  VARCHAR(64)            NOT NULL,
