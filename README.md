@@ -13,3 +13,5 @@
 * Widget, Sidebar as WordPress
 * Cache: Memcached, Redis, APC, File
 * Default module: Content, Slide Shows, Menus
+
+* Integrate Facebook, Google+ Login
