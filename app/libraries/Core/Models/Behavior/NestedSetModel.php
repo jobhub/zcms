@@ -1,6 +1,6 @@
 <?php
 
-namespace ZCMS\Core\Models;
+namespace ZCMS\Core\Models\Behavior;
 
 use Phalcon\Di as PDI,
     Phalcon\Mvc\Model\Behavior as PMMBehavior,

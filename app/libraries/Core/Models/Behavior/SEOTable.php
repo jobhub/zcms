@@ -13,12 +13,12 @@ trait SEOTable
     /**
      * @var string
      */
-    public $metadesc = '';
+    public $meta_desc = '';
 
     /**
      * @var string
      */
-    public $metakey = '';
+    public $meta_keywords = '';
 
     /**
      * @var array

@@ -9,20 +9,17 @@ $resource = [
     'location' => 'frontend',
     'class_name' => 'ZCMS\\Frontend\\Auth\\Module',
     'path' => '/frontend/auth/Module.php',
-    'acl' =>
+    'acl' => [
         [
-            [
-                'controller' => 'index',
-                'controller_name' => 'Index',
-                'rules' =>
-                    [
-
-                        [
-                            'action' => 'index',
-                            'action_name' => 'Front End',
-                            'sub_action' => ''
-                        ]
-                    ]
+            'controller' => 'index',
+            'controller_name' => 'Index',
+            'rules' => [
+                [
+                    'action' => 'index',
+                    'action_name' => 'Front End',
+                    'sub_action' => ''
+                ]
             ]
         ]
+    ]
 ];

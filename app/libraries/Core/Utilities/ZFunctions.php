@@ -1,10 +1,10 @@
 <?php
 
+use ZCMS\Core\ZSEO;
 use Phalcon\Di as PDI;
 use ZCMS\Core\ZSidebar;
 use ZCMS\Core\ZTranslate;
 use ZCMS\Core\Utilities\URLify;
-use ZCMS\Core\ZSEO;
 
 /**
  * Get sidebar html, use in volt template

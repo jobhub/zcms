@@ -55,13 +55,15 @@ class ZSocialHelper
      *
      * @return array
      */
+
+
     public function process()
     {
         if ($this->userInfo['first_name'] && $this->userInfo['last_name'] && $this->userInfo['email'] && in_array($this->socialName, self::$socialSupport)) {
             $messageActive = '_ZT_Please Activate Account from Email';
             $messageFailed = '_ZT_System is busy, please try again later!';
-            $autoLoginIfAccountExists = CoreOptions::getOptions('social_automatic_' . $this->socialName, 'zcms', 0);
-            $sendEmailActivateAccount = CoreOptions::getOptions('social_automatic_' . $this->socialName, 'zcms', 1);
+            $autoLoginIfAccountExists = CoreOptions::getOptions('auto_login_if_account_exists_with' . $this->socialName, 'zcms', 0);
+            $sendEmailActivateAccount = CoreOptions::getOptions('verify_register_or_exist_account_with_' . $this->socialName, 'zcms', 1);
             $this->user = Users::findFirst([
                 'conditions' => 'email = ?0',
                 'bind' => [$this->userInfo['email']]

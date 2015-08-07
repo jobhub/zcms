@@ -49,11 +49,11 @@ class ZFrontTemplate
      */
     public function beforeRender(PEvent $event, PView $view)
     {
-        $defaultTemplate = $view->getDI()->get("config")->frontendTemplate->defaultTemplate;
-        $viewDir = ROOT_PATH . "/app/templates/frontend/" . $defaultTemplate . "/modules/" . $this->moduleBaseName . "/";
-        $pathView = $viewDir . $view->getControllerName() . "/" . $view->getActionName();
-        $view->setVar("_templateDir", ROOT_PATH . "/app/templates/frontend/" . $defaultTemplate);
-        if (realpath($pathView . ".volt")) {
+        $defaultTemplate = $view->getDI()->get('config')->frontendTemplate->defaultTemplate;
+        $viewDir = ROOT_PATH . '/app/templates/frontend/' . $defaultTemplate . '/modules/' . $this->moduleBaseName . '/';
+        $pathView = $viewDir . $view->getControllerName() . '/' . $view->getActionName();
+        $view->setVar('_templateDir', ROOT_PATH . '/app/templates/frontend/' . $defaultTemplate);
+        if (realpath($pathView . '.volt')) {
             $view->setViewsDir($viewDir);
         }
     }

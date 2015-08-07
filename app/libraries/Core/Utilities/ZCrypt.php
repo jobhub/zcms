@@ -11,7 +11,7 @@ use Phalcon\Crypt;
  */
 class ZCrypt extends Crypt
 {
-    const ZCMS_SYSTEM_ENCRYPT_KEY = "123456";
+    const ZCMS_SYSTEM_ENCRYPT_KEY = "BLA BLA";
 
     /**
      * @var ZCrypt
