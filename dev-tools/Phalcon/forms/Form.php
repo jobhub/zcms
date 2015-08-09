@@ -114,7 +114,7 @@ class Form extends \Phalcon\Di\Injectable implements \Countable, \Iterator
     /**
      * Returns the form elements added to the form
      *
-     * @return \Phalcon\Forms\ElementInterface 
+     * @return \Phalcon\Forms\ElementInterface[]
      */
 	public function getElements() {}
 

@@ -151,53 +151,53 @@ class ZForm extends Form
         }
 
         //Title
-        $seo_title = new Text('zcms_seo_title');
-        $seo_title->addValidator(new StringLength([
+        $seoTitle = new Text('zcms_seo_title');
+        $seoTitle->addValidator(new StringLength([
             'min' => 0,
             'max' => 255
         ]));
-        $this->add($seo_title);
+        $this->add($seoTitle);
 
         //Meta description
-        $meta_desc = new TextArea('metadesc', ['rows' => 4]);
-        $meta_desc->addValidator(new StringLength(
+        $metaDesc = new TextArea('meta_desc', ['rows' => 4]);
+        $metaDesc->addValidator(new StringLength(
             [
                 'min' => 0,
                 'max' => 255
             ]
         ));
-        $this->add($meta_desc);
+        $this->add($metaDesc);
 
         //Meta keywords
-        $meta_key = new TextArea('metakey', ['rows' => 4]);
-        $meta_key->addValidator(new StringLength([
+        $metaKey = new Text('meta_keywords');
+        $metaKey->addValidator(new StringLength([
             'min' => 0,
             'max' => 255
         ]));
-        $this->add($meta_key);
+        $this->add($metaKey);
 
         //Meta Robots Index:
-        $meta_robot_index = new Select('zcms_meta_robot_index', [
+        $metaRobotIndex = new Select('zcms_meta_robot_index', [
             'index' => 'Index',
             'noindex' => 'NoIndex',
         ]);
-        $meta_robot_index->addValidator(new InclusionIn([
+        $metaRobotIndex->addValidator(new InclusionIn([
             'domain' => ['index', 'noindex']
         ]));
-        $this->add($meta_robot_index);
+        $this->add($metaRobotIndex);
 
         //Meta Robots Follow
-        $meta_robot_follow = new Select('zcms_meta_robot_follow', [
+        $metaRobotFollow = new Select('zcms_meta_robot_follow', [
             'follow' => 'Follow',
             'nofollow' => 'NoFollow',
         ]);
-        $meta_robot_follow->addValidator(new InclusionIn([
+        $metaRobotFollow->addValidator(new InclusionIn([
             'domain' => ['follow', 'nofollow']
         ]));
-        $this->add($meta_robot_follow);
+        $this->add($metaRobotFollow);
 
         //Meta robot advance
-        $meta_robot_advance = new Select('zcms_meta_robot_advance',
+        $metaRobotAdvance = new Select('zcms_meta_robot_advance',
             [
                 'none' => 'None',
                 'noodp' => 'NO ODP',
@@ -211,10 +211,10 @@ class ZForm extends Form
                 'name' => 'zcms_meta_robot_advance[]'
             ]
         );
-//       $meta_robot_advance->addValidator(new InclusionIn([
-//           'domain' => ['none', 'noodp', 'noydir', 'noimageindex', 'noarchive', 'nosnippet']
-//       ]));
-        $this->add($meta_robot_advance);
+        $metaRobotAdvance->addValidator(new InclusionIn([
+            'domain' => ['', 'none', 'noodp', 'noydir', 'noimageindex', 'noarchive', 'nosnippet']
+        ]));
+        $this->add($metaRobotAdvance);
 
         //Redirect 301
         $redirect301 = new Text('zcms_redirect_301');
@@ -247,8 +247,8 @@ class ZForm extends Form
                 $data['zcms_metadata']['robots'] = $data['zcms_meta_robot_index'] . ',' . $data['zcms_meta_robot_follow'];
             }
             $data['zcms_metadata']['redirect_301'] = $data['zcms_redirect_301'];
-            $data['zcms_metadata']['description'] = $data['metadesc'];
-            $data['zcms_metadata']['keywords'] = $data['metakey'];
+            $data['zcms_metadata']['description'] = $data['meta_desc'];
+            $data['zcms_metadata']['keywords'] = $data['meta_keywords'];
             $data['metadata'] = json_encode($data['zcms_metadata']);
         }
         return $data;
@@ -283,13 +283,18 @@ class ZForm extends Form
      * @param bool $useCol
      * @param string $cols
      * @param bool $clearFix
+     * @param string $title
      * @return string
      */
-    public function getSeoFormHTML($useCol = true, $cols = 'col-md-6', $clearFix = false)
+    public function getSeoFormHTML($useCol = true, $cols = 'col-md-6', $clearFix = false, $title = 'SEO Info')
     {
         $html = '';
         if ($useCol) {
             $html = '<div class="' . $cols . '">';
+        }
+
+        if ($title) {
+            //$html .= '<h4 class="seo-form-title">' . $title . '</h4>';
         }
 
         //Render element title
@@ -301,13 +306,13 @@ class ZForm extends Form
         //Render element description
         $html .= '<div class="form-group">
                      <label class="control-label">' . __('gb_seo_label_meta_desc') . '</label>' .
-            $this->render('metadesc') .
+            $this->render('meta_desc') .
             '</div>';
 
         //Render element description
         $html .= '<div class="form-group">
-                     <label class="control-label">' . __('gb_seo_label_meta_key') . '</label>' .
-            $this->render('metakey') .
+                     <label class="control-label">' . __('gb_seo_label_meta_keywords') . '</label>' .
+            $this->render('meta_keywords') .
             '</div>';
 
         //Render element robot index

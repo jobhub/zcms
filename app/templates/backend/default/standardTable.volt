@@ -598,10 +598,10 @@
                             {% if access %}
                                 {% if column['link_prefix'] is defined %}
                                     <?php $itemColumnLinkPrefix = $item->{$column['link_prefix']} ?>
-                                    {% set html = '<a title="' ~ __(action['link_title']) ~ '" href="' ~ _baseUri ~ action['link'] ~ itemColumnLinkPrefix ~ '" >' %}
+                                    {% set html = '<a title="' ~ __(action['link_title']) ~ '" href="' ~ _baseUri ~ action['link'] ~ itemColumnLinkPrefix ~ '/" >' %}
                                 {% else %}
                                     <?php $itemCaseLinkPrefix = $item->{$action['link_prefix']} ?>
-                                    {% set html = '<a title="' ~ __(action['link_title']) ~ '" href="' ~ _baseUri ~ action['link'] ~ itemCaseLinkPrefix ~ '" >' %}
+                                    {% set html = '<a title="' ~ __(action['link_title']) ~ '" href="' ~ _baseUri ~ action['link'] ~ itemCaseLinkPrefix ~ '/" >' %}
                                 {% endif %}
                             {% else %}
                                 {% set html = '<a title="' ~ __(action['link_title']) ~ '" href="#" >' %}

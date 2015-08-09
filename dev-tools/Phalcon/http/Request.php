@@ -99,7 +99,8 @@ class Request implements \Phalcon\Http\RequestInterface, \Phalcon\Di\InjectionAw
      * @param mixed $filters 
      * @param mixed $defaultValue 
      * @param bool $notAllowEmpty 
-     * @param bool $noRecursive 
+     * @param bool $noRecursive
+     * @return mixed
      */
 	public function getQuery($name = null, $filters = null, $defaultValue = null, $notAllowEmpty = false, $noRecursive = false) {}
 

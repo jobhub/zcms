@@ -1,9 +1,47 @@
 if ("undefined" === typeof ZCMS) var ZCMS = {};
 
+//ZCMS.submitForm = function (f) {
+//    if ("undefined" === typeof f && (f = document.getElementById("adminForm"), !f)) f = document.adminForm;
+//    if ("function" == typeof f.onsubmit) f.onsubmit();
+//    "function" == typeof f.fireEvent && f.fireEvent("submit");
+//    f.submit();
+//    return false;
+//};
+
 ZCMS.submitForm = function (f) {
     if ("undefined" === typeof f && (f = document.getElementById("adminForm"), !f)) f = document.adminForm;
     if ("function" == typeof f.onsubmit) f.onsubmit();
     "function" == typeof f.fireEvent && f.fireEvent("submit");
+    var hasErrorRequiredField = false;
+    var ErrorRequiredFieldID = '';
+    $('[required]').each(function () {
+        if ($(this).val() == '') {
+            $(this).parent().addClass('has-error');
+            if ($(this).parent().find('.help-block').length == 0) {
+                $(this).parent().append('<span class="help-block">This is required field!</span>');
+            } else {
+                $(this).parent().find('.help-block').css('display', 'block');
+            }
+            hasErrorRequiredField = true;
+            if (ErrorRequiredFieldID == '') {
+                ErrorRequiredFieldID = $(this).attr('id');
+            }
+
+        } else {
+            $(this).parent().addClass('has-success').removeClass('has-error');
+            $(this).parent().find('.help-block').css('display', 'none');
+        }
+    });
+
+    if (hasErrorRequiredField == true) {
+        if (ErrorRequiredFieldID != '') {
+            $('#' + ErrorRequiredFieldID).focus();
+        }
+        return false;
+    } else {
+        ErrorRequiredFieldID = '';
+    }
+
     f.submit();
     return false;
 };

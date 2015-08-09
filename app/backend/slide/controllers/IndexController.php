@@ -25,7 +25,7 @@ class IndexController extends ZAdminController
     /**
      * @var string PHQL Model
      */
-    public $_model = 'SlideShows';
+    public $_model = 'ZCMS\Core\Models\SlideShows';
 
     /**
      * @var string Model name in database
@@ -57,7 +57,7 @@ class IndexController extends ZAdminController
         $conditions = [];
 
         if ($filter['filter_column_title']) {
-            $conditions[] = "title ILIKE '%" . htmlspecialchars($filter['filter_column_title']) . "%'";
+            $conditions[] = "LOWER(title) LIKE '%" . strtolower(htmlspecialchars($filter['filter_column_title'])) . "%'";
         }
 
         if ($filter['filter_slide_show_id']) {

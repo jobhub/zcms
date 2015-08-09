@@ -22,6 +22,12 @@ ilike
 datatables
 onsubmit
 onload
+noindex
+noimageindex
+noarchive
+nosnippet
+summernote
+nofollow
 zsidebar
 zwidget
 striptags
@@ -65,3 +71,4 @@ smtp
 sitemap
 dropdown
 submenu
+resultset

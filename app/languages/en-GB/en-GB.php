@@ -48,6 +48,7 @@ return [
     //Button name
     'gb_update' => 'Update',
     'gb_published' => 'Published',
+    'gb_pending' => 'Pending',
     'gb_unpublished' => 'Unpublished',
     'gb_ordering' => 'Ordering',
     'gb_move_down' => 'Move Down',
@@ -113,6 +114,7 @@ return [
     'gb_select_location' => '-- Select Location--',
     'gb_please_check_required_filed' => 'Please check required field!',
     'gb_form_this_field_is_required' => 'This is required field',
+    'gb_message_you_are_must_set_model_in_child_controller' => 'You are must set model in child controller',
 
     //Permission / Session
     'gb_session_login_timeout' => 'Login session expired!',
@@ -136,5 +138,13 @@ return [
     'gb_message_items_move_down_error' => 'Move down error',
     'gb_message_items_successfully_move_down' => 'Move down successfully',
     'gb_published_this_item' => 'Published this item',
-    'gb_unpublished_this_item' => 'Unpublished this item'
+    'gb_unpublished_this_item' => 'Unpublished this item',
+
+    //SEO
+    'gb_seo_label_seo_title' => 'Title for SEO',
+    'gb_seo_label_meta_desc' => 'Meta description',
+    'gb_seo_label_meta_keywords' => 'Meta keywords',
+    'gb_seo_label_meta_robot_index' => 'Robots Index',
+    'gb_seo_label_meta_robot_follow' => 'Robots follow',
+    'gb_seo_label_redirect_301' => 'Redirect 301'
 ];

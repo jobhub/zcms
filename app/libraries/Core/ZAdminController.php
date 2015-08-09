@@ -251,7 +251,7 @@ class ZAdminController extends Controller
      */
     public function publishAction($id = null, $redirect = null, $log = true)
     {
-        if ($this->_model && $this->_modelBaseName) {
+        if ($this->_model && $this->_modelBaseName && $this->_modelPrimaryKey) {
             $extraQuery = null;
             if ($log) {
                 $extraQuery = ', updated_by = ' . $this->_user['id'] . ", updated_at = '" . date("Y-m-d H:i:s") . "'";
@@ -287,7 +287,7 @@ class ZAdminController extends Controller
      */
     public function unPublishAction($id = null, $redirect = null, $log = true)
     {
-        if ($this->_model && $this->_modelBaseName) {
+        if ($this->_model && $this->_modelBaseName && $this->_modelPrimaryKey) {
             $extraQuery = null;
             if ($log) {
                 $extraQuery = ', updated_by = ' . $this->_user['id'] . ", updated_at = '" . date("Y-m-d H:i:s") . "'";
@@ -376,7 +376,6 @@ class ZAdminController extends Controller
      * Move up
      *
      * @param $id
-     * @return \Phalcon\Http\ResponseInterface
      */
     public function moveUpAction($id)
     {
@@ -396,14 +395,14 @@ class ZAdminController extends Controller
         } else {
             $this->flashSession->error($this->_getPrefixMessage() . 'message_items_move_up_error');
         }
-        return $this->response->redirect('/admin/system/module/');
+        $this->response->redirect('/admin/system/module/');
+        return;
     }
 
     /**
      * Move down
      *
      * @param $id
-     * @return \Phalcon\Http\ResponseInterface
      */
     public function moveDownAction($id)
     {
@@ -423,7 +422,8 @@ class ZAdminController extends Controller
         } else {
             $this->flashSession->error($this->_getPrefixMessage() . 'message_items_move_down_error');
         }
-        return $this->response->redirect('/admin/system/module/');
+        $this->response->redirect('/admin/system/module/');
+        return;
     }
 
     /**

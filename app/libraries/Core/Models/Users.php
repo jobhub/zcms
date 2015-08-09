@@ -46,6 +46,12 @@ class Users extends ZModel
      *
      * @var string
      */
+    public $display_name;
+
+    /**
+     *
+     * @var string
+     */
     public $email;
 
     /**
@@ -301,6 +307,8 @@ class Users extends ZModel
         if ($this->validationHasFailed() == true) {
             return false;
         }
+
+        $this->display_name = $this->first_name . ' ' . $this->last_name;
 
         return true;
     }
