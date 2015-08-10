@@ -480,7 +480,7 @@ CREATE TABLE IF NOT EXISTS users (
   reset_password_token    TEXT,
   reset_password_token_at DATETIME,
   active_account_at       DATETIME,
-  active_account_token    VARCHAR(255),
+  active_account_token    TEXT,
   active_account_type     VARCHAR(32),
   coin                    DOUBLE PRECISION DEFAULT 0,
   token                   VARCHAR(255),
