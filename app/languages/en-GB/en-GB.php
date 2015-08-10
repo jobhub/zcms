@@ -146,5 +146,8 @@ return [
     'gb_seo_label_meta_keywords' => 'Meta keywords',
     'gb_seo_label_meta_robot_index' => 'Robots Index',
     'gb_seo_label_meta_robot_follow' => 'Robots follow',
-    'gb_seo_label_redirect_301' => 'Redirect 301'
+    'gb_seo_label_redirect_301' => 'Redirect 301',
+
+    //Busy or error
+    'System is busy, please try again later' => 'System is busy, please try again later',
 ];

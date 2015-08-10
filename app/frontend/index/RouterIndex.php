@@ -35,6 +35,11 @@ class RouterIndex extends Group
             'controller' => 'forgot-password',
             'action' => 'index',
         ]);
+
+        $this->add('user/reset-password(/)?', [
+            'controller' => 'forgot-password',
+            'action' => 'resetPassword',
+        ]);
     }
 }
 
