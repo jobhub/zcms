@@ -6,7 +6,7 @@ return [
         'host' => 'localhost',
         'username' => 'root',
         'password' => 'root',
-        'dbname' => 'zcms',
+        'dbname' => 'zcms_db_master',
         'port' => '3306',
         'schema' => 'public',
         'log' => 0,
@@ -28,8 +28,8 @@ return [
     ],
     'social' => [
         'facebook' => [
-            'appId' => '1101020523259539',
-            'appSecret' => '6c2b05451172bb6b65f12f10ec654726',
+            'appId' => '',
+            'appSecret' => '',
             'defaultGraphVersion' => 'v2.4',
             'permissions' => [
                 'email',
@@ -75,7 +75,6 @@ return [
         'status' => true
     ],
     'apcCache' => [
-        'prefix' => 'cache',
         'lifetime' => 1800,
         'status' => true
     ],
@@ -83,7 +82,6 @@ return [
         'host' => 'localhost',
         'lifetime' => 1800,
         'port' => 11211,
-        'prefix' => 'ZCMS_',
         'status' => true
     ],
     'redisCache' => [
@@ -97,8 +95,7 @@ return [
     'modelMetadataCache' => [
         'status' => true,
         'lifetime' => 1800,
-        'type' => 'files',
-        'prefix' => 'mmc_'//mmc = model_metadata_cache
+        'type' => 'files'
     ],
     'debug' => 0,
     'logError' => 0,
