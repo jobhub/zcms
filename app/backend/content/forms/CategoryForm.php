@@ -42,11 +42,11 @@ class CategoryForm extends ZForm
         $alias = new Text('alias');
         $this->add($alias);
 
-        $status = new Select('published', [
+        $published = new Select('published', [
             '1' => __('gb_published'),
             '0' => __('gb_unpublished')
-        ], ['value' => $category != null ? $category->status : 'published']);
-        $this->add($status);
+        ], ['value' => $category != null ? $category->published : 'published']);
+        $this->add($published);
 
         $description = new TextArea('description', ['class' => 'summernote']);
         $this->add($description);
@@ -68,17 +68,17 @@ class CategoryForm extends ZForm
                 $root = PostCategory::getRoot('content');
                 $value = $root->category_id;
             }
-            $elementParents = new Select('parent', $categoryFilter,['value' => $value]);
+            $elementParent = new Select('parent', $categoryFilter,['value' => $value, 'required' => 'required']);
         } else {
-            $elementParents = new Select('parent', $categoryFilter);
+            $elementParent = new Select('parent', $categoryFilter, ['required' => 'required']);
         }
 
         /**
          * @var \Phalcon\Mvc\Model\ResultsetInterface $categories
          */
-        $elementParents->addValidator(new InclusionIn(array(
+        $elementParent->addValidator(new InclusionIn(array(
             'domain' => array_column($categories->toArray(), 'category_id')
         )));
-        $this->add($elementParents);
+        $this->add($elementParent);
     }
 }

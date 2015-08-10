@@ -20,21 +20,27 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    {{ form.label('parent') }}
-                                    {{ form.render('parent') }}
+                                    {{ form.label('category_id') }}
+                                    {{ form.render('category_id') }}
                                 </div>
-                            </div>
-                            <div class="col-md-6">
                                 <div class="form-group">
                                     {{ form.label('published') }}
                                     {{ form.render('published') }}
                                 </div>
                             </div>
+                            <div class="col-md-6">
+
+                            </div>
                             <div class="clearfix"></div>
 
                             <div class="col-md-12">
-                                {{ form.label('description') }}
-                                {{ form.render('description') }}
+                                {{ form.label('intro_text') }}
+                                {{ form.render('intro_text') }}
+                            </div>
+
+                            <div class="col-md-12">
+                                {{ form.label('full_text') }}
+                                {{ form.render('full_text') }}
                             </div>
                         </div>
                         {{ form.getSeoFormHTML(true, 'col-md-5') }}
@@ -48,6 +54,7 @@
 {% block js_footer %}
     <link href="{{ _baseUri }}/plugins/summernote/dist/summernote.css" rel="stylesheet">
     <script src="{{ _baseUri }}/plugins/summernote/dist/summernote.min.js"></script>
+    <script type="text/javascript" src="{{ _baseUri }}/plugins/summernote/plugin/summernote-ext-hint.js"></script>
     <script type="text/javascript">
         $(function () {
             $('.summernote').summernote({

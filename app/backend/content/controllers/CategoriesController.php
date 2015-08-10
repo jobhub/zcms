@@ -45,7 +45,7 @@ class CategoriesController extends ZAdminController
 
         //Add sorting
         $this->addFilter('filter_order', 'lft', 'string');
-        $this->addFilter('filter_order_dir', 'DESC', 'string');
+        $this->addFilter('filter_order_dir', 'ASC', 'string');
         $this->addFilter('filter_column_title', '', 'string');
         $this->addFilter('filter_category_id', '', 'int');
         $this->addFilter('filter_published', '', 'string');
@@ -94,7 +94,7 @@ class CategoriesController extends ZAdminController
                 'title' => 'm_content_form_category_form_title',
                 'column' => 'title',
                 'link' => '/admin/content/categories/edit/',
-                'access' => $this->acl->isAllowed('content|category|edit'),
+                'access' => $this->acl->isAllowed('content|categories|edit'),
                 'pad_column' => 'level',
                 'pad_type' => STR_PAD_LEFT,
                 'pad_string' => '&mdash; ',
@@ -113,7 +113,7 @@ class CategoriesController extends ZAdminController
             [
                 'type' => 'published',
                 'title' => 'gb_published',
-                'access' => $this->acl->isAllowed('content|category|edit'),
+                'access' => $this->acl->isAllowed('content|categories|edit'),
                 'link' => '/admin/content/categories/',
                 'column' => 'published',
                 'filter' => [
@@ -143,14 +143,14 @@ class CategoriesController extends ZAdminController
                         'link' => '/admin/content/categories/moveUp/',
                         'link_class' => '',
                         'icon_class' => 'glyphicon glyphicon-chevron-up', // Co icon_class thi ko hien thi title
-                        'access' => $this->acl->isAllowed('content|category|edit'),
+                        'access' => $this->acl->isAllowed('content|categories|edit'),
                     ],
                     [
                         'link_title' => 'gb_move_down',
                         'link' => '/admin/content/categories/moveDown/',
                         'link_class' => '',
                         'icon_class' => 'glyphicon glyphicon-chevron-down', // Co icon_class thi ko hien thi title
-                        'access' => $this->acl->isAllowed('content|category|edit'),
+                        'access' => $this->acl->isAllowed('content|categories|edit'),
                     ]
                 ]
             ],
@@ -194,6 +194,8 @@ class CategoriesController extends ZAdminController
             if ($parent) {
                 if ($category->appendTo($parent)) {
                     $this->flashSession->success('m_content_category_message_add_new_category_successfully');
+                    $this->response->redirect('/admin/content/categories/edit/' . $category->category_id . '/');
+                    return;
                 } else {
                     $this->setFlashSession($category->getMessages(), 'notice');
                     return;
