@@ -166,7 +166,7 @@ class ZCache
         $this->cache = new FileCache(
             new DataFrontend(['lifetime' => $this->config->fileCache->lifetime]),
             [
-                'prefix' => $this->config,
+                'prefix' => $this->prefix,
                 'cacheDir' => ROOT_PATH . $this->config->fileCache->cacheDir
             ]
         );
@@ -184,7 +184,7 @@ class ZCache
         $this->cache = new MemcacheCache(
             new DataFrontend(['lifetime' => $this->lifeTime]),
             [
-                'prefix' => $this->config,
+                'prefix' => $this->prefix,
                 'host' => $this->config->memCache->host,
                 'port' => $this->config->memCache->port
             ]
@@ -203,7 +203,7 @@ class ZCache
         $this->cache = new ApcCache(
             new DataFrontend(['lifetime' => $this->lifeTime]),
             [
-                'prefix' => $this->config
+                'prefix' => $this->prefix
             ]
         );
     }
