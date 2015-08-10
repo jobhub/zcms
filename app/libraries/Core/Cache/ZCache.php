@@ -46,6 +46,11 @@ class ZCache
     protected $config;
 
     /**
+     * @var string
+     */
+    public $prefix;
+
+    /**
      * @var int
      */
     public $cache_status = 0;
@@ -117,6 +122,7 @@ class ZCache
         }
         $this->config = DI::getDefault()->get('config');
         $this->cacheName = $this->config->cachePrefix . $cacheName;
+        $this->prefix = $this->config->cachePrefix;
         if ($cacheType == self::memCache && $this->config->memCache->status) {
             $this->_initMemCached();
         } elseif ($cacheType == self::APC_CACHE && $this->config->apcCache->status) {
@@ -160,7 +166,7 @@ class ZCache
         $this->cache = new FileCache(
             new DataFrontend(['lifetime' => $this->config->fileCache->lifetime]),
             [
-                'prefix' => 'cache',
+                'prefix' => $this->config,
                 'cacheDir' => ROOT_PATH . $this->config->fileCache->cacheDir
             ]
         );
@@ -178,7 +184,7 @@ class ZCache
         $this->cache = new MemcacheCache(
             new DataFrontend(['lifetime' => $this->lifeTime]),
             [
-                'prefix' => $this->config->memCache->prefix,
+                'prefix' => $this->config,
                 'host' => $this->config->memCache->host,
                 'port' => $this->config->memCache->port
             ]
@@ -197,7 +203,7 @@ class ZCache
         $this->cache = new ApcCache(
             new DataFrontend(['lifetime' => $this->lifeTime]),
             [
-                'prefix' => $this->config->apcCache->prefix
+                'prefix' => $this->config
             ]
         );
     }

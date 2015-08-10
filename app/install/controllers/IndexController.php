@@ -1,4 +1,5 @@
 <?php
+
 use Phalcon\Db;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Email;
@@ -78,6 +79,7 @@ class IndexController extends InstallController
                 $salt = $this->security->getSaltBytes();
                 $config['website']['siteName'] = trim(preg_replace("/[^A-Za-z0-9 ]/", '', $siteName), ' ');
                 $config['mail']['mailFrom'] = $email;
+                $config['cachePrefix'] = randomString('6') . '_';
                 $config['mail']['smtpUser'] = $email;
                 $validation = new Validation();
                 $validation->add('email', new Email(array(
