@@ -47,7 +47,7 @@
         </form>
         <p class="text-center">
             <br/>
-            <a href="/" class="text-center">&larr; {{ __('m_user_help_text_back_to_frontend') }}</a> | <a
+            <a href="{{ _baseUri }}" class="text-center">&larr; {{ __('m_user_help_text_back_to_frontend') }}</a> | <a
                     href="/admin/user/forgot-password/">{{ __('m_user_help_text_i_forgot_my_password') }}</a>
         </p>
     </div>

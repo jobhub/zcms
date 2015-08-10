@@ -409,9 +409,13 @@ class Users extends ZModel
          * @var Users $user
          */
         $user = Users::findFirst([
-            'conditions' => 'is_active = 1 AND email = ?0',
+            'conditions' => 'email = ?0',
             'bind' => [$email]
         ]);
+
+        if ($user->is_active != '1') {
+            return -1;
+        }
 
         /**
          * @var \Phalcon\Security $security

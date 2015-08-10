@@ -46,12 +46,16 @@ class LoginController extends ZFrontController
             $email = strtolower($this->request->getPost('email', 'email'));
             $password = $this->request->getPost('password', 'string');
 
-            if (Users::login($email, $password)) {
+            $status = Users::login($email, $password);
+            if ($status === true) {
                 $user = Users::getCurrentUser();
                 $this->flashSession->success('Hi, ' . $user['full_name']);
                 $this->response->redirect('/');
-            } else {
-                $this->flashSession->error('User or password not match!');
+            } elseif($status === false) {
+                $this->flashSession->error('User or password not match');
+                $this->response->redirect('/user/login/');
+            }else{
+                $this->flashSession->error('Your account is not active yet');
                 $this->response->redirect('/user/login/');
             }
         }

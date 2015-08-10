@@ -16,7 +16,7 @@ class ForgotPasswordController extends ZFrontController
     {
         if ($this->isLogin()) {
             $this->response->redirect('/');
-            exit;
+            return;
         }
         if ($this->request->isPost()) {
             $email = $this->request->getPost('email', null, '');
@@ -29,7 +29,7 @@ class ForgotPasswordController extends ZFrontController
                     'bind' => [$email]
                 ]);
                 if ($user) {
-                    $user->reset_password_token = randomString(222) . time();
+                    $user->reset_password_token = randomString(255) . md5($user->email) . time();
                     $user->reset_password_token_at = date('Y-m-d H:i:s');
                     $user->save();
                     ZEmail::getInstance()

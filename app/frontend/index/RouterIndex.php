@@ -31,6 +31,11 @@ class RouterIndex extends Group
             'action' => 'index',
         ]);
 
+        $this->add('user/activate-account(/)?', [
+            'controller' => 'register',
+            'action' => 'activateAccount',
+        ]);
+
         $this->add('user/forgot-password(/)?', [
             'controller' => 'forgot-password',
             'action' => 'index',
