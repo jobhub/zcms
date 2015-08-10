@@ -1,7 +1,5 @@
 <?php
 $resource = [
-    'name' => 'Default Front End',
-    'description' => '',
     'author' => 'ZCMS Team',
     'authorUri' => 'http://www.zcms.com',
     'version' => '0.0.1',

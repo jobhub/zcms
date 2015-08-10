@@ -1,7 +1,5 @@
 <?php
 $resource = [
-    'name' => 'Social Login',
-    'description' => 'Integrate Facebook, G+, Twitter login to website',
     'author' => 'ZCMS Team',
     'authorUri' => 'http://www.zcms.com',
     'version' => '0.0.1',
