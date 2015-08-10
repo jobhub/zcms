@@ -27,6 +27,11 @@ class Posts extends ZModel
     public $post_type;
 
     /**
+     * @var integer
+     */
+    public $category_id;
+
+    /**
      * @var string
      */
     public $title;
@@ -106,4 +111,20 @@ class Posts extends ZModel
      * @var integer
      */
     public $comment_status;
+
+    /**
+     * Initialize method for model
+     */
+    public function initialize()
+    {
+
+    }
+
+    public function beforeSave()
+    {
+        $this->title = strip_tags($this->title);
+        if($this->alias == ''){
+            $this->alias = generateAlias($this->title);
+        }
+    }
 }
