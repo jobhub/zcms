@@ -446,7 +446,7 @@ CREATE TABLE IF NOT EXISTS posts
   tags           TEXT,
   version        INTEGER UNSIGNED,
   ordering       INTEGER UNSIGNED,
-  status         VARCHAR(20),
+  published      SMALLINT,
   published_at   DATETIME,
   intro_text     TEXT,
   full_text      LONGTEXT,
