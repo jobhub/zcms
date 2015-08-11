@@ -446,7 +446,6 @@ CREATE TABLE IF NOT EXISTS posts
   hits           INTEGER,
   tags           TEXT,
   version        INTEGER,
-  ordering       INTEGER,
   published      SMALLINT,
   published_at   TIMESTAMP,
   intro_text     TEXT,
@@ -461,6 +460,22 @@ CREATE TABLE IF NOT EXISTS posts
   created_by     INTEGER,
   updated_at     TIMESTAMP,
   updated_by     INTEGER
+);
+--ZCMS--
+CREATE TABLE IF NOT EXISTS medias
+(
+  media_id    SERIAL NOT NULL PRIMARY KEY,
+  title       VARCHAR(255),
+  alt_text    VARCHAR(255),
+  caption     VARCHAR(255),
+  description TEXT,
+  mime_type   VARCHAR(100),
+  file_name   VARCHAR(255),
+  information TEXT,
+  created_at  TIMESTAMP,
+  created_by  INTEGER,
+  updated_at  TIMESTAMP,
+  updated_by  INTEGER
 );
 --ZCMS--
 CREATE TABLE IF NOT EXISTS users (

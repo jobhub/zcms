@@ -445,7 +445,6 @@ CREATE TABLE IF NOT EXISTS posts
   hits           INTEGER UNSIGNED,
   tags           TEXT,
   version        INTEGER UNSIGNED,
-  ordering       INTEGER UNSIGNED,
   published      SMALLINT,
   published_at   DATETIME,
   intro_text     TEXT,
@@ -454,12 +453,28 @@ CREATE TABLE IF NOT EXISTS posts
   meta_key       VARCHAR(255),
   metadata       VARCHAR(255),
   options        LONGTEXT,
-  comment_count  INTEGER UNSIGNED,
+  comment_count  INTEGER,
   comment_status VARCHAR(20),
   created_at     DATETIME,
-  created_by     INTEGER UNSIGNED,
+  created_by     INTEGER,
   updated_at     DATETIME,
-  updated_by     INTEGER UNSIGNED
+  updated_by     INTEGER
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+##ZCMS##
+CREATE TABLE IF NOT EXISTS medias
+(
+  media_id    INTEGER UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  title       VARCHAR(255),
+  alt_text    VARCHAR(255),
+  caption     VARCHAR(255),
+  description TEXT,
+  mime_type   VARCHAR(100),
+  file_name   VARCHAR(255),
+  information TEXT,
+  created_at  DATETIME,
+  created_by  INTEGER,
+  updated_at  DATETIME,
+  updated_by  INTEGER
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 ##ZCMS##
 CREATE TABLE IF NOT EXISTS users (
