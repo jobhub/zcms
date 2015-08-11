@@ -120,7 +120,7 @@ class ForgotPasswordController extends ZFrontController
              * @var Users $user
              */
             $user = Users::findFirst([
-                'conditions' => "is_active = 1 AND reset_password_token = ?0 AND reset_password_token <>''",
+                'conditions' => "is_active = 1 AND reset_password_token = ?0 AND reset_password_token <> ''",
                 'bind' => [$token]
             ]);
             if ($user) {

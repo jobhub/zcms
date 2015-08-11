@@ -9,7 +9,7 @@ $menu = [
         ],
         [
             'rule' => 'menu|menuitem',
-            'icon_class' => 'fa fa-share-alt'
+            'icon_class' => 'fa fa-link'
         ]
     ]
 ];
