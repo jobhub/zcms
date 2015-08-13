@@ -405,7 +405,7 @@ class Users extends ZModel
      */
     public static function login($email, $password)
     {
-        $email = strtolower(str_replace(' ', '', $email));
+        $email = strtolower($email);
 
         /**
          * @var Users $user
@@ -414,6 +414,8 @@ class Users extends ZModel
             'conditions' => 'email = ?0',
             'bind' => [$email]
         ]);
+
+        echo '<pre>'; var_dump($user);echo '</pre>'; die();
 
         if ($user->is_active != '1') {
             return -1;
