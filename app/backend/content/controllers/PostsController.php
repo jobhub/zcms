@@ -4,6 +4,7 @@ namespace ZCMS\Backend\Content\Controllers;
 
 use ZCMS\Backend\Content\Forms\PostForm;
 use ZCMS\Core\Models\Posts;
+use ZCMS\Core\Models\UserRoles;
 use ZCMS\Core\Utilities\ZArrayHelper;
 use ZCMS\Core\ZAdminController;
 use ZCMS\Core\ZPagination;
@@ -33,6 +34,7 @@ class PostsController extends ZAdminController
         $this->addFilter('filter_column_title', '', 'string');
         $this->addFilter('filter_post_id', '', 'int');
         $this->addFilter('filter_published', '', 'string');
+        $this->addFilter('filter_role', '', 'int');
 
         //Get filter
         $filter = $this->getFilter();
@@ -48,8 +50,12 @@ class PostsController extends ZAdminController
             $conditions[] = "p.post_id = " . intval($filter['filter_post_id']);
         }
 
-        if ($filter['filter_published'] != '') {
+        if ($filter['filter_published'] != '' && $filter['filter_published'] != '-1') {
             $conditions[] = "p.published = " . intval($filter['filter_published']);
+        }
+
+        if($filter['filter_role'] != '' && $filter['filter_role'] != '-1'){
+            $conditions[] = "u.role_id = " . intval($filter['filter_role']);
         }
 
         $items = $this->modelsManager->createBuilder()
@@ -91,12 +97,6 @@ class PostsController extends ZAdminController
                 'class' => 'text-center'
             ],
             [
-                'type' => 'text',
-                'title' => 'gb_created_by',
-                'column' => 'display_name',
-                'class' => 'text-center'
-            ],
-            [
                 'type' => 'published',
                 'title' => 'gb_published',
                 'access' => $this->acl->isAllowed('content|posts|edit'),
@@ -107,7 +107,7 @@ class PostsController extends ZAdminController
                     'name' => 'filter_published',
                     'attributes' => [
                         'useEmpty' => true,
-                        'emptyValue' => '0',
+                        'emptyValue' => '-1',
                         'emptyText' => 'All',
                         'value' => $filter['filter_published'] == '' ? -1 : $filter['filter_published']
                     ],
@@ -115,6 +115,27 @@ class PostsController extends ZAdminController
                         0 => 'No',
                         1 => 'Yes',
                     ]
+                ]
+            ],
+            [
+                'type' => 'text',
+                'title' => 'gb_created_by',
+                'column' => 'display_name',
+                'class' => 'text-center',
+                'filter' => [
+                    'type' => 'select',
+                    'name' => 'filter_role',
+                    'attributes' => [
+                        'using' => [
+                            'role_id',
+                            'name'
+                        ],
+                        'useEmpty' => true,
+                        'emptyValue' => '-1',
+                        'emptyText' => 'All',
+                        'value' => $filter['filter_role'] == '' ? -1 : $filter['filter_role']
+                    ],
+                    'value' => UserRoles::find()
                 ]
             ],
             [
@@ -218,10 +239,10 @@ class PostsController extends ZAdminController
             foreach ($posts as $p) {
                 $p->delete();
             }
-            if($count == 1){
+            if ($count == 1) {
                 $this->flashSession->success('m_content_post_message_delete_one_post_successfully');
-            }else{
-                $this->flashSession->success(__('m_content_post_message_delete_posts_successfully',[$count]));
+            } else {
+                $this->flashSession->success(__('m_content_post_message_delete_posts_successfully', [$count]));
             }
         }
         $this->response->redirect('/admin/content/posts/');

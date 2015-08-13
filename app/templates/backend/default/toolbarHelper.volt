@@ -8,5 +8,4 @@
             </div>
         </section>
         <!-- End Content Header (Page header) -->
-
 {% include _flashSession %}

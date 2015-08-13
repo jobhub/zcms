@@ -310,3 +310,10 @@ jQuery(window).scroll(function () {
         check_scroll = false;
     }
 });
+
+$('.alert button.close').click(function () {
+    var alert = $(this).parent().parent();
+    if (alert.hasClass('zcms-toolbar-helper')) {
+        alert.remove();
+    }
+});

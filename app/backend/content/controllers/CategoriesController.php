@@ -4,6 +4,7 @@ namespace ZCMS\Backend\Content\Controllers;
 
 use ZCMS\Backend\Content\Forms\CategoryForm;
 use ZCMS\Core\Models\PostCategory;
+use ZCMS\Core\Models\UserRoles;
 use ZCMS\Core\Utilities\ZArrayHelper;
 use ZCMS\Core\ZAdminController;
 use ZCMS\Core\ZPagination;
@@ -15,23 +16,6 @@ use ZCMS\Core\ZPagination;
  */
 class CategoriesController extends ZAdminController
 {
-//    /**
-//     * @var string PHQL Model
-//     */
-//    public $_model = 'ZCMS\Core\Models\PostCategory';
-//
-//    /**
-//     * @var string Model name in database
-//     */
-//    public $_modelBaseName = 'categories';
-//
-//    /**
-//     * Primary key for this model
-//     *
-//     * @var string Model primary key
-//     */
-//    public $_modelPrimaryKey = 'category_id';
-
     /**
      * List all categories
      */
@@ -48,7 +32,8 @@ class CategoriesController extends ZAdminController
         $this->addFilter('filter_order_dir', 'ASC', 'string');
         $this->addFilter('filter_column_title', '', 'string');
         $this->addFilter('filter_category_id', '', 'int');
-        $this->addFilter('filter_published', '', 'string');
+        $this->addFilter('filter_published', '', 'int');
+        $this->addFilter('filter_role', '', 'int');
 
         //Get filter
         $filter = $this->getFilter();
@@ -66,8 +51,12 @@ class CategoriesController extends ZAdminController
             $conditions[] = "category_id = " . intval($filter['filter_category_id']);
         }
 
-        if ($filter['filter_published'] != '') {
+        if ($filter['filter_published'] != '' && $filter['filter_published'] != '-1') {
             $conditions[] = "published = " . intval($filter['filter_published']);
+        }
+
+        if($filter['filter_role'] != '' && $filter['filter_role'] != '-1'){
+            $conditions[] = "u.role_id = " . intval($filter['filter_role']);
         }
 
         $items = $this->modelsManager->createBuilder()
@@ -105,12 +94,6 @@ class CategoriesController extends ZAdminController
                 ]
             ],
             [
-                'type' => 'text',
-                'title' => 'gb_created_by',
-                'column' => 'display_name',
-                'class' => 'text-center'
-            ],
-            [
                 'type' => 'published',
                 'title' => 'gb_published',
                 'access' => $this->acl->isAllowed('content|categories|edit'),
@@ -121,7 +104,7 @@ class CategoriesController extends ZAdminController
                     'name' => 'filter_published',
                     'attributes' => [
                         'useEmpty' => true,
-                        'emptyValue' => '0',
+                        'emptyValue' => '-1',
                         'emptyText' => 'All',
                         'value' => $filter['filter_published'] == '' ? -1 : $filter['filter_published']
                     ],
@@ -152,6 +135,27 @@ class CategoriesController extends ZAdminController
                         'icon_class' => 'glyphicon glyphicon-chevron-down', // Co icon_class thi ko hien thi title
                         'access' => $this->acl->isAllowed('content|categories|edit'),
                     ]
+                ]
+            ],
+            [
+                'type' => 'text',
+                'title' => 'gb_created_by',
+                'column' => 'display_name',
+                'class' => 'text-center',
+                'filter' => [
+                    'type' => 'select',
+                    'name' => 'filter_role',
+                    'attributes' => [
+                        'using' =>[
+                            'role_id',
+                            'name'
+                        ],
+                        'useEmpty' => true,
+                        'emptyValue' => '-1',
+                        'emptyText' => 'All',
+                        'value' => $filter['filter_role'] == '' ? -1 : $filter['filter_role']
+                    ],
+                    'value' => UserRoles::find()
                 ]
             ],
             [

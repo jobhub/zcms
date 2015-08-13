@@ -14,7 +14,7 @@ use ZCMS\Core\Utilities\ZToolbarHelper;
  * @package   ZCMS\Core
  * @since     0.0.1
  */
-class ZTemplate
+class ZAdminTemplate
 {
     /**
      * @var string Module name need overwrite template
@@ -52,10 +52,9 @@ class ZTemplate
     public function beforeRender($event, $view)
     {
         $view->setVar('_limit', $view->getDI()->get('config')->pagination->limit);
-        if (isset($view->_sortColumn) && isset($view->_filter)) {
-            $filter = array_column($view->_sortColumn, 'filter');
+        if (isset($view->_pageLayout) && isset($view->_filter)) {
+            $filter = array_column($view->_pageLayout, 'filter');
             if (!empty($filter)) {
-
                 $filterForm = new ZFormFilter($filter, $view->_filter);
                 $view->setVar('_filterColumn', $filterForm->getForm());
             }

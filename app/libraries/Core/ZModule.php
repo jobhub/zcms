@@ -127,7 +127,7 @@ class ZModule implements ModuleDefinitionInterface
             //Create Phalcon\Mvc\View
             $view = new ZView();
 
-            $template = new ZTemplate($this->module);
+            $template = new ZAdminTemplate($this->module);
 
             //Attach event
             $eventsManager = $di->getShared('eventsManager');

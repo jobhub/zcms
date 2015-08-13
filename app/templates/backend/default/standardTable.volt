@@ -9,12 +9,12 @@
             <div class="col-md-4">
                 <div class="dataTables_filter">
                     <label>
-                        <button type="submit" class="btn btn-success btn-sm"><i
-                                    class="fa fa-filter"></i> {{ __('gb_search') }}</button>
-                    </label>
-                    <label>
                         <button type="reset" onclick="return ZCMS.resetFilter();" class="btn btn-warning btn-sm"><i
                                     class="fa fa-undo"></i> {{ __('gb_reset') }}</button>
+                    </label>
+                    <label>
+                        <button type="submit" class="btn btn-success btn-sm"><i
+                                    class="fa fa-filter"></i> {{ __('gb_search') }}</button>
                     </label>
                 </div>
             </div>

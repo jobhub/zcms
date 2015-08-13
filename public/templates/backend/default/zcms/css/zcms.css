@@ -20,10 +20,6 @@
     height: 2px
 }
 
-.zcms-toolbar-helper {
-    margin-top: 15px;
-}
-
 .symbol.required:before {
     content: "*";
     display: inline;
@@ -113,6 +109,11 @@
 
 .zcms-toolbar-helper {
     margin-bottom: 5px;
+    margin-top: 8px;
+}
+
+.zcms-toolbar-helper .alert{
+    margin-bottom: 1px;
 }
 
 .zcms-toolbar-helper a {
