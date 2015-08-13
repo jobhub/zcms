@@ -415,8 +415,6 @@ class Users extends ZModel
             'bind' => [$email]
         ]);
 
-        echo '<pre>'; var_dump($user);echo '</pre>'; die();
-
         if ($user->is_active != '1') {
             return -1;
         }
