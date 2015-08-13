@@ -39,7 +39,7 @@ class LoginController extends ZAdminController
                 return $this->response->redirect('/admin/user/login/');
             }
 
-            $email = strtolower($this->request->getPost('email', 'email'));
+            $email = $this->request->getPost('email', 'email');
             $password = $this->request->getPost('password', 'string');
 
             if (Users::login($email, $password)) {

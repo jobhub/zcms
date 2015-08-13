@@ -405,6 +405,8 @@ class Users extends ZModel
      */
     public static function login($email, $password)
     {
+        $email = strtolower(str_replace(' ', '', $email));
+
         /**
          * @var Users $user
          */
