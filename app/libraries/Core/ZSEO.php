@@ -2,7 +2,7 @@
 
 namespace ZCMS\Core;
 
-use Phalcon\Di as PDI;
+use Phalcon\Di;
 use Phalcon\Escaper;
 
 /**
@@ -193,7 +193,7 @@ class ZSEO
 
     /**
      * Set keywords
-     * @param $keywords
+     * @param string $keywords
      * @return $this
      */
     public function setKeywords($keywords)
@@ -254,7 +254,7 @@ class ZSEO
     /**
      * Get link by rel type
      *
-     * @param $relType
+     * @param string $relType
      * @param string $defaultValue
      * @return string
      */
@@ -339,7 +339,7 @@ class ZSEO
 
     /**
      * Set header prefix
-     * @param $str
+     * @param string $str
      * @return $this
      */
     public function setHeaderPrefix($str)
@@ -431,7 +431,7 @@ class ZSEO
      */
     public function __toString()
     {
-        $DI = PDI::getDefault();
+        $DI = Di::getDefault();
         $config = $DI->get('config');
         $this->icon = BASE_URI . '/templates/frontend/' . $config->frontendTemplate->defaultTemplate . '/favicon.ico';
 

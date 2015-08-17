@@ -1,7 +1,7 @@
 <?php
 
+use Phalcon\Di;
 use ZCMS\Core\ZSEO;
-use Phalcon\Di as PDI;
 use ZCMS\Core\ZSidebar;
 use ZCMS\Core\ZTranslate;
 use ZCMS\Core\Utilities\URLify;
@@ -80,7 +80,7 @@ function zcms_header_prefix()
 /**
  * Remove multi space
  *
- * @param $str
+ * @param string $str
  * @return mixed
  */
 function remove_multi_space($str)
@@ -105,7 +105,7 @@ function zcms_load_widget_file($location = 'frontend')
             /**
              * @var \Phalcon\Flash\Session $flashSession
              */
-            $flashSession = PDI::getDefault()->get('flashSession');
+            $flashSession = Di::getDefault()->get('flashSession');
             $flashSession->error(__('gb_widget_not_found_in_location', ['1' => $w, '2' => $location]));
         }
     }
@@ -312,14 +312,6 @@ function check_menu($path)
                 if ($cVertical == 0) {
                     return false;
                 }
-
-//                if ($cVertical == 2) {
-//                    $menu['items'][$index]['rule'] .= '|index';
-//                }
-
-//                if($moduleBaseName == 'menu'){
-//                    echo '<pre>'; var_dump($menu['items']);echo '</pre>'; die();
-//                }
 
                 if (!isset($menuItem['menu_name'])) {
                     $menu['items'][$index]['menu_name'] = 'm_admin_' . str_replace('|', '_', $menu['items'][$index]['rule']);
@@ -653,7 +645,7 @@ function register_widget($widgetClassName)
 /**
  * HumanTiming
  *
- * @param $time
+ * @param string $time
  * @return string format time
  */
 function human_timing($time)
