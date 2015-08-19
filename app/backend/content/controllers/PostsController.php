@@ -59,7 +59,7 @@ class PostsController extends ZAdminController
         }
 
         $items = $this->modelsManager->createBuilder()
-            ->columns('p.post_id, p.title, p.created_at, p.updated_at, p.published, u.display_name, c.title as c_title')
+            ->columns('p.post_id, p.title, p.created_at, p.updated_at, p.published AS published, u.display_name, c.title as c_title')
             ->addFrom('ZCMS\Core\Models\Posts', 'p')
             ->join('ZCMS\Core\Models\Users', 'p.created_by = u.user_id', 'u')
             ->leftJoin('ZCMS\Core\Models\PostCategory', 'p.category_id = c.category_id', 'c')
