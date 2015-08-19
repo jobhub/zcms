@@ -10,3 +10,4 @@ cache/logs/db.log
 app/config/config.php
 public/_install.php
 public/install.php
+tmp

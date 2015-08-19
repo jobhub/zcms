@@ -9,7 +9,7 @@ $resource = [
     'path' => '/backend/media/Module.php',
     'acl' => [
         [
-            'controller' => 'media',
+            'controller' => 'manager',
             'rules' => [
                 [
                     'action' => 'index',
