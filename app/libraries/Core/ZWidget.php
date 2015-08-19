@@ -2,13 +2,12 @@
 
 namespace ZCMS\Core;
 
-use Phalcon\Di as PDI;
-use Phalcon\DI\Injectable;
+use Phalcon\Di;
+use Phalcon\Tag;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Volt;
-use Phalcon\Tag;
-use ZCMS\Core\Models\CoreTemplates;
 use ZCMS\Core\Models\CoreWidgets;
+use ZCMS\Core\Models\CoreTemplates;
 use ZCMS\Core\Models\CoreWidgetValues;
 
 /**
@@ -16,10 +15,9 @@ use ZCMS\Core\Models\CoreWidgetValues;
  *
  * @package   ZCMS\Core
  *
- * @property mixed config
  * @since     0.0.1
  */
-class ZWidget extends Injectable
+class ZWidget
 {
     /**
      * Widget id
@@ -79,6 +77,21 @@ class ZWidget extends Injectable
     public $_layout = [];
 
     /**
+     * @var View
+     */
+    protected $view;
+
+    /**
+     * @var \Phalcon\Db\Adapter\Pdo\Postgresql
+     */
+    private $db;
+
+    /**
+     * @var \stdClass
+     */
+    private $config;
+
+    /**
      * Instance construct
      *
      * @param integer $id
@@ -87,6 +100,8 @@ class ZWidget extends Injectable
      */
     public function __construct($id = null, $widgetInfo = [], $options = [])
     {
+        $this->db = Di::getDefault()->get('db');
+        $this->config = Di::getDefault()->get('config');
         $this->validation = $this->checkOptions($options);
         if ($this->validation) {
             $this->newOptions = $options;
@@ -248,6 +263,7 @@ class ZWidget extends Injectable
      */
     public final function getWidget()
     {
+        $this->__initView();
         $this->widget();
         $this->view->start();
         $overrideFolder = ROOT_PATH . '/app/templates/frontend/' . $this->config->frontendTemplate->defaultTemplate . '/widgets/';
@@ -267,6 +283,40 @@ class ZWidget extends Injectable
         }
         $html .= '<div class="widget-content">' . $content . '</div>';
         return $html;
+    }
+
+    private function __initView()
+    {
+        $this->view = new View();
+        $this->view->setDI(Di::getDefault());
+        $this->view->registerEngines([
+            '.volt' => function ($view, $di) {
+                $volt = new Volt($view, $di);
+
+                $volt->setOptions([
+                    'compiledPath' => function ($templatePath) {
+                        $templatePath = strstr($templatePath, '/app');
+                        $dirName = dirname($templatePath);
+
+                        if (!is_dir(ROOT_PATH . '/cache/volt' . $dirName)) {
+                            mkdir(ROOT_PATH . '/cache/volt' . $dirName, 0755, TRUE);
+                        }
+                        return ROOT_PATH . '/cache/volt' . $dirName . '/' . basename($templatePath, '.volt') . '.php';
+                    },
+                    'compileAlways' => method_exists($di, 'get') ? (bool)($di->get('config')->backendTemplate->compileTemplate) : false
+                ]);
+                $compiler = $volt->getCompiler();
+                $compiler->addFunction('get_sidebar', 'get_sidebar');
+                $compiler->addFunction('__', '__');
+                $compiler->addFunction('strtotime', 'strtotime');
+                $compiler->addFunction('human_timing', 'human_timing');
+                $compiler->addFunction('moneyFormat', 'moneyFormat');
+                $compiler->addFunction('number_format', 'number_format');
+                $compiler->addFunction('change_date_format', 'change_date_format');
+                $compiler->addFunction('in_array', 'in_array');
+                return $volt;
+            }
+        ]);
     }
 
     /**
