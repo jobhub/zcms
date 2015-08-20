@@ -49,7 +49,7 @@
                             <div class="clearfix"></div>
                             <div style="float: left">
                                 <div class="product_image_preview" onclick="openFileBrowser(this)"><img
-                                            src="{% if slideShowItems is defined and slideShowItems.image|length %}{{ slideShowItems.image }}{% else %}/media/default/no-image.png{% endif %}"
+                                            src="{{ _baseUri }}{% if slideShowItems is defined and slideShowItems.image|length %}{{ slideShowItems.image }}{% else %}/media/default/no-image.png{% endif %}"
                                             style="width: 250px; border: 1px solid #c0c0c0; padding: 2px; border-radius: 3px">
                                 </div>
                                 <input type="file" name="image" style="display: none" onchange="readURL(this)">

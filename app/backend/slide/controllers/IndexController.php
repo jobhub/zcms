@@ -90,7 +90,7 @@ class IndexController extends ZAdminController
                 'type' => 'image',
                 'width' => '100',
                 'height' => 'auto',
-                'uri_prefix' => '',
+                'uri_prefix' => BASE_URI,
                 'column' => 'image',
                 'css' => 'width : 105px',
                 'title' => 'm_slide_form_slide_show_form_image',
