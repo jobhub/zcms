@@ -14,6 +14,11 @@ class IndexController extends ZFrontController
 {
     public function indexAction()
     {
+        $dir = ROOT_PATH . '/public/media/upload/' . date('Y/m/d');
+        if(!is_dir($dir)){
+            mkdir($dir, 0755,true);
+        }
+        echo '<pre>'; var_dump($dir);echo '</pre>'; die();
 //        $root = Categories::findFirst(1);
 //        $iphone6 = new Categories();
 //        $iphone6->title = 'Iphone 6';

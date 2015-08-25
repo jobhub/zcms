@@ -1,6 +1,8 @@
 <?php
 
 namespace ZCMS\Backend\Media\Controllers;
+
+use ZCMS\Core\Utilities\MediaUpload;
 use ZCMS\Core\ZAdminController;
 
 /**
@@ -15,11 +17,13 @@ class ManagerController extends ZAdminController
 
     }
 
-    public function newAction(){
-        $this->view->setVar('max_file_upload',(int)ini_get("upload_max_filesize"));
-        if($this->request->isAjax()){
-            if($files = $this->request->getUploadedFiles()){
-                $file = $files[0];
+    public function newAction()
+    {
+        $this->view->setVar('max_file_upload', (int)ini_get("upload_max_filesize"));
+        if ($this->request->isAjax()) {
+            if ($files = $this->request->getUploadedFiles()) {
+                $msg = (new MediaUpload($files[0]))->msg;
+                echo '<pre>'; var_dump($msg);echo '</pre>'; die();
             }
         }
     }

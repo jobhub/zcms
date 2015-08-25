@@ -48,7 +48,7 @@ class ZModel extends PModel
         }
 
         if (property_exists($this, 'updated_by')) {
-            $this->updated_by = NULL;
+            $this->updated_by = $this->_getUserId();
         }
 
         if (property_exists($this, 'updated_at')) {
@@ -163,7 +163,7 @@ class ZModel extends PModel
             }
 
         } else {
-            throw new Exception('This model does not support ordering');
+            throw new Exception(__('This model does not support ordering'));
         }
         return true;
     }

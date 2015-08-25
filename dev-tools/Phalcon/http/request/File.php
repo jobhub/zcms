@@ -36,6 +36,9 @@ class File implements \Phalcon\Http\Request\FileInterface
 	public function getKey() {}
 
 
+    /**
+     * @return string
+     */
 	public function getExtension() {}
 
     /**
