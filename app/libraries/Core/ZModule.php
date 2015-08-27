@@ -165,6 +165,9 @@ class ZModule implements ModuleDefinitionInterface
                     $compiler = $volt->getCompiler();
                     $compiler->addFunction('get_sidebar', 'get_sidebar');
                     $compiler->addFunction('__', '__');
+                    $compiler->addFilter('t', function ($resolvedArgs) {
+                        return '__(' . $resolvedArgs . ')';
+                    });
                     $compiler->addFunction('strtotime', 'strtotime');
                     $compiler->addFunction('human_timing', 'human_timing');
                     $compiler->addFunction('moneyFormat', 'moneyFormat');

@@ -23,7 +23,7 @@ class ManagerController extends ZAdminController
         if ($this->request->isAjax()) {
             if ($files = $this->request->getUploadedFiles()) {
                 $msg = (new MediaUpload($files[0]))->msg;
-                echo '<pre>'; var_dump($msg);echo '</pre>'; die();
+                die(json_encode($msg));
             }
         }
     }

@@ -12,18 +12,15 @@
         Dropzone.options.uploadFile = {
             paramName: "file", // The name that will be used to transfer the file
             maxFilesize: {{ max_file_upload }}, // MB,
-            acceptedFiles: 'image/*,application/pdf,video/*',
+            //acceptedFiles: 'image/*,application/pdf,video/*,audio/*',
             dictDefaultMessage: 'Drop or click to upload files!<br /><span style="font-size: 16px">Max file upload size {{ max_file_upload }}Mb</span>',
 //            previewTemplate : '<div></div>',
-//            success: function (file, response, e) {
-//                imageCount++;
-//                if (file) {
-//                    console.log('yyy');
-//                } else {
-//                    console.log('xxxx');
-//                    errorUpload.push(imageCount);
-//                }
-//            }
+            success: function (file, response, e) {
+                if (file.previewElement) {
+                    return file.previewElement.classList.add("dz-success");
+                }
+                console.log(file.type);
+            }
         };
     </script>
 {% endblock %}

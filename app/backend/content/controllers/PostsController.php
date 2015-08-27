@@ -108,7 +108,7 @@ class PostsController extends ZAdminController
                     'attributes' => [
                         'useEmpty' => true,
                         'emptyValue' => '-1',
-                        'emptyText' => 'All',
+                        'emptyText' => __('gb_all'),
                         'value' => $filter['filter_published'] == '' ? -1 : $filter['filter_published']
                     ],
                     'value' => [
@@ -132,7 +132,7 @@ class PostsController extends ZAdminController
                         ],
                         'useEmpty' => true,
                         'emptyValue' => '-1',
-                        'emptyText' => 'All',
+                        'emptyText' => __('gb_all'),
                         'value' => $filter['filter_role'] == '' ? -1 : $filter['filter_role']
                     ],
                     'value' => UserRoles::find()

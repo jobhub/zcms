@@ -5,9 +5,11 @@ cache/volt/
 cache/metadata/
 cache/web
 cache/install
+cache/fileCache
 cache/tmp
 cache/logs/db.log
 app/config/config.php
 public/_install.php
+public/media
 public/install.php
 tmp

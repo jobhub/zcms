@@ -92,6 +92,7 @@ return [
     'gb_alias' => 'Alias',
     'gb_select_role' => '-- Select Role --',
     'gb_select' => '-- Select --',
+    'gb_all' => 'All',
     'gb_metaDesc' => 'Meta description',
     'gb_metaKey' => 'Meta keyword',
     'gb_reset' => 'Reset',

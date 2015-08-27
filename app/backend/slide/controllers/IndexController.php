@@ -140,7 +140,7 @@ class IndexController extends ZAdminController
                     'attributes' => [
                         'useEmpty' => true,
                         'emptyValue' => '0',
-                        'emptyText' => 'All',
+                        'emptyText' => __('gb_all'),
                         'value' => $filter['filter_published'] == '' ? -1 : $filter['filter_published']
                     ],
                     'value' => [

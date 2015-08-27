@@ -230,7 +230,7 @@ class ManageSlideController extends ZAdminController
                     'name' => 'filter_published',
                     'attributes' => [
                         'useEmpty' => true,
-                        'emptyText' => 'All',
+                        'emptyText' => __('gb_all'),
                         'value' => $filter['filter_published'] == '' ? -1 : $filter['filter_published']
                     ],
                     'value' => [
