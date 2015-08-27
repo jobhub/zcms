@@ -15,10 +15,10 @@ class MediaUpload
     /**
      * @var array
      */
-    public $msg;
+    public $response;
 
     /**
-     *
+     * See @WordPress
      *
      * @var array
      */
@@ -79,6 +79,7 @@ class MediaUpload
         'exe' => 'application/x-msdownload',
         'psd' => 'application/octet-stream',
         'xcf' => 'application/octet-stream',
+        'bz2' => 'application/x-bzip2',
         // MS Office formats.
         'doc' => 'application/msword',
         'pot|pps|ppt' => 'application/vnd.ms-powerpoint',
@@ -122,136 +123,32 @@ class MediaUpload
         'key' => 'application/vnd.apple.keynote',
         'numbers' => 'application/vnd.apple.numbers',
         'pages' => 'application/vnd.apple.pages',
-
-        //Image
-        'image/jpeg',
-        'image/gif',
-        'image/png',
-        'image/bmp',
-        'image/tiff',
-        'image/x-icon',
-        //Video
-        'video/x-ms-asf',
-        'video/x-ms-wmv',
-        'video/x-ms-wmx',
-        'video/x-ms-wm',
-        'video/avi',
-        'video/divx',
-        'video/x-flv',
-        'video/quicktime',
-        'video/mpeg',
-        'video/mp4',
-        'video/ogg',
-        'video/webm',
-        'video/x-matroska',
-        'video/3gpp',
-        'video/3gpp2',
-        //Text
-        'text/plain',
-        'text/csv',
-        'text/tab-separated-values',
-        'text/calendar',
-        'text/richtext',
-        'text/css',
-        'text/html',
-        'text/vtt',
-        'application/ttaf+xml',
-        //Audio
-        'audio/mpeg',
-        'audio/x-realaudio',
-        'audio/wav',
-        'audio/ogg',
-        'audio/midi',
-        'audio/x-ms-wma',
-        'audio/x-ms-wax',
-        'audio/x-matroska',
-        //Misc application
-        'application/rtf',
-        'application/javascript',
-        'application/pdf',
-        'application/x-shockwave-flash',
-        'application/java',
-        'application/x-tar',
-        'application/zip',
-        'application/x-gzip',
-        'application/rar',
-        'application/x-compressed-zip',
-        'application/x-bzip2',
-        'application/x-tar',
-        'application/x-rar',
-        'application/x-7z-compressed',
-        'application/x-msdownload',
-        'application/octet-stream',
-        'application/octet-stream',
-        //MS Office
-        'application/msword',
-        'application/vnd.ms-powerpoint',
-        'application/vnd.ms-write',
-        'application/vnd.ms-excel',
-        'application/vnd.ms-access',
-        'application/vnd.ms-project',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        'application/vnd.ms-word.document.macroEnabled.12',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.template',
-        'application/vnd.ms-word.template.macroEnabled.12',
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        'application/vnd.ms-excel.sheet.macroEnabled.12',
-        'application/vnd.ms-excel.sheet.binary.macroEnabled.12',
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.template',
-        'application/vnd.ms-excel.template.macroEnabled.12',
-        'application/vnd.ms-excel.addin.macroEnabled.12',
-        'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-        'application/vnd.ms-powerpoint.presentation.macroEnabled.12',
-        'application/vnd.openxmlformats-officedocument.presentationml.slideshow',
-        'application/vnd.ms-powerpoint.slideshow.macroEnabled.12',
-        'application/vnd.openxmlformats-officedocument.presentationml.template',
-        'application/vnd.ms-powerpoint.template.macroEnabled.12',
-        'application/vnd.ms-powerpoint.addin.macroEnabled.12',
-        'application/vnd.openxmlformats-officedocument.presentationml.slide',
-        'application/vnd.ms-powerpoint.slide.macroEnabled.12',
-        'application/onenote',
-        'application/oxps',
-        'application/vnd.ms-xpsdocument',
-        //OpenOffice
-        'application/vnd.oasis.opendocument.text',
-        'application/vnd.oasis.opendocument.presentation',
-        'application/vnd.oasis.opendocument.spreadsheet',
-        'application/vnd.oasis.opendocument.graphics',
-        'application/vnd.oasis.opendocument.chart',
-        'application/vnd.oasis.opendocument.database',
-        'application/vnd.oasis.opendocument.formula',
-        //WordPerfect
-        'application/wordperfect',
-        //iWork
-        'application/vnd.apple.keynote',
-        'application/vnd.apple.numbers',
-        'application/vnd.apple.pages',
     ];
 
     public function __construct($file)
     {
         if (!$this->__checkSize($file)) {
-            $this->msg = [
+            return $this->response = [
                 'code' => 1,
                 'msg' => __('Media size is too big')
             ];
         }
 
         if (!$this->__checkMediaType($file)) {
-            $this->msg = [
+            return $this->response = [
                 'code' => 1,
                 'msg' => __('Sorry, this file type is not except')
             ];
         }
 
         if (!$this->__uploadMedia($file)) {
-            $this->msg = [
+            return $this->response = [
                 'code' => 1,
                 'msg' => __('Upload media error')
             ];
         }
 
-        $this->msg = [
+        return $this->response = [
             'code' => 0,
             'msg' => __('Upload media successfully')
         ];
@@ -265,8 +162,15 @@ class MediaUpload
      */
     private function __checkMediaType($file)
     {
-        if (in_array($file->getType(), self::$accessMediaType)) {
-            return true;
+        $extension = $file->getExtension();
+        $type = $file->getType();
+        foreach (self::$accessMediaType as $key => $value) {
+            $segmentAccess = explode('/', $value);
+            $segmentAccess = isset($segmentAccess[0]) ? $segmentAccess[0] : '';
+            $segmentAccess .= '/' . $extension;
+            if (($extension == $key || in_array($extension, explode('|', $key))) && ($value == $type || $type == $segmentAccess)) {
+                return true;
+            }
         }
         return false;
     }
@@ -280,7 +184,7 @@ class MediaUpload
     private function __checkSize($file)
     {
         $size = (int)ini_get("upload_max_filesize") * 1024 * 1024;
-        if ($size <= $file->getSize()) {
+        if ($file->getSize() < $size) {
             return true;
         }
 
@@ -310,13 +214,13 @@ class MediaUpload
                 $i++;
                 $filePath = $dir . $fileName . '_' . $i . '.' . $extension;
             }
-            if($i){
+            if ($i) {
                 $fileName .= '_' . $i;
             }
             if ($file->moveTo($filePath)) {
                 $media = new  Medias();
                 $media->assign([
-                    'title' => ucfirst(str_replace(['-','_'], ' ', $fileName)),
+                    'title' => ucfirst(str_replace(['-', '_'], ' ', $fileName)),
                     'mime_type' => $file->getType(),
                     'src' => $baseDir . $fileName . '.' . $extension
                 ]);

@@ -85,7 +85,11 @@ function zcms_header_prefix()
  */
 function remove_multi_space($str)
 {
-    return preg_replace('/\s\s+/', ' ', $str);
+    while (strpos($str,'  ') !== false) {
+        $str = str_replace('  ', ' ', $str);
+    }
+    return $str;
+    //return preg_replace('/\s\s+/', ' ', $str);
 }
 
 /**
@@ -776,9 +780,10 @@ function memory_usage()
  * @param bool|false $specialCharacters
  * @return string
  */
-function randomString($length = 22, $specialCharacters = false) {
+function randomString($length = 22, $specialCharacters = false)
+{
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    if($specialCharacters){
+    if ($specialCharacters) {
         $characters = '~!@#$%^&*()_+' . $characters . '~!@#$%^&*()_+';
     }
     $charactersLength = strlen($characters);

@@ -135,15 +135,14 @@
             withCredentials: false,
             parallelUploads: 2,
             uploadMultiple: false,
-            maxFilesize: 256,
+            maxFileSize: 256,
             paramName: "file",
             createImageThumbnails: true,
-            maxThumbnailFilesize: 10,
+            maxThumbnailFileSize: 10,
             thumbnailWidth: 120,
             thumbnailHeight: 120,
-            filesizeBase: 1000,
+            fileSizeBase: 1000,
             maxFiles: null,
-            filesizeBase: 1000,
             params: {},
             clickable: true,
             ignoreHiddenFiles: true,
@@ -157,9 +156,9 @@
             dictDefaultMessage: "Drop files here to upload",
             dictFallbackMessage: "Your browser does not support drag'n'drop file uploads.",
             dictFallbackText: "Please use the fallback form below to upload your files like in the olden days.",
-            dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
+            dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFileSize}}MiB.",
             dictInvalidFileType: "You can't upload files of this type.",
-            dictResponseError: "Server responded with {{statusCode}} code.",
+            dictResponseError: "Server responded with {{statusText}} code.",
             dictCancelUpload: "Cancel upload",
             dictCancelUploadConfirmation: "Are you sure you want to cancel this upload?",
             dictRemoveFile: "Remove file",
@@ -835,9 +834,9 @@
             selectedSize = selectedUnit = null;
             for (i = _i = 0, _len = units.length; _i < _len; i = ++_i) {
                 unit = units[i];
-                cutoff = Math.pow(this.options.filesizeBase, 4 - i) / 10;
+                cutoff = Math.pow(this.options.fileSizeBase, 4 - i) / 10;
                 if (size >= cutoff) {
-                    selectedSize = size / Math.pow(this.options.filesizeBase, 4 - i);
+                    selectedSize = size / Math.pow(this.options.fileSizeBase, 4 - i);
                     selectedUnit = unit;
                     break;
                 }
@@ -950,8 +949,8 @@
         };
 
         Dropzone.prototype.accept = function (file, done) {
-            if (file.size > this.options.maxFilesize * 1024 * 1024) {
-                return done(this.options.dictFileTooBig.replace("{{filesize}}", Math.round(file.size / 1024 / 10.24) / 100).replace("{{maxFilesize}}", this.options.maxFilesize));
+            if (file.size > this.options.maxFileSize * 1024 * 1024) {
+                return done(this.options.dictFileTooBig.replace("{{filesize}}", Math.round(file.size / 1024 / 10.24) / 100).replace("{{maxFileSize}}", this.options.maxFileSize));
             } else if (!Dropzone.isValidFile(file, this.options.acceptedFiles)) {
                 return done(this.options.dictInvalidFileType);
             } else if ((this.options.maxFiles != null) && this.getAcceptedFiles().length >= this.options.maxFiles) {
@@ -1017,7 +1016,7 @@
         Dropzone.prototype._processingThumbnail = false;
 
         Dropzone.prototype._enqueueThumbnail = function (file) {
-            //if (this.options.createImageThumbnails && file.type.match(/image.*/) && file.size <= this.options.maxThumbnailFilesize * 1024 * 1024) {
+            //if (this.options.createImageThumbnails && file.type.match(/image.*/) && file.size <= this.options.maxThumbnailFileSize * 1024 * 1024) {
                 this._thumbnailQueue.push(file);
                 return setTimeout(((function (_this) {
                     return function () {
@@ -1245,7 +1244,7 @@
                     _results = [];
                     for (_j = 0, _len1 = files.length; _j < _len1; _j++) {
                         file = files[_j];
-                        _results.push(_this._errorProcessing(files, response || _this.options.dictResponseError.replace("{{statusCode}}", xhr.status), xhr));
+                        _results.push(_this._errorProcessing(files, response || _this.options.dictResponseError.replace("{{statusText}}", xhr.statusText), xhr));
                     }
                     return _results;
                 };
