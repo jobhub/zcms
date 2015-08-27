@@ -5,7 +5,7 @@ cache/volt/
 cache/metadata/
 cache/web
 cache/install
-cache/fileCache
+cache/fileCache/*
 cache/tmp
 cache/logs/db.log
 app/config/config.php
