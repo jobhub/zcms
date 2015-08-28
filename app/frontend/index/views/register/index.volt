@@ -1,4 +1,4 @@
-{% extends "../../../templates/frontend/default/index.volt" %}
+{% extends "../../index.volt" %}
 {% block content %}
     <div class="container user-control">
         <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-2">

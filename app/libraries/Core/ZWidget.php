@@ -266,6 +266,9 @@ class ZWidget
         $this->__initView();
         $this->widget();
         $this->view->start();
+        if (!isset($this->options->_layout) || empty($this->options->_layout)) {
+            $this->options->_layout = 'default';
+        }
         $overrideFolder = ROOT_PATH . '/app/templates/frontend/' . $this->config->frontendTemplate->defaultTemplate . '/widgets/';
         $overrideFile = $overrideFolder . $this->_widget_name . DS . $this->options->_layout . '.volt';
         if (file_exists($overrideFile)) {
@@ -288,6 +291,7 @@ class ZWidget
     private function __initView()
     {
         $this->view = new View();
+        $this->view->setVar('_baseUri', BASE_URI);
         $this->view->setDI(Di::getDefault());
         $this->view->registerEngines([
             '.volt' => function ($view, $di) {

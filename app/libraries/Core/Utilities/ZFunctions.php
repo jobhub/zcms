@@ -28,16 +28,20 @@ function zcms_load_frontend_router($router)
     //Get frontend module
     $frontendModule = get_child_folder(APP_DIR . '/frontend/');
     $frontendModule = array_reverse($frontendModule);
+//    $tmp = [];
     foreach ($frontendModule as $module) {
-        $routerClass = 'Router' . ucfirst($module);
+        $moduleRouterClassName = str_replace(' ', '', ucwords(str_replace('-', ' ', $module)));
+        $routerClass = 'Router' . $moduleRouterClassName;
         $fileRoute = APP_DIR . "/frontend/{$module}/{$routerClass}.php";
         if (file_exists($fileRoute)) {
+//            $tmp[] = $fileRoute;
             require_once($fileRoute);
             if (class_exists($routerClass)) {
                 $router->mount(new $routerClass());
             }
         }
     }
+    //echo '<pre>'; var_dump($tmp);echo '</pre>'; die();
     return $router;
 }
 
@@ -85,7 +89,7 @@ function zcms_header_prefix()
  */
 function remove_multi_space($str)
 {
-    while (strpos($str,'  ') !== false) {
+    while (strpos($str, '  ') !== false) {
         $str = str_replace('  ', ' ', $str);
     }
     return $str;
@@ -156,7 +160,7 @@ function get_child_folder($path)
     $directories = scandir($path);
     $childFolders = [];
     foreach ($directories as $directory) {
-        if (strpos($directory, ".") === false && is_dir($path . '/' . $directory)) {
+        if (strpos($directory, '.') === false && is_dir($path . '/' . $directory)) {
             $childFolders[] = $directory;
         }
     }
@@ -180,7 +184,7 @@ function get_files_in_folder($path, $extension = '', $getFileName = false)
             if ($extension != '') {
                 foreach ($files as $file) {
                     $pathFile = $path . '/' . $file;
-                    if (strpos($file, ".") !== false && !is_dir($pathFile) && pathinfo($path . '/' . $file, PATHINFO_EXTENSION) == $extension) {
+                    if (strpos($file, '.') !== false && !is_dir($pathFile) && pathinfo($path . '/' . $file, PATHINFO_EXTENSION) == $extension) {
                         if ($getFileName) {
                             $childFiles[] = pathinfo($path . '/' . $file, PATHINFO_FILENAME);
                         } else {
@@ -190,7 +194,7 @@ function get_files_in_folder($path, $extension = '', $getFileName = false)
                 }
             } else {
                 foreach ($files as $file) {
-                    if (strpos($file, ".") !== false && !is_dir($path . '/' . $file)) {
+                    if (strpos($file, '.') !== false && !is_dir($path . '/' . $file)) {
                         $childFiles[] = $file;
                     }
                 }
@@ -268,7 +272,7 @@ function check_menu($path)
         return false;
     }
 
-    $dirs = explode("/", dirname($path));
+    $dirs = explode('/', dirname($path));
     $moduleBaseName = array_pop($dirs);
 
     //Require menu file
@@ -545,18 +549,18 @@ function check_resource($path, $moduleBaseName, $location)
             }
 
             if (!isset($resource['acl'])) {
-                if (DEBUG) die(__('gb_message_module_resource_must_acl', ["1" => $path]));
+                if (DEBUG) die(__('gb_message_module_resource_must_acl', ['1' => $path]));
                 return false;
             }
 
             if (isset($resource['acl'])) {
                 if (!is_array($resource['acl'])) {
-                    if (DEBUG) die(__('gb_message_module_resource_acl_must_be_array', ["1" => $path]));
+                    if (DEBUG) die(__('gb_message_module_resource_acl_must_be_array', ['1' => $path]));
                     return false;
                 }
 
                 if (!count($resource['acl'])) {
-                    if (DEBUG) die(__('gb_message_module_resource_acl_must_be_rule', ["1" => $path]));
+                    if (DEBUG) die(__('gb_message_module_resource_acl_must_be_rule', ['1' => $path]));
                     return false;
                 }
             }
@@ -564,7 +568,7 @@ function check_resource($path, $moduleBaseName, $location)
             $resource['rules'] = [];
             foreach ($resource['acl'] as $r) {
                 if (!isset($r['controller'])) {
-                    if (DEBUG) die(__('gb_message_module_resource_acl_item_must_controller', ["1" => $path]));
+                    if (DEBUG) die(__('gb_message_module_resource_acl_item_must_controller', ['1' => $path]));
                     return false;
                 }
 
@@ -574,16 +578,16 @@ function check_resource($path, $moduleBaseName, $location)
                 }
 
                 if (!isset($r['rules'])) {
-                    if (DEBUG) die(__('gb_message_module_resource_acl_item_must_rules', ["1" => $path]));
+                    if (DEBUG) die(__('gb_message_module_resource_acl_item_must_rules', ['1' => $path]));
                     return false;
                 }
                 if (!is_array($r['rules']) || !count($r['rules'])) {
-                    if (DEBUG) die(__('gb_message_module_resource_acl_item_must_rules_item', ["1" => $r['controller'], "2" => $path]));
+                    if (DEBUG) die(__('gb_message_module_resource_acl_item_must_rules_item', ['1' => $r['controller'], '2' => $path]));
                     return false;
                 }
                 foreach ($r['rules'] as $ruleItem) {
                     if (!is_array($ruleItem)) {
-                        if (DEBUG) die(__('gb_message_module_resource_structure_rules_in_controller_on_section_acl_item_error', ["1" => $r['controller'], "2" => $path]));
+                        if (DEBUG) die(__('gb_message_module_resource_structure_rules_in_controller_on_section_acl_item_error', ['1' => $r['controller'], '2' => $path]));
                         return false;
                     }
                 }
@@ -594,7 +598,7 @@ function check_resource($path, $moduleBaseName, $location)
                     $tmp['controller_name'] = $r['controller_name'];
 
                     if (!isset($rule['action'])) {
-                        die(__('gb_message_module_resource_must_action_in_rules_on_controller', ["1" => $r['controller'], "2" => $path]));
+                        die(__('gb_message_module_resource_must_action_in_rules_on_controller', ['1' => $r['controller'], '2' => $path]));
                     }
 
                     $tmp['action'] = strtolower($rule['action']);
@@ -620,7 +624,7 @@ function check_resource($path, $moduleBaseName, $location)
                             $sub_action = preg_replace('/[^A-Z,0-9\s]/i', '', $tmp['sub_action']);
                             if ($sub_action != $rule['sub_action']) {
                                 if (DEBUG) {
-                                    die(__('gb_message_module_resource_please_check_sub_action_in_rules_on_controller', ["1" => $rule['sub_action'], "2" => $r['controller'], "3" => $path]));
+                                    die(__('gb_message_module_resource_please_check_sub_action_in_rules_on_controller', ['1' => $rule['sub_action'], '2' => $r['controller'], '3' => $path]));
                                 }
                             }
                         }
@@ -688,7 +692,7 @@ function human_timing($time)
 function moneyFormat($number, $lang = 'vi')
 {
     $number .= '000';
-    $formatter = new MessageFormatter("vi", "{{$lang}, number}");
+    $formatter = new MessageFormatter('vi', "{{$lang}, number}");
     return $formatter->format([$number]);
 }
 
@@ -765,11 +769,11 @@ function memory_usage()
 {
     $mem_usage = memory_get_usage(true);
     if ($mem_usage < 1024) {
-        return $mem_usage . " B";
+        return $mem_usage . ' B';
     } elseif ($mem_usage < 1048576) {
-        return round($mem_usage / 1024, 2) . " KB";
+        return round($mem_usage / 1024, 2) . ' KB';
     } else {
-        return round($mem_usage / 1048576, 2) . " MB";
+        return round($mem_usage / 1048576, 2) . ' MB';
     }
 }
 
