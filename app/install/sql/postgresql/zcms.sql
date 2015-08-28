@@ -294,6 +294,7 @@ CREATE TABLE IF NOT EXISTS menu_items (
   published     SMALLINT,
   require_login SMALLINT               NOT NULL DEFAULT 0,
   class         VARCHAR(255),
+  icon          VARCHAR(255),
   created_at    TIMESTAMP,
   created_by    INTEGER,
   updated_at    TIMESTAMP,

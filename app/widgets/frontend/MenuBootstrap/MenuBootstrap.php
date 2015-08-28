@@ -107,7 +107,7 @@ class MenuBootstrap_Widget extends ZWidget
     private function _getMenu($menuTypeId, $isLogin)
     {
         $builder = new Phalcon\Mvc\Model\Query\Builder();
-        $builder->columns('mi.menu_item_id AS id, mi.name, mi.full_link AS link, mi.thumbnail, md.parent_id, require_login')
+        $builder->columns('mi.menu_item_id AS id, mi.name, mi.full_link AS link, mi.thumbnail, md.parent_id, require_login, icon')
             ->addFrom('ZCMS\Core\Models\MenuItems', 'mi')
             ->innerJoin('ZCMS\Core\Models\MenuDetails', 'mi.menu_item_id = md.menu_item_id', 'md')
             ->innerJoin('ZCMS\Core\Models\MenuTypes', 'md.menu_type_id = mt.menu_type_id', 'mt')
@@ -133,6 +133,9 @@ class MenuBootstrap_Widget extends ZWidget
     {
         $result = [];
         foreach ($menuItems as $item) {
+            if ($item['icon'] != null) {
+                $item['icon'] = '<i class="' . $item['icon'] . '"></i> ';
+            }
             if ($item['parent_id'] == $parent) {
                 $item['children'] = [];
                 if ($item['require_login'] == 0 || ($isLogin && $item['require_login'] == 1) || (!$isLogin && $item['require_login'] == -1)) {

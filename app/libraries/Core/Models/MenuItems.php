@@ -72,6 +72,12 @@ class MenuItems extends ZModel
     public $class;
 
     /**
+     *
+     * @var string
+     */
+    public $icon;
+
+    /**
      * Initialize method for model
      */
     public function initialize()

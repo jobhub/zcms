@@ -120,10 +120,6 @@ class ZFrontController extends PController
         $this->view->setVar("_defaultTemplate", $this->_defaultTemplate);
 
         $this->view->setVar('_user', $this->session->get('auth'));
-        $this->view->setVar('_flashSession', "../../../templates/frontend/{$this->_defaultTemplate}/flashSession");
-        $this->view->setVar('_header', "../../../templates/frontend/{$this->_defaultTemplate}/header");
-        $this->view->setVar('_footer', "../../../templates/frontend/{$this->_defaultTemplate}/footer");
-        $this->view->setVar('_sidebar', "../../../templates/frontend/{$this->_defaultTemplate}/sidebar");
     }
 
     /**

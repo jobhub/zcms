@@ -27,6 +27,7 @@ return [
     'm_menu_form_menu_item_thumbnail_desc' => 'Image for menu item',
     'm_menu_form_menu_item_class' => 'Extra Class',
     'm_menu_form_menu_item_class_desc' => 'Extra Class',
+    'm_menu_form_menu_item_icon' => 'Icon Class',
 
     //Menu type form
     'm_menu_form_menu_type_name' => 'Name',

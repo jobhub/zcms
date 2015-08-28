@@ -54,7 +54,18 @@ class ZFrontTemplate
         $pathView = $viewDir . $view->getControllerName() . '/' . $view->getActionName();
         $view->setVar('_templateDir', ROOT_PATH . '/app/templates/frontend/' . $defaultTemplate);
         if (realpath($pathView . '.volt')) {
+            $view->setVar('_flashSession', '../../flashSession');
+            $view->setVar('_header', '../../header');
+            $view->setVar('_footer', '../../footer');
+            $view->setVar('_sidebar', '../../sidebar');
             $view->setViewsDir($viewDir);
+        } else {
+            if (isset($view->_defaultTemplate)) {
+                $view->setVar('_flashSession', '../../../templates/frontend/' . $view->_defaultTemplate . '/flashSession');
+                $view->setVar('_header', '../../../templates/frontend/' . $view->_defaultTemplate . '/header');
+                $view->setVar('_footer', '../../../templates/frontend/' . $view->_defaultTemplate . '/footer');
+                $view->setVar('_sidebar', '../../../templates/frontend/' . $view->_defaultTemplate . '/sidebar');
+            }
         }
     }
 }

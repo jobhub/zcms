@@ -76,6 +76,12 @@
                                     {{ form.render("class") }}
                                 </div>
                             </div>
+                            <div class="form-group">
+                                {{ form.label('icon', ['class' : 'col-sm-2']) }}
+                                <div class="col-sm-9">
+                                    {{ form.render("icon") }}
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>

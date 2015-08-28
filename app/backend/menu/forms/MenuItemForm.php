@@ -34,6 +34,8 @@ class MenuItemForm extends ZForm
         $class = new Text('class');
         $this->add($class);
 
+        $icon = new Text('icon');
+        $this->add($icon);
 
         $link = new Text('link');
         $this->add($link);
