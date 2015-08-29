@@ -107,7 +107,7 @@ class MenuBootstrap_Widget extends ZWidget
     private function _getMenu($menuTypeId, $isLogin)
     {
         $builder = new Phalcon\Mvc\Model\Query\Builder();
-        $builder->columns('mi.menu_item_id AS id, mi.name, mi.full_link AS link, mi.thumbnail, md.parent_id, require_login, icon')
+        $builder->columns('mi.menu_item_id AS id, mi.name, mi.full_link AS link, mi.thumbnail, md.parent_id, require_login, mi.icon, mi.class')
             ->addFrom('ZCMS\Core\Models\MenuItems', 'mi')
             ->innerJoin('ZCMS\Core\Models\MenuDetails', 'mi.menu_item_id = md.menu_item_id', 'md')
             ->innerJoin('ZCMS\Core\Models\MenuTypes', 'md.menu_type_id = mt.menu_type_id', 'mt')
