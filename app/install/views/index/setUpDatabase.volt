@@ -73,7 +73,7 @@
 
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-tasks"></i></span>
-                        {{ text_field('dbname', 'class' : 'form-control', 'value' : 'zcms') }}
+                        {{ text_field('dbname', 'class' : 'form-control', 'value' : 'zcms_db_master') }}
                     </div>
                 </div>
                 <div class="form-group">

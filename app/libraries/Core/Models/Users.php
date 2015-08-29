@@ -211,6 +211,11 @@ class Users extends ZModel
      */
     public function validation()
     {
+        //Set default avatar
+        if (!$this->avatar) {
+            $this->avatar = USER_AVATAR_DEFAULT;
+        }
+
         //Validate email
         $this->validate(
             new ModelValidatorEmail(
