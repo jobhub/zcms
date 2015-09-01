@@ -284,7 +284,7 @@ class ZWidget
         if (isset($this->options->title) && $this->options->title != '') {
             $html .= $this->beforeTitle() . $this->options->title . $this->afterTitle();
         }
-        $html .= '<div class="widget-content">' . $content . '</div>';
+        $html .= '<div class="widget-content">' . $content . '</div></div>';
         return $html;
     }
 

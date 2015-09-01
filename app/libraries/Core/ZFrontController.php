@@ -53,7 +53,7 @@ class ZFrontController extends PController
         //Get user info
         $this->_user = $this->session->get('auth');
         if ($this->_checkLogin == true && $this->isLogin() == false) {
-            header('Location: /login/');
+            header('Location: ' . BASE_URI . '/user/login/');
             die;
         }
 
